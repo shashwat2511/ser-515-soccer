@@ -1,2 +1,8 @@
-[readme.md](https://github.com/shashwat2511/ser-515-soccer/files/7138656/readme.md)
 # ser-515-soccer
+
+Team Members
+1. Aishwarya Prabha Ramakrishnan (aprabha7@asu.edu)
+2. Deepak Kumar Sahu (dksahu@asu.edu)
+3. Hari Chandana Yendluri (hyendlur@asu.edu)
+4. Kenil Patel (kpatel99@asu.edu)
+5. Shashwat Priyadarshi (spriyad4@asu.edu)
