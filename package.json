@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "**Team 10**\r Members:\r 1. Aishwarya Prabha Ramakrishnan (aprabha7@asu.edu)\r 2. Deepak Kumar Sahu (dksahu@asu.edu)\r 3. Hari Chandana Yendluri (hyendlur@asu.edu)\r 4. Kenil Patel (kpatel99@asu.edu)\r 5. Shashwat Priyadarshi (spriyad4@asu.edu)",
+  "main": "index.js",
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashwat2511/ser-515-soccer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shashwat2511/ser-515-soccer/issues"
+  },
+  "homepage": "https://github.com/shashwat2511/ser-515-soccer#readme"
+}
