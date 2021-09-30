@@ -1,13 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Header from './components/Header.js';
+import Container from './components/Container.js';
+import Footer from './components/Footer.js';
 
 function App() {
+  var app = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    width: '100vw',
+    height: '100vh'
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello World</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+    <div style={app}>
+      <Header></Header>
+      <Container></Container>
+      <Footer></Footer>
     </div>
   );
 }
