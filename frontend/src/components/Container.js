@@ -4,13 +4,15 @@ import Content from './Content';
 function Container() {
     var container = {
         flexGrow: 1,
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
         position: 'relative',
+        display: 'flex',
+        alignItems: 'stretch'
     };
 
     return (
-        <div style={container}>
+        <div className='container' style={container}>
             <Content></Content>
         </div>
     )
