@@ -5,11 +5,14 @@ const StyledMenu = styled.nav`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background: #EFFFFA;
+    background: #FFFFFF;
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(-100%)'};
     height: 41em;
     text-align: left;
-    width: 20vw;
+    width: 25vw;
+    border-top-right-radius: 0.25em;
+    border-bottom-right-radius: 0.25em;
+    box-shadow: 0px 0px 10px black;
     /* padding: 2rem; */
     position: absolute;
     top: ${props => props.menuTop};
@@ -53,7 +56,7 @@ const StyledMenu = styled.nav`
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
+            align-items: start;
             margin-top: 0.5rem;
             padding: 1em
     
@@ -65,32 +68,35 @@ const StyledMenu = styled.nav`
             align-items: center;
             margin-top: 2rem;
         }
+        .menuContentText {
+            margin-left: 1em;
+        }
     }
 `
 
 const HamburgerMenu = ({ open, menuTop }) => {
     return (
         <StyledMenu open={open} menuTop={menuTop}>
-            <div className="closeBtn">
+            {/* <div className="closeBtn">
                 <CloseRoundedIcon fontSize="large" color="action" style={{
                     cursor: 'pointer',
                     display: open ? 'block' : 'none',
                     zIndex: 10
                 }} />
-            </div>
+            </div> */}
             <div className="menuContent">
                 <div className="menuContentInnerBlock">
                     <div>💁🏻‍♂️</div>
-                    <div>About us</div>
+                    <div className='menuContentText'>TEAMS</div>
                 </div>
                 <div className="menuContentInnerBlock">
                     <div>💸</div>
-                    <div>Pricing</div>
+                    <div className='menuContentText'>ENROLMENT FEES</div>
                 </div>
-                <div className="menuContentInnerBlock">
+                {/* <div className="menuContentInnerBlock">
                     <div>📩</div>
                     <div>Contact</div>
-                </div>
+                </div> */}
             </div>
             {/* <a href="/">
                 <span role="img" aria-label="about us">💁🏻‍♂️</span>

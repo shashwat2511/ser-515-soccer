@@ -13,6 +13,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import Menu from '@mui/material/Menu';
+import { blue } from '@mui/material/colors';
 // import Map from './Map';
 
 export default function Header() {
@@ -27,9 +28,13 @@ export default function Header() {
         setAnchorEl(null);
     };
 
+    const iconButton = {
+        backgroundColor: '#BF360C'
+    }
+
     return (
-        <AppBar>
-            <Toolbar style={{
+        <AppBar className='appBar'>
+            <Toolbar className='toolbar' style={{
                 height: "4em",
                 flexShrink: 0,
                 display: "flex",
@@ -37,22 +42,22 @@ export default function Header() {
                 alignItems: "center",
                 justifyContent: "space-between",
             }}>
-                <MenuRoundedIcon fontSize="large" style={{
+                <MenuRoundedIcon fontSize="large" sx={{ color: blue[50] }} style={{
                     cursor: 'pointer',
                     display: open ? 'none' : 'block',
                     zIndex: 10,
                 }} onClick={() => setOpen(!open)} />
 
-                <HamburgerMenu open={open} menuTop='8.5vh' setOpen={setOpen}></HamburgerMenu>
+                <HamburgerMenu open={open} menuTop='8.6vh' setOpen={setOpen}></HamburgerMenu>
 
-                <CloseRoundedIcon fontSize="large" color="action" style={{
+                <CloseRoundedIcon fontSize="large" color="action" sx={{ color: blue[50] }} style={{
                     cursor: 'pointer',
                     display: open ? 'block' : 'none',
                     zIndex: 10
                 }} onClick={() => setOpen(!open)} />
 
                 <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                    <Avatar sx={{ width: 32, height: 32, backgroundColor: '#BF360C' }}>M</Avatar>
                 </IconButton>
 
                 {/* <MenuIcon open={open} setOpen={setOpen}></MenuIcon> */}
