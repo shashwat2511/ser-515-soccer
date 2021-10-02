@@ -1,6 +1,7 @@
 import React from 'react';
 import CoachTeam from './CoachTeam';
 import Referee from './Referee';
+import TournamentManager from './TournamentManager';
 // import TeamRegistration from './TeamRegistration';
 
 function Content() {
@@ -19,8 +20,9 @@ function Content() {
     return (
         <div className='content' style={content}>
             {/* <TeamRegistration></TeamRegistration> */}
-            <CoachTeam></CoachTeam>
+            {/* <CoachTeam></CoachTeam> */}
             {/* <Referee></Referee> */}
+            <TournamentManager></TournamentManager>
         </div>
     )
 }
