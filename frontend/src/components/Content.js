@@ -2,7 +2,9 @@ import React from 'react';
 import CoachTeam from './CoachTeam';
 import Referee from './Referee';
 import TournamentManager from './TournamentManager';
-// import TeamRegistration from './TeamRegistration';
+import TeamRegistration from './TeamRegistration';
+import CoachRegistrationForm from './CoachRegistrationForm';
+import { Paper } from '@material-ui/core';
 
 function Content() {
     var content = {
@@ -22,7 +24,10 @@ function Content() {
             {/* <TeamRegistration></TeamRegistration> */}
             {/* <CoachTeam></CoachTeam> */}
             {/* <Referee></Referee> */}
-            <TournamentManager></TournamentManager>
+            {/* <TournamentManager></TournamentManager> */}
+            <Paper style={{ width: '100%' }}>
+                <CoachRegistrationForm></CoachRegistrationForm>
+            </Paper>
         </div>
     )
 }
