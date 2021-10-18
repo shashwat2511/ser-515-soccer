@@ -25,9 +25,7 @@ function Content() {
             {/* <CoachTeam></CoachTeam> */}
             {/* <Referee></Referee> */}
             {/* <TournamentManager></TournamentManager> */}
-            <Paper style={{ width: '100%' }}>
-                <CoachRegistrationForm></CoachRegistrationForm>
-            </Paper>
+            <CoachRegistrationForm></CoachRegistrationForm>
         </div>
     )
 }
