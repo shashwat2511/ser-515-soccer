@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 node_modules
 backend/env_soccer
-
+backend/.idea	
 
 
 
