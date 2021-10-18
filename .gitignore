@@ -130,8 +130,7 @@ dmypy.json
 node_modules
 backend/env_soccer
 backend/.idea
-
-
+.rar
 
 
 frontend/node_modules
