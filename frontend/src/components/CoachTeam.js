@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, React, useState } from "react";
 import axios from 'axios';
 import { teamList } from '../demoJSONs/teamList';
 import { DataGrid } from '@material-ui/data-grid';
