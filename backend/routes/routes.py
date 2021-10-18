@@ -3,7 +3,7 @@ from flask import Flask, request, Response, json
 # from flask_cors import CORS
 # import json
 
-from services.coachTeamRegistration.CoachTeamRegistration import CoachTeamRegistration
+from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 
 APP = Flask(__name__)
 # CORS(APP)
@@ -13,15 +13,15 @@ APP = Flask(__name__)
 
 @APP.route("/", methods=['GET', 'POST'])
 def index():
-    return("Welome to the Soccer Management System!!!")
+    return("Welcome to the Soccer Management System!!!")
 
 
-@APP.route("/api/v1/coachTeamReg/", methods=['GET'])
-def coach_team_reg():
-    if request.method == 'GET':
+@APP.route("/api/v1/teamfeepayment/", methods=['POST'])
+def team_fee_payment():
+    if request.method == 'POST':
         # print(request)
-        ctr = CoachTeamRegistration()
-        return_data = ctr.welcome()
+        trp = TeamFeePayment()
+        return_data = trp.save_team_payment(request)
 
         response = Response(
             response=json.dumps(return_data),
