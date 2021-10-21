@@ -14,10 +14,18 @@ class RegistrationPayment():
         registrationDate = json_data["date"]
         paymentInfo = json_data["payInfo"]
         delta = registrationDate - currentDate
-        print(delta.days)
         offerPay= paymentInfo - ((paymentInfo*15)/100)
         lateFee = paymentInfo + ((paymentInfo*10)/100)
-        print(offerPay, lateFee)
+        if(delta.days >45):
+            print("You are too early to register")
+        elif(delta.days >30):
+            print("To register the team, you need to pay:",offerPay)
+        elif(delta.days >15):
+            print("To register the team, you need to pay", paymentInfo)
+        elif(delta.days >0):
+            print("To register the team, you need to pay", lateFee)
+        else:
+            print("You cannot make this payment, You are late for competition!")
 
 
 
