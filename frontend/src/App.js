@@ -4,7 +4,7 @@ import Header from './components/Header.js';
 import Container from './components/Container.js';
 import Footer from './components/Footer.js';
 
-function App() {
+function App({children}) {
   var app = {
     display: 'flex',
     flexDirection: 'column',
@@ -18,7 +18,7 @@ function App() {
   return (
     <div style={app}>
       <Header className='header'></Header>
-      <Container className='container'></Container>
+      <Container className='container'>{children}</Container>
       <Footer className='footer'></Footer>
     </div>
   );

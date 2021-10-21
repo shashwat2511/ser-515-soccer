@@ -1,6 +1,6 @@
 import React from 'react';
-import PaymentInfo from './PaymentInfo/PaymentIndex';
-import PaymentDetails from './PaymentInfo/PaymentDetails';
+// import PaymentInfo from './PaymentInfo/PaymentIndex';
+// import PaymentDetails from './PaymentInfo/PaymentDetails';
 // import CoachTeam from './CoachTeam';
 // import Referee from './Referee';
 // import TournamentManager from './TournamentManager';
@@ -9,6 +9,7 @@ import PaymentDetails from './PaymentInfo/PaymentDetails';
 import RulesandRegulationsTM from './RulesandRegulationsTM';
 
 function Content() {
+function Content({children}) {
     var content = {
         position: 'absolute',
         top: 0,
@@ -28,8 +29,9 @@ function Content() {
             {/* <Referee></Referee> */}
             {/* <TournamentManager></TournamentManager> */}
             {/* <RulesandRegulationsTM /> */}
-            <PaymentInfo/> 
+            {/* <PaymentInfo/>  */}
             {/* <PaymentDetails/> */}
+            {children}
         </div>
     )
 }
