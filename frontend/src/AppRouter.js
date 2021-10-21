@@ -4,7 +4,8 @@ import { Switch, Route } from "react-router"
 import { Provider } from 'react-redux'
 
 import App from "./App";
-import RulesandRegulationsTM from "./components/RulesandRegulationsTM";
+import RulesandRegulationsTM from "./components/rulesTM/RulesandRegulationsTM";
+
 export const AppRouter = ({history, store}) => {
 
     return ( <Provider store={store}>

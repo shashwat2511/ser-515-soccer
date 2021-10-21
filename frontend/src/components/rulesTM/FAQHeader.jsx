@@ -1,7 +1,7 @@
 
 import { Box, Link, List, ListItem, Typography } from '@material-ui/core'
 import React from 'react'
-import {FAQTopicsList } from "../demoJSONs/faq"
+import {FAQTopicsList } from "../../demoJSONs/faq"
 const FAQHeader = ({ onTopicClick }) => {
     return (
        <Box mx={2} my={1}>

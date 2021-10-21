@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Box, Grid, Link, Paper, Typography } from '@material-ui/core'
-import {FAQContent } from "../demoJSONs/faq"
+import {FAQContent } from "../../demoJSONs/faq"
 import FAQHeader from './FAQHeader';
 
 const RulesandRegulationsTM = () => {
