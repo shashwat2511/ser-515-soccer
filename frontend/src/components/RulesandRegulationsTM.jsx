@@ -19,7 +19,6 @@ const RulesandRegulationsTM = () => {
         }
 
     return (
-        <>
         <Grid container direction="row">
             <Grid item >
                 <FAQHeader onTopicClick={(topic, index) => handleOnClick(index)} />
@@ -44,7 +43,6 @@ const RulesandRegulationsTM = () => {
             </Box> 
         </Grid>)}
         </Grid>
-        </>
     )
 }
 

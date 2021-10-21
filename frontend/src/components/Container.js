@@ -1,7 +1,7 @@
 import React from 'react'
 import Content from './Content';
 
-function Container() {
+function Container({children}) {
     var container = {
         flexGrow: 1,
         // width: '100%',
@@ -13,7 +13,7 @@ function Container() {
 
     return (
         <div className='container' style={container}>
-            <Content></Content>
+            <Content>{children}</Content>
         </div>
     )
 }

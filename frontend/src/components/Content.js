@@ -4,13 +4,13 @@ import Referee from './Referee';
 import TournamentManager from './TournamentManager';
 // import TeamRegistration from './TeamRegistration';
 
-function Content() {
+function Content({children}) {
     var content = {
         position: 'absolute',
         top: 0,
         left: 0,
         width: 'calc(100% - 2em)',
-        height: 'calc(100% - 6em)',
+        height: 'calc(100% - 10em)',
         overflow: 'auto',
         padding: '5em 1em',
         display: 'flex',
@@ -22,7 +22,8 @@ function Content() {
             {/* <TeamRegistration></TeamRegistration> */}
             {/* <CoachTeam></CoachTeam> */}
             {/* <Referee></Referee> */}
-            <TournamentManager></TournamentManager>
+            {/* <TournamentManager></TournamentManager> */}
+            {children}
         </div>
     )
 }
