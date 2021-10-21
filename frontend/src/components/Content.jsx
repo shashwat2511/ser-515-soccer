@@ -1,8 +1,12 @@
 import React from 'react';
-import CoachTeam from './CoachTeam';
-import Referee from './Referee';
-import TournamentManager from './TournamentManager';
+import PaymentInfo from './PaymentInfo/PaymentIndex';
+import PaymentDetails from './PaymentInfo/PaymentDetails';
+// import CoachTeam from './CoachTeam';
+// import Referee from './Referee';
+// import TournamentManager from './TournamentManager';
 // import TeamRegistration from './TeamRegistration';
+
+import RulesandRegulationsTM from './RulesandRegulationsTM';
 
 function Content() {
     var content = {
@@ -10,7 +14,7 @@ function Content() {
         top: 0,
         left: 0,
         width: 'calc(100% - 2em)',
-        height: 'calc(100% - 6em)',
+        height: 'calc(100% - 10em)',
         overflow: 'auto',
         padding: '5em 1em',
         display: 'flex',
@@ -22,7 +26,10 @@ function Content() {
             {/* <TeamRegistration></TeamRegistration> */}
             {/* <CoachTeam></CoachTeam> */}
             {/* <Referee></Referee> */}
-            <TournamentManager></TournamentManager>
+            {/* <TournamentManager></TournamentManager> */}
+            {/* <RulesandRegulationsTM /> */}
+            <PaymentInfo/> 
+            {/* <PaymentDetails/> */}
         </div>
     )
 }
