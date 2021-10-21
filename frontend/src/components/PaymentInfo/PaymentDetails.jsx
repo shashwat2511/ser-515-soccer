@@ -3,9 +3,10 @@ import "date-fns";
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { useHistory } from "react-router";
 
-function PaymentDetails() {
-
+const  PaymentDetails = () => {
+    const history = useHistory()
     return (
         <Grid container justifyContent="center">
             <Grid xs={5} item>
@@ -55,12 +56,12 @@ function PaymentDetails() {
 
                         <Grid item xs={6}>
                             <Box p={1}>
-                                <Button fullWidth variant="contained" color="primary">Pay 100$</Button>
+                                <Button  fullWidth variant="contained" color="primary">Pay 100$</Button>
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
                             <Box p={1}>
-                                <Button fullWidth variant="contained" color="secondary">Cancel</Button>
+                                <Button onClick={() =>  history.push("/payment_info")} fullWidth variant="contained" color="secondary">Cancel</Button>
                             </Box>
                         </Grid>
                     </Grid>

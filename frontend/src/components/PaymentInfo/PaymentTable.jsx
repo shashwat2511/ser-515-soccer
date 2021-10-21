@@ -1,6 +1,7 @@
 import { Button, Box, Grid, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 import React from 'react'
 import { tableCellClasses } from '@mui/material/TableCell';
+import { useHistory } from "react-router";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -25,6 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const PaymentTable = ({ header, rows, showPay}) => {
   
+  const history = useHistory()
 
     return (
         <TableContainer component={Paper}>
@@ -47,7 +49,7 @@ const PaymentTable = ({ header, rows, showPay}) => {
                   <Typography> {`${row.amount} (${row.currency})`} </Typography>
                   </Box>
                   {showPay && <Box >
-                  <Button variant="contained" color="primary">PAY</Button>
+                  <Button variant="contained" onClick={() => history.push("/payment_gateway")} color="primary">PAY</Button>
                   </Box>}
                 </Grid>
                   </StyledTableCell>

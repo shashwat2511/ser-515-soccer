@@ -4,14 +4,16 @@ import { Switch, Route } from "react-router"
 import { Provider } from 'react-redux'
 
 import App from "./App";
-import RulesandRegulationsTM from "./components/RulesandRegulationsTM";
+import PaymentInfo from './components/PaymentInfo';
+import PaymentDetails from './components/PaymentInfo/PaymentDetails';
 export const AppRouter = ({history, store}) => {
 
     return ( <Provider store={store}>
         <ConnectedRouter history={history} >
             <Switch>
                 <App>
-                    <Route exact path="/rules" component={RulesandRegulationsTM}></Route>
+                    <Route exact path="/payment_info" component={PaymentInfo}></Route>
+                    <Route exact path="/payment_gateway" component={PaymentDetails}></Route>
                 </App>
             </Switch>
         </ConnectedRouter>

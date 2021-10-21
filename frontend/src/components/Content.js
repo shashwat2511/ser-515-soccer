@@ -6,9 +6,6 @@ import React from 'react';
 // import TournamentManager from './TournamentManager';
 // import TeamRegistration from './TeamRegistration';
 
-import RulesandRegulationsTM from './RulesandRegulationsTM';
-
-function Content() {
 function Content({children}) {
     var content = {
         position: 'absolute',
