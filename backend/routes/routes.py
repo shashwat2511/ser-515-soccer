@@ -5,7 +5,8 @@ from flask import Flask, request, Response, json
 
 from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
-
+from services.registrationPaymentAmount.registrationPaymentAmount import RegistrationPayment
+from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
 
 APP = Flask(__name__)
 # CORS(APP)
@@ -25,6 +26,12 @@ def coach_team_reg():
         ctr = TeamRegistration()
         # request.data
         return_data = ctr.team_reqistration(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
 
 @APP.route("/api/v1/teamfeepayment/", methods=['POST'])
 def team_fee_payment():
@@ -33,6 +40,32 @@ def team_fee_payment():
         trp = TeamFeePayment()
         return_data = trp.save_team_payment(request)
 
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/registrationPaymentAmount/", methods=['POST'])
+def reg_payment_amount():
+    if request.method == 'POST':
+        print("rexcsdacquest")
+        rp = RegistrationPayment()
+        # request.data
+        return_data = rp.registration_payment(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/fetchTeamListForTm/", methods=['GET'])
+def fetch_team_list_for_tm():
+    if request.method == 'GET':
+        ftl = FetchTeamListForTm()
+        return_data = ftl.team_reqistration(request)
         response = Response(
             response=json.dumps(return_data),
             status=200,

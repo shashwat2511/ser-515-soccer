@@ -19,14 +19,17 @@ class TeamRegistration():
         club_name = json_data["club_name"]
         primary_contact = json_data["primary_contact"]
         is_active = json_data["is_active"]
-        divison = json_data["divison"]
+        division = json_data["division"]
         player_name = json_data["player_name"]
 
         db = User()
-        db.insert_user(team_name, gender, age, coach_name, team_city, team_state, club_name, primary_contact, is_active, divison, player_name)
+        db.insert_user(team_name, gender, age, coach_name, team_city, team_state, club_name, primary_contact, is_active, division, player_name)
 
         print(team_name)
-        return "You have no teams registered"
+        message = "Your team " + team_name +" has been registered. Please pay the due about to enroll to tournament"
+
+        return {"message": message}
+
 
 # if __name__ == "__main__":
 #     sasa

@@ -3,7 +3,7 @@ import configparser
 from datetime import datetime
 
 
-class User(object):
+class DBFetchTeamListForTm.py(object):
 
     def __init__(self):
         config = configparser.ConfigParser()

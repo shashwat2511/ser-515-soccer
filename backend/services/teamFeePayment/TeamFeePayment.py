@@ -1,4 +1,5 @@
 import json
+import requests
 class TeamFeePayment():
 
     # def __init__(self, ):
@@ -12,7 +13,7 @@ class TeamFeePayment():
     def save_team_payment(self, req):
         # cwd = os.getcwd()
         # print(cwd)
-        json_data = request_stream(req)
+        json_data = self.request_stream(req)
         print(json_data)
         s = json_data['team']
-        return "You have no teams registered"
+        return "Amount paid for team. You are now enrolled to the tournament."
