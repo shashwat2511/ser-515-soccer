@@ -5,6 +5,7 @@ import TournamentManager from './TournamentManager';
 import TeamRegistration from './TeamRegistration';
 import CoachRegistrationForm from './CoachRegistrationForm';
 import { Paper } from '@material-ui/core';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function Content() {
     var content = {
@@ -21,11 +22,21 @@ function Content() {
     }
     return (
         <div className='content' style={content}>
-            {/* <TeamRegistration></TeamRegistration> */}
-            {/* <CoachTeam></CoachTeam> */}
-            {/* <Referee></Referee> */}
-            {/* <TournamentManager></TournamentManager> */}
-            <CoachRegistrationForm></CoachRegistrationForm>
+            <Router>
+                <Switch>
+                    <Route path="/" exact component={CoachRegistrationForm} />
+                    <Route path="/referee" component={Referee} />
+                    <Route path="/team-registration" component={TeamRegistration} />
+                    <Route path="/coach-team" component={CoachTeam} />
+                    <Route path="/tournament-manager" component={TournamentManager} />
+                    {/* <Route path="/coach-registration" component={CoachRegistrationForm} /> */}
+                </Switch>
+                {/* <TeamRegistration></TeamRegistration> */}
+                {/* <CoachTeam></CoachTeam> */}
+                {/* <Referee></Referee> */}
+                {/* <TournamentManager></TournamentManager> */}
+                {/* <CoachRegistrationForm></CoachRegistrationForm> */}
+            </Router>
         </div>
     )
 }

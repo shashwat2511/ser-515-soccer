@@ -73,9 +73,9 @@ function CoachTeam() {
                 }} className='teamTable'
                     rows={tableData}
                     columns={columns}
-                    pageSize={15}
+                    pageSize={5}
                     disableSelectionOnClick
-                    rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
+                    rowsPerPageOptions={[5, 15, 30, 45, 60, 75, 90]}
                 ></DataGrid>
             </div >
 

@@ -1,5 +1,5 @@
 import { Box, Grid, Paper } from '@material-ui/core';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm, Form } from './useForm';
 import Controls from './controls/Controls';
 
@@ -20,7 +20,6 @@ const initialFValues = {
     stateName: '',
     age: 8,
     division: '',
-    teamID: '',
     fileUplaod: '',
 }
 
@@ -85,11 +84,73 @@ const division = [
 ]
 
 function CoachRegistrationForm() {
+    const validateRegitrationForm = (fieldValues = values) => {
+        let temp = { ...errors };
+
+        if ('teamName' in fieldValues)
+            temp.teamName = fieldValues.teamName.trim() ? '' : 'This field is required.';
+        if ('clubName' in fieldValues)
+            temp.clubName = fieldValues.clubName.trim() ? '' : 'This field is required.';
+        if ('coachName' in fieldValues)
+            temp.coachName = fieldValues.coachName.trim() ? '' : 'This field is required.';
+        if ('city' in fieldValues)
+            temp.city = (fieldValues.city.trim().length > 0) ? '' : 'This field is required.';
+        if ('gender' in fieldValues)
+            temp.gender = (fieldValues.gender.trim().length > 0) ? '' : 'This field is required.';
+        if ('stateName' in fieldValues)
+            temp.stateName = (fieldValues.stateName.trim().length > 0) ? '' : 'This field is required.';
+        if ('division' in fieldValues)
+            temp.division = (fieldValues.division.trim().length > 0) ? '' : 'This field is required.';
+
+        if ('mobile' in fieldValues) {
+            if (fieldValues.mobile.trim().length === 0) {
+                temp.mobile = 'This field is required.';
+            } else if (isNaN(fieldValues.mobile)) {
+                temp.mobile = 'Only numeric values are allowed.';
+            } else if (fieldValues.mobile.trim().length < 10) {
+                temp.mobile = 'Minimum 10 digits are required.';
+            } else {
+                temp.mobile = '';
+            }
+        }
+
+        if ('age' in fieldValues) {
+            if (fieldValues.age.length === 0) {
+                temp.age = 'This field is required.';
+            } else {
+                temp.age = '';
+            }
+        }
+
+        if ('fileUplaod' in fieldValues) {
+            console.log(fileRef.current.files);
+            if (fileRef.current.files.length === 0) {
+                temp.fileUplaod = 'This field is required.';
+            } else if (!fileRef.current.files[0].name.includes('.pdf') || !fileRef.current.files[0].type.includes('application/pdf')) {
+                temp.fileUplaod = 'File type should only be pdf';
+            } else if (Math.round(fileRef.current.files[0].size / 1024) > 2) {
+                temp.fileUplaod = 'File should not be greater than 2MB';
+            } else {
+                temp.fileUplaod = '';
+            }
+        }
+
+        setErrors({
+            ...temp
+        });
+
+        if (fieldValues === values) {
+            return Object.values(temp).every(x => x === "");
+        }
+    }
+
     const {
         values,
         setValues,
+        errors,
+        setErrors,
         handleInputChange
-    } = useForm(initialFValues);
+    } = useForm(initialFValues, true, validateRegitrationForm);
 
     const boxStyles = {
         display: 'flex',
@@ -97,6 +158,16 @@ function CoachRegistrationForm() {
         justifyContent: 'flex - start',
         alignItems: 'center',
     }
+
+    const handleRegistrationSubmit = (e) => {
+        // alert("here");
+        e.preventDefault();
+        if (validateRegitrationForm()) {
+            alert('testing');
+        }
+    }
+
+    const fileRef = useRef(null);
 
     return (
         <Box style={boxStyles}>
@@ -138,7 +209,7 @@ function CoachRegistrationForm() {
                 }}>OR</Box>
             </Grid>
 
-            <Form autoComplete="on" style={{ backgroundColor: '#FFFFFF' }}>
+            <Form autoComplete="on" onSubmit={handleRegistrationSubmit} style={{ backgroundColor: '#FFFFFF' }}>
                 <Grid container spacing={1}>
                     <Grid container item>
                         <Grid container item xs={4} >
@@ -146,13 +217,15 @@ function CoachRegistrationForm() {
                                 label="Team Name"
                                 name="teamName"
                                 value={values.teamName}
+                                error={errors.teamName}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
                                 label="Club Name"
                                 name="clubName"
-                                value={values.coachName}
+                                value={values.clubName}
+                                error={errors.clubName}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
@@ -160,6 +233,7 @@ function CoachRegistrationForm() {
                                 label="Coach Name"
                                 name="coachName"
                                 value={values.coachName}
+                                error={errors.coachName}
                                 onChange={handleInputChange} />
                         </Grid>
                     </Grid>
@@ -168,7 +242,9 @@ function CoachRegistrationForm() {
                             <Controls.Input variant="outlined"
                                 label="Age"
                                 name="age"
+                                type="number"
                                 value={values.age}
+                                error={errors.age}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
@@ -178,6 +254,7 @@ function CoachRegistrationForm() {
                                 value={values.gender}
                                 onChange={handleInputChange}
                                 items={genderItems}
+                                error={errors.gender}
                             />
                         </Grid>
                         <Grid container item xs={4}>
@@ -188,6 +265,7 @@ function CoachRegistrationForm() {
                                 value={values.division}
                                 onChange={handleInputChange}
                                 options={division}
+                                error={errors.division}
                             />
                         </Grid>
                     </Grid>
@@ -197,6 +275,7 @@ function CoachRegistrationForm() {
                                 label="Contact Number"
                                 name="mobile"
                                 value={values.mobile}
+                                error={errors.mobile}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
@@ -204,6 +283,7 @@ function CoachRegistrationForm() {
                                 label="City"
                                 name="city"
                                 value={values.city}
+                                error={errors.city}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
@@ -212,6 +292,7 @@ function CoachRegistrationForm() {
                                 name="stateName"
                                 label="State"
                                 value={values.stateName}
+                                error={errors.stateName}
                                 onChange={handleInputChange}
                                 options={USAStateList}
                             />
@@ -223,18 +304,14 @@ function CoachRegistrationForm() {
                                 label=""
                                 name="fileUplaod"
                                 value={values.fileUplaod}
+                                error={errors.fileUplaod}
                                 onChange={handleInputChange}
-                                type="file" />
+                                type="file"
+                                fileRef={fileRef}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>
-
-                {/* <Grid container style={{ marginTop: '1rem', marginBottom: '1rem' }}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center">
-
-                </Grid> */}
 
                 <Grid container style={{ marginTop: '1rem', marginBottom: '0.5rem' }}
                     direction="row"
@@ -246,53 +323,6 @@ function CoachRegistrationForm() {
                         size="large"
                         text="register" />
                 </Grid>
-
-
-                {/* <Grid container>
-                <Grid item xs={4}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="stretch">
-
-                    
-                    
-                </Grid>
-                <Grid item xs={4}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="stretch">
-
-                    
-
-                    <Controls.DatePicker
-                        variant="inline"
-                        inputVariant="outlined"
-                        formate="MMM/dd/yyyy"
-                        name="hireDate"
-                        label="Pick up a Date"
-                        value={values.hireDate}
-                        onChange={handleInputChange}
-                    />
-
-                    <Controls.Checkbox
-                        name="isPermanent"
-                        label="Permanent Person"
-                        value={values.isPermanent}
-                        onChange={handleInputChange}
-                    />
-
-                    <Box>
-                        
-                    </Box>
-                </Grid>
-                <Grid item xs={4}
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="stretch">
-
-                    
-                </Grid>
-            </Grid> */}
             </Form>
         </Box >
     )
