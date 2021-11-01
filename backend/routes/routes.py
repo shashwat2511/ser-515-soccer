@@ -18,14 +18,13 @@ APP = Flask(__name__)
 def index():
     return("Welcome to the Soccer Management System!!!")
 
-
-@APP.route("/api/v1/coachTeamReg/", methods=['POST'])
-def coach_team_reg():
+@APP.route("/api/v1/team_registration/", methods=['POST'])
+def team_registration():
     if request.method == 'POST':
         # print(request)
         ctr = TeamRegistration()
         # request.data
-        return_data = ctr.team_reqistration(request)
+        return_data = ctr.team_registration(request)
         response = Response(
             response=json.dumps(return_data),
             status=200,
@@ -33,10 +32,9 @@ def coach_team_reg():
         )
         return response
 
-@APP.route("/api/v1/teamfeepayment/", methods=['POST'])
+@APP.route("/api/v1/team_fee_payment/", methods=['POST'])
 def team_fee_payment():
     if request.method == 'POST':
-        # print(request)
         trp = TeamFeePayment()
         return_data = trp.save_team_payment(request)
 
