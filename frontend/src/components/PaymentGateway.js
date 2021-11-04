@@ -3,10 +3,11 @@ import "date-fns";
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-// import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
 
 const  PaymentGateway = () => {
-    // const history = useHistory()
+    const location = useLocation();
+    console.log(location);
     return (
         <Grid container justifyContent="center">
             <Grid xs={5} item>
