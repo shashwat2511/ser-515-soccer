@@ -1,11 +1,19 @@
 import React from 'react';
+
 import CoachTeam from './CoachTeam';
 import Referee from './Referee';
 import TournamentManager from './TournamentManager';
 import TeamRegistration from './TeamRegistration';
 import CoachRegistrationForm from './CoachRegistrationForm';
-import { Paper } from '@material-ui/core';
+// import { Paper } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import index from './PaymentInfo/index';
+import PaymentInfo from './PaymentInfo';
+import PaymentGateway from './PaymentGateway';
+
+// import PaymentInfo from './PaymentInfo/PaymentIndex';
+// import PaymentDetails from './PaymentInfo/PaymentDetails';
+
 
 function Content() {
     var content = {
@@ -13,7 +21,7 @@ function Content() {
         top: 0,
         left: 0,
         width: 'calc(100% - 2em)',
-        height: 'calc(100% - 6em)',
+        height: 'calc(100% - 10em)',
         overflow: 'auto',
         padding: '5em 1em',
         display: 'flex',
@@ -22,6 +30,7 @@ function Content() {
     }
     return (
         <div className='content' style={content}>
+
             <Router>
                 <Switch>
                     <Route path="/" exact component={CoachRegistrationForm} />
@@ -29,13 +38,11 @@ function Content() {
                     <Route path="/team-registration" component={TeamRegistration} />
                     <Route path="/coach-team" component={CoachTeam} />
                     <Route path="/tournament-manager" component={TournamentManager} />
-                    {/* <Route path="/coach-registration" component={CoachRegistrationForm} /> */}
+                    
+                    {/* <Route path="/rules-and-regulations" component={RulesandRegulationsTM} /> */}
+                    <Route path="/payment-gateway" component={PaymentGateway} />
+                    <Route path="/payment-info" component={PaymentInfo} />
                 </Switch>
-                {/* <TeamRegistration></TeamRegistration> */}
-                {/* <CoachTeam></CoachTeam> */}
-                {/* <Referee></Referee> */}
-                {/* <TournamentManager></TournamentManager> */}
-                {/* <CoachRegistrationForm></CoachRegistrationForm> */}
             </Router>
         </div>
     )
