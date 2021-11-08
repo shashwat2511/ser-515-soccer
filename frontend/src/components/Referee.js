@@ -1,7 +1,6 @@
 import Calendar from 'react-calendar';
 import { useEffect, React, useState } from "react";
 import 'react-calendar/dist/Calendar.css';
-import { borderRight } from '@mui/system';
 import axios from 'axios';
 import { teamList } from '../demoJSONs/teamList';
 import { DataGrid } from '@material-ui/data-grid';
@@ -10,7 +9,7 @@ import { DataGrid } from '@material-ui/data-grid';
 function Referee() {
     const [calDate, setCalDate] = useState(new Date())
 
-    function onChange (calDate) {
+    function onChange(calDate) {
         setCalDate(calDate)
     }
     var cal = {
@@ -59,9 +58,9 @@ function Referee() {
             <div className='referee' style={{
                 ...referee,
                 width: "80%",
-                float:"left",
+                float: "left",
                 backgroundColor: '#EDF5FC',
-                }}>
+            }}>
                 LETS ENROLL SOME MATECHES NOW !
             </div>
         )

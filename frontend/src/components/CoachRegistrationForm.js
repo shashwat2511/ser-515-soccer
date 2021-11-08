@@ -9,20 +9,6 @@ const genderItems = [
     { id: 'other', title: 'Other' }
 ]
 
-const initialFValues = {
-    id: 0,
-    coachName: '',
-    teamName: '',
-    clubName: '',
-    mobile: '',
-    city: '',
-    gender: '',
-    stateName: '',
-    age: 8,
-    division: '',
-    fileUplaod: '',
-}
-
 const USAStateList = [
     { id: '1', state: 'Alabama' },
     { id: '2', state: 'Alaska' },
@@ -84,6 +70,20 @@ const division = [
 ]
 
 function CoachRegistrationForm() {
+    const initialFValues = {
+        id: 0,
+        coachName: '',
+        teamName: '',
+        clubName: '',
+        mobile: '',
+        city: '',
+        gender: '',
+        stateName: '',
+        age: 8,
+        division: '',
+        fileUplaod: '',
+    }
+
     const validateRegitrationForm = (fieldValues = values) => {
         let temp = { ...errors };
 
@@ -150,7 +150,7 @@ function CoachRegistrationForm() {
         errors,
         setErrors,
         handleInputChange
-    } = useForm(initialFValues, true, validateRegitrationForm);
+    } = useForm(initialFValues, false, true, validateRegitrationForm);
 
     const boxStyles = {
         display: 'flex',

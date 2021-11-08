@@ -1,0 +1,31 @@
+.sssFilterDeclarationHead {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    font-weight: 700;
+    font-family: Roboto;
+    font-size: 1em;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem; 
+}
+
+.sssFilterDeclarationContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    font-family: Roboto;
+    font-size: 0.85em;
+    font-weight: 300;
+    padding-left: 0.5rem;
+    margin-bottom: 1rem; 
+}
+
+.sssFilterDividor {
+    height: 0.05em;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-left: -0.5rem;
+    margin-right: -0.4rem;
+    margin-bottom: 0.7rem; 
+}
