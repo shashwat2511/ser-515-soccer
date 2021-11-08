@@ -10,10 +10,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import index from './PaymentInfo/index';
 import PaymentInfo from './PaymentInfo';
 import PaymentGateway from './PaymentGateway';
+import FilterTitle from './FilterTitle';
 
 // import PaymentInfo from './PaymentInfo/PaymentIndex';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
-
 
 function Content() {
     var content = {
@@ -30,15 +30,15 @@ function Content() {
     }
     return (
         <div className='content' style={content}>
-
             <Router>
                 <Switch>
-                    <Route path="/" exact component={CoachRegistrationForm} />
+                    <Route path="/" exact component={FilterTitle} />
                     <Route path="/referee" component={Referee} />
                     <Route path="/team-registration" component={TeamRegistration} />
                     <Route path="/coach-team" component={CoachTeam} />
                     <Route path="/tournament-manager" component={TournamentManager} />
-                    
+                    <Route path="/coach-registration" exact component={CoachRegistrationForm} />
+
                     {/* <Route path="/rules-and-regulations" component={RulesandRegulationsTM} /> */}
                     <Route path="/payment-gateway" component={PaymentGateway} />
                     <Route path="/payment-info" component={PaymentInfo} />
