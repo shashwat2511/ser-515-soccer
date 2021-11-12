@@ -37,12 +37,11 @@ def team_registration():
         return response
 
 
-@APP.route("/api/v1/generateTeamRegistrationAmount/", methods=['POST'])
+@APP.route("/api/v1/generateTeamRegistrationAmount/", methods=['GET'])
 def generate_team_registration_amount():
-    if request.method == 'POST':
+    if request.method == 'GET':
         gtra = GenerateTeamRegistrationAmount()
-        # request.data
-        return_data = gtra.registration_payment(request)
+        return_data = gtra.registration_payment()
         response = Response(
             response=json.dumps(return_data),
             status=200,
