@@ -2,7 +2,7 @@ import json
 import psycopg2
 from db.functions.DBTeamRegistration import DBTeamRegistration
 
-class TeamRegistration():
+class FilterMatchDetails():
 
     def team_registration(self, request):
         request_body = request.stream.read()
