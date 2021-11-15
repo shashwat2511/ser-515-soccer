@@ -7,6 +7,7 @@ from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount import GenerateTeamRegistrationAmount
 from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
+from services.getFilterParameters.GetFilterParameters import GetFilterParameters
 # from services.
 
 APP = Flask(__name__)
@@ -49,7 +50,7 @@ def generate_team_registration_amount():
         )
         return response
 
-
+#
 @APP.route("/api/v1/teamFeePayment/", methods=['POST'])
 def team_fee_payment():
     if request.method == 'POST':
@@ -64,12 +65,25 @@ def team_fee_payment():
         return response
 
 
-
+#
 @APP.route("/api/v1/fetchTeamListForTm/", methods=['GET'])
 def fetch_team_list_for_tm():
     if request.method == 'GET':
         ftl = FetchTeamListForTm()
         return_data = ftl.team_registration(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+
+@APP.route("/api/v1/getFilterParams/", methods=['GET'])
+def get_filter_params():
+    if request.method == 'GET':
+        gfp = GetFilterParameters()
+        return_data = gfp.get_all_filter_params()
         response = Response(
             response=json.dumps(return_data),
             status=200,
