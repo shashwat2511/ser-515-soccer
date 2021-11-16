@@ -34,10 +34,10 @@ function Content() {
                 <Switch>
                     <Route path="/" exact component={FilterTitle} />
                     <Route path="/referee" component={Referee} />
-                    <Route path="/team-registration" component={TeamRegistration} />
+                    {/* <Route path="/team-registration" component={TeamRegistration} /> */}
                     <Route path="/coach-team" component={CoachTeam} />
                     <Route path="/tournament-manager" component={TournamentManager} />
-                    <Route path="/coach-registration" exact component={CoachRegistrationForm} />
+                    <Route path="/team-registration" exact component={CoachRegistrationForm} />
 
                     {/* <Route path="/rules-and-regulations" component={RulesandRegulationsTM} /> */}
                     <Route path="/payment-gateway" component={PaymentGateway} />

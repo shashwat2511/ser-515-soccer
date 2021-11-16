@@ -1,5 +1,5 @@
 import { Button, Box, Grid, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { tableCellClasses } from '@mui/material/TableCell';
 import { useHistory } from "react-router-dom";
 
@@ -26,7 +26,40 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const PaymentTable = ({ header, rows, showPay}) => {
   
-  const history = useHistory()
+  // to call api before pageload
+  // const history = useHistory()
+  // useEffect(() => {
+  //   fetch("localhost:5000/api/v1/teamFeePayment/", {
+  //     body: JSON.stringify(data),
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //   }).then((res) => res.json())
+  //   .then((res) => {
+  //     history.push("/payment-gateway", {team_id: res.team_id})
+
+  //   })
+  //   .catch((e) => {
+  //   })
+  // }, [])
+
+  const payHandler = (e) => {
+    const data = {
+      "team_id": 1,
+      "payment_amount" : 1100
+  };
+    fetch("localhost:5000/api/v1/teamFeePayment/", {
+      body: JSON.stringify(data),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => res.json())
+    .then((res) => {
+      history.push("/payment-gateway", {team_id: res.team_id})
+
+    })
+    .catch((e) => {
+
+    })
+  }
 
     return (
         <TableContainer component={Paper}>
@@ -50,7 +83,7 @@ const PaymentTable = ({ header, rows, showPay}) => {
                   </Box>
                   {showPay && <Box >
                   <Button variant="contained"
-                   onClick={() => history.push("/payment-gateway", {id: 2})} 
+                   onClick={payHandler} 
                    color="primary">PAY</Button>
                   </Box>}
                 </Grid>

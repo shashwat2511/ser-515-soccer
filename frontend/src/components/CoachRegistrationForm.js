@@ -1,7 +1,13 @@
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Box, Grid, Paper } from '@material-ui/core';
-import React, { useRef } from 'react';
 import { useForm, Form } from './useForm';
 import Controls from './controls/Controls';
+import CircularProgress from '@mui/material/CircularProgress';
+// import Box as BoxMUI from '@mui/material/Box';
+import { registerTeam } from "../features/team/teamSlice";
+import { useHistory } from "react-router";
+
 
 const genderItems = [
     { id: 'male', title: 'Male' },
@@ -70,6 +76,26 @@ const division = [
 ]
 
 function CoachRegistrationForm() {
+    const { isLoadingRegister, errorRegisterCode } = useSelector((state) => state.team);
+    const prevIsLoadingRegisterRef = useRef();
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (prevIsLoadingRegisterRef.current && !isLoadingRegister) {
+            if (errorRegisterCode.length === 0) {
+                history.pushState("/payment-info");
+            } else {
+                alert(`Error: ${errorRegisterCode}`);
+            }
+        }
+
+        prevIsLoadingRegisterRef.current = isLoadingRegister;
+    }, [
+        isLoadingRegister,
+        errorRegisterCode,
+    ]);
+
     const initialFValues = {
         id: 0,
         coachName: '',
@@ -164,6 +190,8 @@ function CoachRegistrationForm() {
         e.preventDefault();
         if (validateRegitrationForm()) {
             alert('testing');
+        } else {
+            dispatch(registerTeam(values))
         }
     }
 
@@ -312,6 +340,14 @@ function CoachRegistrationForm() {
                         </Grid>
                     </Grid>
                 </Grid>
+
+                {
+                    isLoadingRegister && (
+                        <Box sx={{ display: 'flex' }}>
+                            <CircularProgress />
+                        </Box>
+                    )
+                }
 
                 <Grid container style={{ marginTop: '1rem', marginBottom: '0.5rem' }}
                     direction="row"
