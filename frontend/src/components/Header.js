@@ -1,37 +1,8 @@
 import { AppBar, Toolbar } from "@material-ui/core";
-import React, { useState } from "react";
-// import MenuIcon from './MenuIcon.js';
-import HamburgerMenu from './HamburgerMenu.js';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import Menu from '@mui/material/Menu';
-import { blue } from '@mui/material/colors';
-// import Map from './Map';
+import { Box } from "@mui/system";
+import './../css/header.css';
 
 export default function Header() {
-    const [open, setOpen] = useState(false);
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const openRightMenu = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const iconButton = {
-        backgroundColor: '#BF360C'
-    }
-
     return (
         <AppBar className='appBar'>
             <Toolbar className='toolbar' style={{
@@ -39,30 +10,40 @@ export default function Header() {
                 flexShrink: 0,
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
+                alignItems: "stretch",
+                justifyContent: "space-evenly",
+                fontWeight: "500"
             }}>
-                <MenuRoundedIcon fontSize="large" sx={{ color: blue[50] }} style={{
+                <a href="./home" className="headerMenu"><Box>HOME</Box></a>
+                <a href="./about" className="headerMenu"><Box>ABOUT</Box></a>
+                <a href="./coach-registration" className="headerMenu"><Box>APPLY</Box></a>
+                <a href="./faqs" className="headerMenu"><Box>FAQs</Box></a>
+                <a href="./schedule" className="headerMenu"><Box>TEAMS, SCHEDULES & SCORES</Box></a>
+                <a href="./maps" className="headerMenu"><Box>MAPS</Box></a>
+                <a href="./forms" className="headerMenu"><Box>FORMS</Box></a>
+                <a href="./sponsors" className="headerMenu"><Box>SPONSORS</Box></a>
+                <a href="./referee" className="headerMenu"><Box>REFEREE</Box></a>
+                {/* <MenuRoundedIcon fontSize="large" sx={{ color: blue[50] }} style={{
                     cursor: 'pointer',
                     display: open ? 'none' : 'block',
                     zIndex: 10,
-                }} onClick={() => setOpen(!open)} />
+                }} onClick={() => setOpen(!open)} /> */}
 
-                <HamburgerMenu open={open} menuTop='8.6vh' setOpen={setOpen}></HamburgerMenu>
+                {/* <HamburgerMenu open={open} menuTop='8.6vh' setOpen={setOpen}></HamburgerMenu> */}
 
-                <CloseRoundedIcon fontSize="large" color="action" sx={{ color: blue[50] }} style={{
+                {/* <CloseRoundedIcon fontSize="large" color="action" sx={{ color: blue[50] }} style={{
                     cursor: 'pointer',
                     display: open ? 'block' : 'none',
                     zIndex: 10
-                }} onClick={() => setOpen(!open)} />
+                }} onClick={() => setOpen(!open)} /> */}
 
-                <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+                {/* <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
                     <Avatar sx={{ width: 32, height: 32, backgroundColor: '#BF360C' }}>M</Avatar>
-                </IconButton>
+                </IconButton> */}
 
                 {/* <MenuIcon open={open} setOpen={setOpen}></MenuIcon> */}
 
-                <Menu
+                {/* <Menu
                     anchorEl={anchorEl}
                     open={openRightMenu}
                     onClose={handleClose}
@@ -121,7 +102,7 @@ export default function Header() {
                         </ListItemIcon>
                         Logout
                     </MenuItem>
-                </Menu>
+                </Menu> */}
             </Toolbar>
         </AppBar>
     );
