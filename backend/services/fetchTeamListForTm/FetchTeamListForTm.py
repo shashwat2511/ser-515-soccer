@@ -1,20 +1,17 @@
-import json
-import datetime as dt
-from datetime import datetime
-# from db.functions.DBTeamRegistration import User
+from db.functions.DBFetchTeamListForTm import DBFetchTeamListForTm
 
 class FetchTeamListForTm():
 
-    # def _init_(self, ):
-    #     self. = UPLOAD_FOLDER
-
-    def registration_payment(self, request):
-        # print("hello")
-        # request_body = request.stream.read()
-        # json_data = json.loads(request_body)
-        # paymentInfo = json_data["payInfo"]
-        message = ""
-        return {"message": message}
+    def get_registered_team_list(self):
+        # req_data = request.stream.read()
+        # json_data = json.loads(req_data)
+        # team_id = json_data['team_id']
+        dftl = DBFetchTeamListForTm()
+        enrolled_team_list_data = dftl.select_registered_team_list()
+        return_data = {
+            "enrolled_teams": enrolled_team_list_data
+        }
+        return return_data
 
 
 

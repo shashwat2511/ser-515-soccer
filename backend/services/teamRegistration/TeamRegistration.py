@@ -1,5 +1,4 @@
 import json
-import psycopg2
 from db.functions.DBTeamRegistration import DBTeamRegistration
 
 class TeamRegistration():
