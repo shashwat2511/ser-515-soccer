@@ -2,12 +2,12 @@ from flask import Flask, request, Response, json
 # url_for, send_from_directory, jsonify,  
 # from flask_cors import CORS
 # import json
-
 from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount import GenerateTeamRegistrationAmount
 from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
 from services.getFilterParameters.GetFilterParameters import GetFilterParameters
+from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
 
 
 APP = Flask(__name__)
@@ -81,6 +81,19 @@ def get_filter_params():
     if request.method == 'GET':
         gfp = GetFilterParameters()
         return_data = gfp.get_all_filter_params()
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+
+@APP.route("/api/v1/scheluleMatches/", methods=['GET'])
+def schelule_matches():
+    if request.method == 'GET':
+        sa = SchedulingAlgorithm()
+        return_data = sa.execute_scheduler()
         response = Response(
             response=json.dumps(return_data),
             status=200,
