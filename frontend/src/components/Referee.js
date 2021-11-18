@@ -84,16 +84,6 @@ function Referee() {
             </div >
         )
     }
-    // return (
-    //     // <div>
-    //     // <div className="result-calendar" style={cal}>
-    //     //     <Calendar onChange={onChange} value={calDate} />
-    //     // </div>
-    //     <div style={ref}>
-    //         Referee
-    //     </div>
-    //     // </div>
-    // )
 }
 
 export default Referee

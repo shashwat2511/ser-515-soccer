@@ -5,12 +5,12 @@ import Referee from './Referee';
 import TournamentManager from './TournamentManager';
 import TeamRegistration from './TeamRegistration';
 import CoachRegistrationForm from './CoachRegistrationForm';
-// import { Paper } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import index from './PaymentInfo/index';
 import PaymentInfo from './PaymentInfo';
 import PaymentGateway from './PaymentGateway';
 import FilterTitle from './FilterTitle';
+import Home from './Home';
+import SSSFilter from './SSSFilter';
 
 // import PaymentInfo from './PaymentInfo/PaymentIndex';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
@@ -32,14 +32,14 @@ function Content() {
         <div className='content' style={content}>
             <Router>
                 <Switch>
-                    <Route path="/" exact component={FilterTitle} />
+                    <Route path="/" exact component={Home} />
+                    <Route path="/home" component={Home} />
+                    <Route path="/schedule" component={FilterTitle} />
                     <Route path="/referee" component={Referee} />
                     <Route path="/team-registration" component={TeamRegistration} />
                     <Route path="/coach-team" component={CoachTeam} />
                     <Route path="/tournament-manager" component={TournamentManager} />
                     <Route path="/coach-registration" exact component={CoachRegistrationForm} />
-
-                    {/* <Route path="/rules-and-regulations" component={RulesandRegulationsTM} /> */}
                     <Route path="/payment-gateway" component={PaymentGateway} />
                     <Route path="/payment-info" component={PaymentInfo} />
                 </Switch>

@@ -70,12 +70,34 @@ CREATE SEQUENCE public.tournament_tournament_id_seq
 ALTER SEQUENCE public.tournament_tournament_id_seq OWNER TO postgres;
 
 
+CREATE SEQUENCE public.user_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 10000
+    CACHE 1;
+
+ALTER SEQUENCE public.user_user_id_seq OWNER TO postgres;
+
 
 
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+CREATE TABLE public.users (
+    user_id integer DEFAULT nextval('public.user_user_id_seq'::regclass) NOT NULL,
+    username character varying(256) NOT NULL,
+    password character varying(256) NOT NULL,
+    user_role character varying(256) NOT NULL,
+    is_admin boolean DEFAULT true NOT NULL,
+    is_active boolean DEFAULT true NOT NULL,
+    CONSTRAINT user_pkey PRIMARY KEY (username),
+    CONSTRAINT user_id_unq UNIQUE (user_id)
+);
+
+ALTER TABLE public.users OWNER TO postgres;
 
 
 CREATE TABLE public.field (
@@ -88,6 +110,20 @@ CREATE TABLE public.field (
 );
 
 ALTER TABLE public.field OWNER TO postgres;
+
+
+CREATE TABLE public.grounds_fields (
+    field_id integer NOT NULL,
+    ground_number integer NOT NULL,
+    age_start integer NOT NULL,
+    age_end integer NOT NULL,
+    is_active boolean DEFAULT true,
+    CONSTRAINT grounds_field_pkey PRIMARY KEY (field_id, ground_number),
+    CONSTRAINT grounds_fields_field_id_fkey FOREIGN KEY (field_id) REFERENCES public.field(field_id)
+);
+
+
+ALTER TABLE public.grounds_fields OWNER TO postgres;
 
 
 CREATE TABLE public.referee (
@@ -131,7 +167,7 @@ CREATE TABLE public.payment (
     payment_amount double precision NOT NULL,
     team_id integer NOT NULL,
     CONSTRAINT payment_pkey PRIMARY KEY (payment_id),
-    CONSTRAINT payment_to_team_fk FOREIGN KEY (team_id) 
+    CONSTRAINT payment_to_team_fkey FOREIGN KEY (team_id) 
         REFERENCES public.teams(team_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -165,18 +201,22 @@ CREATE TABLE public.match (
     team_1_id integer NOT NULL,
     team_2_id integer NOT NULL,
     ground_number character varying NOT NULL,
-    team_1_goal integer NOT NULL,
-    team_2_goal integer NOT NULL,
+    team_1_goal integer,
+    team_2_goal integer,
     match_date date NOT NULL,
     match_time time without time zone NOT NULL,
     tournament_id integer NOT NULL,
     match_age_group integer NOT NULL,
     match_gender "char" NOT NULL,
     match_division character varying(10) NOT NULL,
-    match_result character varying(4) NOT NULL,
+    match_result character varying(4),
     match_stage character varying(20) NOT NULL,
     field_id integer NOT NULL,    
-    CONSTRAINT match_pkey PRIMARY KEY (match_id),
+    CONSTRAINT match_pkey PRIMARY KEY (tournament_id, match_stage, team_1_id, team_2_id),
+    CONSTRAINT tournament_id_fk FOREIGN KEY (tournament_id) 
+        REFERENCES public.tournament(tournament_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT field_id_fk FOREIGN KEY (field_id) 
         REFERENCES public.field(field_id) MATCH SIMPLE
         ON UPDATE NO ACTION

@@ -2,13 +2,13 @@ from flask import Flask, request, Response, json
 # url_for, send_from_directory, jsonify,  
 # from flask_cors import CORS
 # import json
-
 from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount import GenerateTeamRegistrationAmount
 from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
 from services.getFilterParameters.GetFilterParameters import GetFilterParameters
-# from services.
+from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
+
 
 APP = Flask(__name__)
 
@@ -26,9 +26,7 @@ def index():
 @APP.route("/api/v1/teamRegistration/", methods=['POST'])
 def team_registration():
     if request.method == 'POST':
-        # print(request)
         ctr = TeamRegistration()
-        # request.data
         return_data = ctr.team_registration(request)
         response = Response(
             response=json.dumps(return_data),
@@ -50,7 +48,7 @@ def generate_team_registration_amount():
         )
         return response
 
-#
+
 @APP.route("/api/v1/teamFeePayment/", methods=['POST'])
 def team_fee_payment():
     if request.method == 'POST':
@@ -65,12 +63,11 @@ def team_fee_payment():
         return response
 
 
-#
 @APP.route("/api/v1/fetchTeamListForTm/", methods=['GET'])
 def fetch_team_list_for_tm():
     if request.method == 'GET':
         ftl = FetchTeamListForTm()
-        return_data = ftl.team_registration(request)
+        return_data = ftl.get_registered_team_list()
         response = Response(
             response=json.dumps(return_data),
             status=200,
@@ -84,6 +81,19 @@ def get_filter_params():
     if request.method == 'GET':
         gfp = GetFilterParameters()
         return_data = gfp.get_all_filter_params()
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+
+@APP.route("/api/v1/scheluleMatches/", methods=['GET'])
+def schelule_matches():
+    if request.method == 'GET':
+        sa = SchedulingAlgorithm()
+        return_data = sa.execute_scheduler()
         response = Response(
             response=json.dumps(return_data),
             status=200,

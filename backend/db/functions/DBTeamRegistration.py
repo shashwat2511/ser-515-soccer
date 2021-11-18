@@ -8,7 +8,6 @@ class DBTeamRegistration(object):
     def __init__(self):
         config = configparser.ConfigParser()
         config.read('./db/functions/DBConfig.ini')
-        # print(config.read('./db/functions/DBConfig.ini'))
         self.host = config['PostgresDB']['host']
         self.port = config['PostgresDB']['port']
         self.database = config['PostgresDB']['database']
@@ -47,15 +46,15 @@ class DBTeamRegistration(object):
         except (Exception, psycopg2.Error) as error:
             print("Failed to insert record into users table", error)
 
-    def check_team_exist(self, team_name):
-        connection = psycopg2.connect(
-            user=self.user,
-            password=self.password,
-            host=self.host,
-            port=self.port,
-            database=self.database,
-        )
-        cursor = connection.cursor()
-        select_query = "Select team_name from public.teams where team_name=%s"
+    # def check_team_exist(self, team_name):
+    #     connection = psycopg2.connect(
+    #         user=self.user,
+    #         password=self.password,
+    #         host=self.host,
+    #         port=self.port,
+    #         database=self.database,
+    #     )
+    #     cursor = connection.cursor()
+    #     select_query = "Select team_name from public.teams where team_name=%s"
 
 
