@@ -11,6 +11,7 @@ import PaymentGateway from './PaymentGateway';
 import FilterTitle from './FilterTitle';
 import Home from './Home';
 import SSSFilter from './SSSFilter';
+import MatchLocation from './MatchLocation'
 
 // import PaymentInfo from './PaymentInfo/PaymentIndex';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
@@ -42,6 +43,7 @@ function Content() {
                     <Route path="/coach-registration" exact component={CoachRegistrationForm} />
                     <Route path="/payment-gateway" component={PaymentGateway} />
                     <Route path="/payment-info" component={PaymentInfo} />
+                    <Route path="/maps" component={MatchLocation} />
                 </Switch>
             </Router>
         </div>
