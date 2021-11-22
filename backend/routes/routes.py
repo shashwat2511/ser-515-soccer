@@ -1,6 +1,6 @@
 from flask import Flask, request, Response, json
 # url_for, send_from_directory, jsonify,  
-# from flask_cors import CORS
+from flask_cors import CORS
 # import json
 from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
@@ -8,12 +8,13 @@ from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount impo
 from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
 from services.getFilterParameters.GetFilterParameters import GetFilterParameters
 from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
+from services.adminLogin.AdminLogin import AdminLogin
 
 
 APP = Flask(__name__)
 
 
-# CORS(APP)
+CORS(APP)
 # APP.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 # APP.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -89,11 +90,25 @@ def get_filter_params():
         return response
 
 
+@APP.route("/api/v1/scheluleMatches", methods=['GET'])
 @APP.route("/api/v1/scheluleMatches/", methods=['GET'])
 def schelule_matches():
     if request.method == 'GET':
         sa = SchedulingAlgorithm()
         return_data = sa.execute_scheduler()
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/adminLogin", methods=['POST'])
+@APP.route("/api/v1/adminLogin/", methods=['POST'])
+def admin_login():
+    if request.method == 'POST':
+        al = AdminLogin()
+        return_data = al.login(request)
         response = Response(
             response=json.dumps(return_data),
             status=200,
