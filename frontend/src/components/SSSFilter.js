@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Grid } from '@material-ui/core';
 import { useForm, Form } from './useForm';
 import Controls from './controls/Controls';
 import { Box } from '@mui/system';
 import './../css/SSSFilter.css';
+import axios from 'axios';
 
 const division = [
     { id: '11', value: 'blue' },
@@ -63,12 +64,100 @@ function SSSFilter() {
 
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
-        // console.log(btnRef.current);
+        var url = new URL(document.location);
+
+        if (values.sByDivision != null) {
+            url.searchParams.append('division', values.sByDivision);
+        }
+
+        if (values.sByDay != null) {
+            url.searchParams.append('division', values.sByDay);
+        }
+
+        if (values.sByVenue != null) {
+            url.searchParams.append('division', values.sByVenue);
+        }
+
+        if (values.sByTeam != null) {
+            url.searchParams.append('division', values.sByTeam);
+        }
+
+        if (values.sByClub != null) {
+            url.searchParams.append('division', values.sByClub);
+        }
+
+        alert(url);
     }
+
+    useEffect(() => {
+        let param = (new URL(document.location)).searchParams;
+        let division = param.get('division');
+        let day = param.get('day');
+        let venue = param.get('venue');
+        let team = param.get('team');
+        let club = param.get('club');
+        let temp = {};
+        let thereIsAValue = false;
+
+        console.log("division : " + division);
+        console.log("day : " + day);
+        console.log("venue : " + venue);
+        console.log("team : " + team);
+        console.log("club : " + club);
+
+        if (division != null) {
+            temp = {
+                ...temp,
+                "division": division
+            };
+            thereIsAValue = true;
+        }
+
+        if (day != null) {
+            temp = {
+                ...temp,
+                "day": day
+            };
+            thereIsAValue = true;
+        }
+
+        if (venue != null) {
+            temp = {
+                ...temp,
+                "venue": venue
+            };
+            thereIsAValue = true;
+        }
+
+        if (team != null) {
+            temp = {
+                ...temp,
+                "team": team
+            };
+            thereIsAValue = true;
+        }
+
+        if (club != null) {
+            temp = {
+                ...temp,
+                "club": club
+            };
+            thereIsAValue = true;
+        }
+
+        console.log(temp);
+        if (thereIsAValue) {
+            axios.post('https://jsonplaceholder.typicode.com/posts', temp)
+                .then((response) => {
+                })
+                .catch((error) => {
+                });
+        }
+    }, []);
 
     return (
         <React.Fragment>
-            <Grid container /* style={{ marginTop: '1rem', marginBottom: '0.3rem' }} */
+            <Grid container
                 direction="column"
                 justifyContent="flex-start"
                 alignItems="stretch"
@@ -77,7 +166,7 @@ function SSSFilter() {
                 <Box className="sssFilterDeclarationContent">Select one of the following searches to find your team's games. Game times, location and opponents subject to change. Scores are posted as soon as available, but subject to change in the event of a review.</Box>
                 <Box className="sssFilterDividor"></Box>
             </Grid>
-            <Form autoComplete="on" onSubmit={handleRegistrationSubmit} style={{ backgroundColor: '#FFFFFF' }}>
+            <Form autoComplete="on" onSubmit={handleRegistrationSubmit}>
                 <Grid container spacing={1}>
                     <Grid container item>
                         <Grid container item xs={4}>

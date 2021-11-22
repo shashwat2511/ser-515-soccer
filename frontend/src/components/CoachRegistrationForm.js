@@ -160,7 +160,6 @@ function CoachRegistrationForm() {
     }
 
     const handleRegistrationSubmit = (e) => {
-        // alert("here");
         e.preventDefault();
         if (validateRegitrationForm()) {
             alert('testing');
