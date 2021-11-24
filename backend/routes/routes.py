@@ -92,7 +92,7 @@ def get_filter_params():
 
 @APP.route("/api/v1/scheluleMatches", methods=['GET'])
 @APP.route("/api/v1/scheluleMatches/", methods=['GET'])
-def schelule_matches():
+def schedule_matches():
     if request.method == 'GET':
         sa = SchedulingAlgorithm()
         return_data = sa.execute_scheduler()
