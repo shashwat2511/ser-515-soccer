@@ -7,6 +7,7 @@ from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount import GenerateTeamRegistrationAmount
 from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
 from services.getFilterParameters.GetFilterParameters import GetFilterParameters
+from services.filterMatchDetails.FilterMatchDetails import FilterMatchDetails
 from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
 from services.adminLogin.AdminLogin import AdminLogin
 
@@ -90,8 +91,22 @@ def get_filter_params():
         return response
 
 
-@APP.route("/api/v1/scheluleMatches", methods=['GET'])
-@APP.route("/api/v1/scheluleMatches/", methods=['GET'])
+# @APP.route("/api/v1/filterMatches", methods=['POST'])
+@APP.route("/api/v1/filterMatches/", methods=['POST'])
+def filter_matches():
+    if request.method == 'POST':
+        fmd = FilterMatchDetails()
+        return_data = fmd.filter_matches(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+
+@APP.route("/api/v1/scheduleMatches", methods=['GET'])
+@APP.route("/api/v1/scheduleMatches/", methods=['GET'])
 def schedule_matches():
     if request.method == 'GET':
         sa = SchedulingAlgorithm()
