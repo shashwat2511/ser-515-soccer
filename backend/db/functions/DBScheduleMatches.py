@@ -2,6 +2,7 @@ import psycopg2
 import configparser
 from db.functions.DBTournamentDetails import DBTournamentDetails
 
+
 class DBScheduleMatches(object):
 
     def __init__(self):
@@ -60,7 +61,8 @@ class DBScheduleMatches(object):
             print("Failed to select record into teams table", error)
 
     def insert_match_details(self, team_1_id, team_2_id, ground_number, match_date,
-                             match_time, match_age_group, match_gender, match_division, field_id=1, match_stage="group"):
+                             match_time, match_age_group, match_gender, match_division, field_id=1,
+                             match_stage="group"):
         try:
             connection = psycopg2.connect(
                 user=self.user,
@@ -90,7 +92,4 @@ class DBScheduleMatches(object):
             return "All matches scheduled successfully."
         except (Exception, psycopg2.Error) as error:
             print("Failed to insert record into match table", error)
-            connection.close()
             return "Already Scheduled"
-
-
