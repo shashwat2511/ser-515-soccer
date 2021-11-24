@@ -80,3 +80,24 @@ class DBGetTeamDetail():
         except (Exception, psycopg2.Error) as error:
             print("Failed to select record into tournament table", error)
 
+    def select_team_list(self):
+        try:
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=self.database,
+            )
+            cursor = connection.cursor()
+            select_query = """select array_agg(row_to_json(t)) from 
+                                (SELECT team_id, team_name, gender, age_group, division, coach_name from public.teams
+                                 where is_active = True) t
+                            """
+            cursor.execute(select_query)
+            teams_json = cursor.fetchall()
+            connection.close()
+            return teams_json[0][0]
+        except (Exception, psycopg2.Error) as error:
+            print("Failed to select record into tournament table", error)
+
