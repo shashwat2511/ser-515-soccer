@@ -93,3 +93,23 @@ class DBScheduleMatches(object):
         except (Exception, psycopg2.Error) as error:
             print("Failed to insert record into match table", error)
             return "Already Scheduled"
+
+    def select_all_matches(self):
+        try:
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=self.database,
+            )
+            cursor = connection.cursor()
+            select_query = """select array_agg(row_to_json(t)) from 
+                                (SELECT * from public.match) t
+                            """
+            cursor.execute(select_query)
+            matches_json = cursor.fetchall()
+            connection.close()
+            return matches_json[0][0]
+        except (Exception, psycopg2.Error) as error:
+            print("Failed to select record into matches table", error)

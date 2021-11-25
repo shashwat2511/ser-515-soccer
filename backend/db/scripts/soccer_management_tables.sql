@@ -103,6 +103,7 @@ ALTER TABLE public.users OWNER TO postgres;
 CREATE TABLE public.field (
     field_id integer DEFAULT nextval('public.field_field_id_seq'::regclass) NOT NULL,
     field_name character varying(256) NOT NULL,
+    field_acronym character varying(20) NOT NULL,
     field_location character varying(256) NOT NULL,
     num_of_grounds integer,
     is_active boolean DEFAULT true NOT NULL,
