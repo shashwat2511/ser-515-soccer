@@ -10,6 +10,7 @@ from services.getFilterParameters.GetFilterParameters import GetFilterParameters
 from services.filterMatchDetails.FilterMatchDetails import FilterMatchDetails
 from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
 from services.adminLogin.AdminLogin import AdminLogin
+from services.fetchMatchDetails.FetchMatchDetails import FetchMatchDetails
 
 
 APP = Flask(__name__)
@@ -91,7 +92,6 @@ def get_filter_params():
         return response
 
 
-# @APP.route("/api/v1/filterMatches", methods=['POST'])
 @APP.route("/api/v1/filterMatches/", methods=['POST'])
 def filter_matches():
     if request.method == 'POST':
@@ -105,7 +105,6 @@ def filter_matches():
         return response
 
 
-@APP.route("/api/v1/scheduleMatches", methods=['GET'])
 @APP.route("/api/v1/scheduleMatches/", methods=['GET'])
 def schedule_matches():
     if request.method == 'GET':
@@ -118,12 +117,23 @@ def schedule_matches():
         )
         return response
 
-@APP.route("/api/v1/adminLogin", methods=['POST'])
 @APP.route("/api/v1/adminLogin/", methods=['POST'])
 def admin_login():
     if request.method == 'POST':
         al = AdminLogin()
         return_data = al.login(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/getMatches/", methods=['GET'])
+def get_matches():
+    if request.method == 'GET':
+        fmd = FetchMatchDetails()
+        return_data = fmd.get_matches()
         response = Response(
             response=json.dumps(return_data),
             status=200,
