@@ -154,3 +154,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 backend/db/functions/DBConfig.ini
+frontend/package-lock.json
