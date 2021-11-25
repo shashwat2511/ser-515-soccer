@@ -51,11 +51,15 @@ function SSSFilter() {
     const [tableData, setTableData] = useState([]);
 
     const columns = [
-        { field: 'id', headerName: 'ID', minWidth: 100, flex: 1, headerClassName: 'super-app-theme--header', },
-        { field: 'teamName', headerName: 'Team', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'ageGrp', headerName: 'Age Group', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'teamMembersNums', headerName: 'No. of Members', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'match', headerName: 'Match', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'field_id', headerName: 'FIELD ID', minWidth: 100, flex: 1, headerClassName: 'super-app-theme--header', },
+        { field: 'ground_number', headerName: 'GROUND NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_date', headerName: 'MATCH DATE', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_division', headerName: 'MATCH DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_time', headerName: 'MATCH TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_1_club_name', headerName: 'T1 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_1_id', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_2_club_name', headerName: 'T2 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_2_id', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
     ];
 
     const initialFValues = {
@@ -145,6 +149,20 @@ function SSSFilter() {
     };
 
     useEffect(() => {
+
+        axios.get('localhost:5000/api/v1/getFilterParams/')
+            .then((response) => {
+                setTableData(response.data);
+                console.log(response.data);
+                setTableData(teamList);
+                console.log(tableData);
+            })
+            .catch((error) => {
+                // setErrorMsg(error);
+                // console.log(errorMsg);
+            });
+
+
         let param = (new URL(document.location)).searchParams;
         let division = param.get('division');
         let day = param.get('day');
@@ -152,7 +170,7 @@ function SSSFilter() {
         let team = param.get('team');
         let club = param.get('club');
         let temp = {};
-        let thereIsAValue = false;
+        let thereIsAValue = true;
 
         if (division !== null && division.trim() !== '') {
             temp = {
@@ -181,7 +199,7 @@ function SSSFilter() {
         if (team !== null && team.trim() !== '') {
             temp = {
                 ...temp,
-                "team": team
+                "team_id": team
             };
             thereIsAValue = true;
         }
@@ -189,18 +207,45 @@ function SSSFilter() {
         if (club !== null && club.trim() !== '') {
             temp = {
                 ...temp,
-                "club": club
+                "club_name": club
             };
             thereIsAValue = true;
         }
 
+        temp["division"] = "Red";
+        temp["day"] = "2021-12-15";
+        temp["venue"] = "";
+        temp["team_id"] = 1;
+        temp["club_name"] = "Shashwat Club";
+
         console.log(temp);
         setTableData(teamList);
         if (thereIsAValue) {
-            axios.post('https://jsonplaceholder.typicode.com/posts', temp)
+            /* let config = {
+                headers: {
+                    header1: {
+                        "Content-Type": "application/json",
+                    }
+                }
+            } */
+
+            /* fetch("http://localhost:5000/api/v1/filterMatches/", {
+                body: JSON.stringify(temp),
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+            }).then((res) => res.json())
+                .then((res) => {
+                    setTableData(res);
+                    console.log(res);
+                })
+                .catch((e) => {
+
+                }) */
+
+            axios.post('http://localhost:5000/api/v1/filterMatches/', temp)
                 .then((response) => {
-                    setTableData(teamList);
-                    console.log(teamList);
+                    setTableData(response.data.matches);
+                    console.log(response.data.matches);
                 })
                 .catch((error) => {
                 });
