@@ -11,6 +11,7 @@ from services.filterMatchDetails.FilterMatchDetails import FilterMatchDetails
 from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
 from services.adminLogin.AdminLogin import AdminLogin
 from services.fetchMatchDetails.FetchMatchDetails import FetchMatchDetails
+from services.updateMatchScore.UpdateMatchScore import UpdateMatchScore
 
 
 APP = Flask(__name__)
@@ -134,6 +135,18 @@ def get_matches():
     if request.method == 'GET':
         fmd = FetchMatchDetails()
         return_data = fmd.get_matches()
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/updateMatchScore/", methods=['POST'])
+def update_score():
+    if request.method == 'POST':
+        ums = UpdateMatchScore()
+        return_data = ums.scores_update(request)
         response = Response(
             response=json.dumps(return_data),
             status=200,
