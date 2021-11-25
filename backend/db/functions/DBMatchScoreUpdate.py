@@ -14,7 +14,7 @@ class DBMatchScoreUpdate(object):
         self.user = config['PostgresDB']['user']
         self.password = config['PostgresDB']['password']
 
-    def update_team_score(self, team_1_name, team_2_name, team_1_goal, team_2_goal, match_stage):
+    def update_team_score(self, team_1_name, team_2_name, team_1_goal, team_2_goal, match_stage, winner, match_result):
         try:
             connection = psycopg2.connect(
                 user=self.user,
@@ -27,17 +27,21 @@ class DBMatchScoreUpdate(object):
 
             team_1_id = self.get_team_id(team_1_name)
             team_2_id = self.get_team_id(team_2_name)
+            winner_id = self.get_team_id(winner)
+
             update_query = """ UPDATE public.match SET
-            team_1_goal=%s, team_2_goal=%s, match_stage=%s where team_1_id=% and team_2_id=%s"""
+            team_1_goal=%s, team_2_goal=%s, match_stage=%s, winner=%s, match_result=%s
+            where team_1_id=%s and team_2_id=%s"""
             record_to_update = (
-                team_1_goal, team_2_goal, match_stage, team_1_id["team_id"], team_2_id["team_id"]
+                team_1_goal, team_2_goal, match_stage, str(winner_id["team_id"]),
+                match_result, str(team_1_id["team_id"]), str(team_2_id["team_id"])
             )
             cursor.execute(update_query, record_to_update)
             connection.commit()
             connection.close()
             return_msg = "Match Goals updated successfully "
             return return_msg
-        except (Exception, psycopg2.Error) as error:
+        except (psycopg2.Error) as error:
             print("Failed to update record into users table", error)
 
     def get_team_id(self, team_name):
@@ -58,7 +62,7 @@ class DBMatchScoreUpdate(object):
             cursor.execute(select_query, (team_name,))
             team_json = cursor.fetchall()
             connection.close()
-            return team_json[0][0]
+            return team_json[0][0][0]
 
         except (Exception, psycopg2.Error) as error:
             print("Failed to select record into team table", error)
