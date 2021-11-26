@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { teamList } from '../demoJSONs/teamList';
 import { DataGrid } from '@material-ui/data-grid';
+import { Box } from '@mui/system';
 
 function TournamentManager() {
     const [tableData, setTableData] = useState([]);
@@ -14,7 +15,7 @@ function TournamentManager() {
         { field: 'ageGrp', headerName: 'Age Group', minWidth: 200, flex: 1.5, headerClassName: 'super-app-theme--header', },
         { field: 'teamMembersNums', headerName: 'No. of Members', minWidth: 200, flex: 1.5, headerClassName: 'super-app-theme--header', },
         { field: 'match', headerName: 'Match', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-    ]
+    ];
 
     useEffect(() => {
         // Update the document title using the browser API
@@ -41,7 +42,7 @@ function TournamentManager() {
         alignItems: 'center',
         fontFamily: 'RobotoSlab',
         fontWeight: 700,
-    }
+    };
 
     if (tableData.length === 0) {
         return (
@@ -54,7 +55,7 @@ function TournamentManager() {
         )
     } else if (tableData.length > 0) {
         return (
-            <div className='TournamentManager' style={{
+            <Box className='TournamentManager' style={{
                 ...TournamentManager,
                 backgroundColor: '#EDEDED'
             }}>
@@ -69,7 +70,7 @@ function TournamentManager() {
                     disableSelectionOnClick
                     rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
                 ></DataGrid>
-            </div >
+            </Box >
         )
     }
 }

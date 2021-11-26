@@ -1,30 +1,30 @@
 import json
 import psycopg2
-from db.functions.DBTeamRegistration import DBTeamRegistration
+from db.functions.DBFilterMatches import DBFilterMatches
 
 class FilterMatchDetails():
 
-    def team_registration(self, request):
+    def filter_matches(self, request):
         request_body = request.stream.read()
         json_data = json.loads(request_body)
-        team_name = json_data["team_name"]
-        gender = json_data["gender"]
-        age_group = json_data["age_group"]
-        coach_name = json_data["coach_name"]
-        team_city = json_data["team_city"]
-        team_state = json_data["team_state"]
+
+        division = json_data.get("division")
+        day = json_data["day"]
+        venue = json_data["venue"]
+        team_id = json_data["team_id"]
         club_name = json_data["club_name"]
-        primary_contact = json_data["primary_contact"]
-        division = json_data["division"]
-        player_names = json_data["player_names"]
 
-        db = DBTeamRegistration()
-        db.insert_team(team_name, gender, age_group, coach_name, team_city, team_state, club_name, primary_contact, division, player_names)
+        dbfm = DBFilterMatches()
+        filtered_matches = dbfm.select_filtered_match_list(division, day, venue, team_id, club_name)
+        print(filtered_matches)
 
-        message = "Your team " + team_name +" has been registered. Please pay the due about to enroll to tournament"
-
-        return {"message": message}
-
-
-# if __name__ == "__main__":
-#     sasa
+        filtered_matches_restructures = []
+        if filtered_matches is not None:
+            for key, value in enumerate(filtered_matches):
+                filtered_matches_restructures.append(
+                    {
+                        "id": key,
+                        "value": value
+                    }
+                )
+        return {"matches": filtered_matches_restructures if filtered_matches_restructures is not None else []}
