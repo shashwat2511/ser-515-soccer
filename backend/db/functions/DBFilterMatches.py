@@ -70,11 +70,9 @@ class DBFilterMatches(object):
                             where %s) agg_tab
                             """
 
-            print((select_query % query_where_clause))
             cursor.execute(select_query % query_where_clause)
             match_json = cursor.fetchall()
             connection.close()
-            print(match_json)
             return match_json[0][0]
         except (Exception, psycopg2.Error) as error:
             print("Failed to select record into teams table", error)
