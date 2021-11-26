@@ -16,15 +16,10 @@ class FilterMatchDetails():
 
         dbfm = DBFilterMatches()
         filtered_matches = dbfm.select_filtered_match_list(division, day, venue, team_id, club_name)
-        print(filtered_matches)
 
         filtered_matches_restructures = []
         if filtered_matches is not None:
             for key, value in enumerate(filtered_matches):
-                filtered_matches_restructures.append(
-                    {
-                        "id": key,
-                        "value": value
-                    }
-                )
+                value["id"] = key
+                filtered_matches_restructures.append(value)
         return {"matches": filtered_matches_restructures if filtered_matches_restructures is not None else []}
