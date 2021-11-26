@@ -33,7 +33,7 @@ class DBFilterMatches(object):
                 if result != "":
                     result += " AND "
                 result += "m.field_id='" + venue + "'"
-            if team_id is not None:
+            if len(str(team_id)) > 0:
                 if result != "":
                     result += " AND "
                 result += "(m.team_1_id='" + str(team_id) + "'"
