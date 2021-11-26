@@ -13,6 +13,7 @@ import Home from './Home';
 import SSSFilter from './SSSFilter';
 import MatchLocation from './MatchLocation'
 import { AdminLogin } from './AdminLogin';
+import MatchSchedule from './MatchSchedule';
 
 // import PaymentInfo from './PaymentInfo/PaymentIndex';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
@@ -46,6 +47,7 @@ function Content() {
                     <Route path="/payment-info" component={PaymentInfo} />
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/admin_login" component={AdminLogin} />
+                    <Route path="/match_schedule" component={MatchSchedule} />
                 </Switch>
             </Router>
         </div>
