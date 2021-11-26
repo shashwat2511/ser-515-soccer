@@ -15,7 +15,7 @@ import MatchLocation from './MatchLocation'
 import { AdminLogin } from './AdminLogin';
 import MatchSchedule from './MatchSchedule';
 
-// import PaymentInfo from './PaymentInfo/PaymentIndex';
+import RulesandRegulationsTM from './RulesandRegulationsTM';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
 
 function Content() {
@@ -48,6 +48,7 @@ function Content() {
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/admin_login" component={AdminLogin} />
                     <Route path="/match_schedule" component={MatchSchedule} />
+                    <Route path="/rulesandregulations" component={RulesandRegulationsTM} />
                 </Switch>
             </Router>
         </div>
