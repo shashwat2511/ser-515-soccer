@@ -12,7 +12,7 @@ import FilterTitle from './FilterTitle';
 import Home from './Home';
 import SSSFilter from './SSSFilter';
 import MatchLocation from './MatchLocation'
-import { AdminLogin } from './AdminLogin';
+import AdminLogin from './AdminLogin';
 import MatchSchedule from './MatchSchedule';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
