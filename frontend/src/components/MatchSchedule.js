@@ -57,6 +57,9 @@ function MatchSchedule(){
 
     const {
         values,
+        setValues,
+        errors,
+        setErrors,
         handleInputChange
     } = useForm(initialFValues, false, true);
 
@@ -101,12 +104,14 @@ function MatchSchedule(){
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="center">
-                            <Button
-                                variant="contained"
-                                color="secondary"
+                            <Button 
+                                disabled={disable} 
+                                variant="contained" 
+                                color="secondary" 
                                 size="large"
-                            >Schedule</Button>
-                             <button disabled={disable} onClick={() => setDisable(true)}>Click me!</button>
+                                onClick={() => setDisable(true)}>
+                                    Schedule
+                            </Button>
                         </Grid>
                     </Form>
             </Paper>
