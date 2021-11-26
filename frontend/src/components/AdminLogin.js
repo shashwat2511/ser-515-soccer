@@ -1,19 +1,22 @@
 import { Button, Checkbox, FormControlLabel, Grid, SvgIcon, TextField, Typography } from '@material-ui/core'
 import { Box } from '@mui/system'
-import React from 'react';
+import React, { useState } from 'react';
 
-export const AdminLogin = () => {
+function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+  }
+
+function AdminLogin(){
+    const [username, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+
     const handleSubmit = (event) => {
         event.preventDefault();
     }
-
-    function HomeIcon(props) {
-        return (
-          <SvgIcon {...props}>
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-          </SvgIcon>
-        );
-      }
 
     return (
         <Grid container justifyContent="center">
@@ -26,12 +29,12 @@ export const AdminLogin = () => {
                     <Grid container direction="row" >
                         <Grid item xs={12}>
                             <Box p={1}>
-                                <TextField sm={5} style={{width:'100%'}} variant="outlined" required id="username" label="User name" margin="normal" autoFocus />
+                                <TextField sm={5} style={{width:'100%'}} variant="outlined" required name="username" label="User name" margin="normal" autoFocus />
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
                             <Box p={1}>
-                            <TextField sm={5} style={{width:'100%'}} variant="outlined" required id="password" label="Password" margin="normal" autoFocus />
+                            <TextField sm={5} style={{width:'100%'}} variant="outlined" required name="password" label="Password" margin="normal" autoFocus />
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
@@ -52,3 +55,5 @@ export const AdminLogin = () => {
         </Grid>
     )
 }
+
+export default AdminLogin
