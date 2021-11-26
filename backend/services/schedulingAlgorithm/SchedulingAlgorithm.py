@@ -1,4 +1,4 @@
-from db.functions.DBGetTeamDetail import DBGetTeamDetail
+# from db.functions.DBGetTeamDetail import DBGetTeamDetail
 from db.functions.DBScheduleMatches import DBScheduleMatches
 
 
@@ -20,17 +20,17 @@ class SchedulingAlgorithm():
         return ans
 
     def get_division_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         division_list = db.select_division_list()
         return division_list
 
     def get_age_group_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         age_group_list = db.select_age_group_list()
         return age_group_list
 
     def get_gender_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         gender_list = db.select_gender_list()
         return gender_list
 
