@@ -8,62 +8,33 @@ import axios from 'axios';
 import { DataGrid } from "@material-ui/data-grid";
 import { teamList } from '../demoJSONs/teamList';
 
-const division = [
-    { id: '11', value: 'blue' },
-    { id: '12', value: 'green' },
-    { id: '13', value: 'yellow' },
-    { id: '14', value: 'purple' },
-];
-
-const dates = [
-    { id: '11', value: '2021-12-15' },
-    { id: '12', value: '2021-12-16' },
-    { id: '13', value: '2021-12-17' },
-];
-
-const venues = [
-    { id: '11', value: 'Warrior Soccer Complex (WSC)' }
-];
-
-const clubs = [
-    { id: '11', value: 'Alliance Cincinnati Soccer Clubblue' },
-    { id: '12', value: 'Auglaize Mercer United' },
-    { id: '13', value: 'Barca Academy Columbus' },
-    { id: '14', value: 'Bluffton SC' },
-    { id: '15', value: 'Butler United Soccer Club' },
-    { id: '16', value: 'Central Ohio Elite' },
-    { id: '17', value: 'Charleston Clash' },
-    { id: '18', value: 'Cincinnati United' },
-    { id: '19', value: 'Cincinnati United Premier' },
-    { id: '20', value: 'Cincinnati United Premier Soccer Club (OHS)' },
-    { id: '21', value: 'Cincinnati United Soccer Club' },
-    { id: '22', value: 'Cincinnati United Southeast' },
-    { id: '23', value: 'Cincinnati West' },
-    { id: '24', value: 'Cleveland Kickers SC' },
-    { id: '25', value: 'Dayton Futbol Academy' },
-    { id: '26', value: 'Dayton Kroc Soccer Club' },
-    { id: '27', value: 'Dublin Soccer Excel' },
-    { id: '28', value: 'Dublin United Soccer Club' },
-    { id: '29', value: 'ECLIPSE EAST' },
-];
-
 function SSSFilter() {
     const [tableData, setTableData] = useState([]);
 
+    const [divisions, setDivisions] = useState([]);
+    const [dates, setDates] = useState([]);
+    const [venues, setVenues] = useState([]);
+    const [teams, setTeams] = useState([]);
+    const [clubs, setClubs] = useState([]);
+
     const columns = [
-        { field: 'id', headerName: 'ID', minWidth: 100, flex: 1, headerClassName: 'super-app-theme--header', },
-        { field: 'teamName', headerName: 'Team', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'ageGrp', headerName: 'Age Group', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'teamMembersNums', headerName: 'No. of Members', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'match', headerName: 'Match', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'field_id', headerName: 'FIELD ID', minWidth: 100, flex: 1, headerClassName: 'super-app-theme--header', },
+        { field: 'ground_number', headerName: 'GROUND NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_date', headerName: 'MATCH DATE', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_division', headerName: 'MATCH DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'match_time', headerName: 'MATCH TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_1_club_name', headerName: 'T1 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_1_id', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_2_club_name', headerName: 'T2 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'team_2_id', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
     ];
 
     const initialFValues = {
-        sByDivision: '',
-        sByDay: '',
-        sByVenue: '',
-        sByTeam: '',
-        sByClub: '',
+        division: '',
+        day: '',
+        venue: '',
+        team_id: '',
+        club_name: '',
     }
 
     const {
@@ -78,55 +49,81 @@ function SSSFilter() {
         e.preventDefault();
         var url = new URL(document.location);
         let thereIsAValue = false;
-        let temp = {};
+        let data = {};
 
-        if (values.sByDivision !== null && values.sByDivision.trim() !== '') {
+        if (values.division !== null && values.division.trim() !== '') {
             thereIsAValue = true;
-            temp = {
-                ...temp,
-                "division": values.sByDivision
+            data = {
+                ...data,
+                "division": values.division
             };
-            url.searchParams.append('division', values.sByDivision);
+            url.searchParams.append('division', values.division);
+        } else {
+            data = {
+                ...data,
+                "division": ""
+            };
         }
 
-        if (values.sByDay !== null && values.sByDay.trim() !== '') {
+        if (values.day !== null && values.day.trim() !== '') {
             thereIsAValue = true;
-            temp = {
-                ...temp,
-                "day": values.sByDay
+            data = {
+                ...data,
+                "day": values.day
             };
-            url.searchParams.append('division', values.sByDay);
+            url.searchParams.append('division', values.day);
+        } else {
+            data = {
+                ...data,
+                "day": ""
+            };
         }
 
-        if (values.sByVenue !== null && values.sByVenue.trim() !== '') {
+        if (values.venue !== null && values.venue.trim() !== '') {
             thereIsAValue = true;
-            temp = {
-                ...temp,
-                "venue": values.sByVenue
+            data = {
+                ...data,
+                "venue": values.venue
             };
-            url.searchParams.append('division', values.sByVenue);
+            url.searchParams.append('division', values.venue);
+        } else {
+            data = {
+                ...data,
+                "venue": ""
+            };
         }
 
-        if (values.sByTeam !== null && values.sByTeam.trim() !== '') {
+        if (values.team_id !== null && values.team_id.trim() !== '') {
             thereIsAValue = true;
-            temp = {
-                ...temp,
-                "team": values.sByTeam
+            data = {
+                ...data,
+                "team": values.team_id
             };
-            url.searchParams.append('division', values.sByTeam);
+            url.searchParams.append('division', values.team_id);
+        } else {
+            data = {
+                ...data,
+                "team": ""
+            };
         }
 
-        if (values.sByClub !== null && values.sByClub.trim() !== '') {
+        if (values.club_name !== null && values.club_name.trim() !== '') {
             thereIsAValue = true;
-            temp = {
-                ...temp,
-                "club": values.sByClub
+            data = {
+                ...data,
+                "club": values.club_name
             };
-            url.searchParams.append('division', values.sByClub);
+            url.searchParams.append('division', values.club_name);
+        } else {
+            data = {
+                ...data,
+                "club": ""
+            };
         }
 
         if (thereIsAValue) {
-            axios.post('https://jsonplaceholder.typicode.com/posts', temp)
+            setValues(data);
+            axios.post('https://jsonplaceholder.typicode.com/posts', data)
                 .then((response) => {
                     setTableData(teamList);
                 })
@@ -145,67 +142,128 @@ function SSSFilter() {
     };
 
     useEffect(() => {
+        fetch("http://localhost:5000/api/v1/getFilterParams/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Request-Headers": "Content-Type"
+            },
+        }).then((res) => res.json())
+            .then((result) => {
+                setDivisions(result.division);
+                setDates(result.day);
+                setVenues(result.venue);
+                setTeams(result.teams);
+                setClubs(result.club);
+                alert(JSON.stringify(result));
+                console.log(JSON.stringify(result.club));
+            })
+            .catch((e) => {
+            });
+
         let param = (new URL(document.location)).searchParams;
         let division = param.get('division');
         let day = param.get('day');
         let venue = param.get('venue');
         let team = param.get('team');
         let club = param.get('club');
-        let temp = {};
+        let data = {};
         let thereIsAValue = false;
 
         if (division !== null && division.trim() !== '') {
-            temp = {
-                ...temp,
+            data = {
+                ...data,
                 "division": division
             };
             thereIsAValue = true;
+        } else {
+            data = {
+                ...data,
+                "division": ""
+            };
         }
 
         if (day !== null && day.trim() !== '') {
-            temp = {
-                ...temp,
+            data = {
+                ...data,
                 "day": day
             };
             thereIsAValue = true;
+        } else {
+            data = {
+                ...data,
+                "day": ""
+            };
         }
 
         if (venue !== null && venue.trim() !== '') {
-            temp = {
-                ...temp,
+            data = {
+                ...data,
                 "venue": venue
             };
             thereIsAValue = true;
+        } else {
+            data = {
+                ...data,
+                "venue": ""
+            };
         }
 
         if (team !== null && team.trim() !== '') {
-            temp = {
-                ...temp,
-                "team": team
+            data = {
+                ...data,
+                "team_id": team
             };
             thereIsAValue = true;
+        } else {
+            data = {
+                ...data,
+                "team_id": ""
+            };
         }
 
         if (club !== null && club.trim() !== '') {
-            temp = {
-                ...temp,
-                "club": club
+            data = {
+                ...data,
+                "club_name": club
             };
             thereIsAValue = true;
+        } else {
+            data = {
+                ...data,
+                "club_name": ""
+            };
         }
 
-        console.log(temp);
-        setTableData(teamList);
-        if (thereIsAValue) {
-            axios.post('https://jsonplaceholder.typicode.com/posts', temp)
-                .then((response) => {
-                    setTableData(teamList);
-                    console.log(teamList);
-                })
-                .catch((error) => {
-                });
+        data = {
+            "division": "Red",
+            "day": "2021-12-15",
+            "venue": "",
+            "team_id": 1,
+            "club_name": "Shashwat Club"
         }
+        fetch("http://localhost:5000/api/v1/filterMatches/", {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Request-Headers": "Content-Type"
+            },
+        }).then((res) => res.json())
+            .then((result) => {
+                setTableData(result.matches);
+                // alert(result);
+                console.log(result);
+            })
+            .catch((e) => {
+            });
     }, []);
+
+
 
     return (
         <React.Fragment>
@@ -225,19 +283,19 @@ function SSSFilter() {
                             <Grid container item xs={4}>
                                 <Controls.Select
                                     variant="outlined"
-                                    name="sByDivision"
+                                    name="division"
                                     label="Search by Division"
-                                    value={values.sByDivision}
+                                    value={values.division}
                                     onChange={handleInputChange}
-                                    options={division}
+                                    options={divisions}
                                 />
                             </Grid>
                             <Grid container item xs={4}>
                                 <Controls.Select
                                     variant="outlined"
-                                    name="sByDay"
+                                    name="day"
                                     label="Search by Day"
-                                    value={values.sByDay}
+                                    value={values.day}
                                     onChange={handleInputChange}
                                     options={dates}
                                 />
@@ -245,9 +303,9 @@ function SSSFilter() {
                             <Grid container item xs={4}>
                                 <Controls.Select
                                     variant="outlined"
-                                    name="sByVenue"
+                                    name="venue"
                                     label="Search by Venue"
-                                    value={values.sByVenue}
+                                    value={values.venue}
                                     onChange={handleInputChange}
                                     options={venues}
                                 />
@@ -257,19 +315,19 @@ function SSSFilter() {
                             <Grid container item xs={6}>
                                 <Controls.Select
                                     variant="outlined"
-                                    name="sByTeam"
+                                    name="team_id"
                                     label="Search by Team"
-                                    value={values.sByTeam}
+                                    value={values.team_id}
                                     onChange={handleInputChange}
-                                    options={division}
+                                    options={teams}
                                 />
                             </Grid>
                             <Grid container item xs={6}>
                                 <Controls.Select
                                     variant="outlined"
-                                    name="sByClub"
+                                    name="club_name"
                                     label="Search by Club"
-                                    value={values.sByClub}
+                                    value={values.club_name}
                                     onChange={handleInputChange}
                                     options={clubs}
                                 />
