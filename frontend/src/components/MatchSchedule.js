@@ -1,9 +1,37 @@
 import { Grid, Paper, Button } from '@material-ui/core'
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useState } from 'react'
 import './../css/SSSFilter.css';
 import Controls from './controls/Controls';
 import { Form, useForm } from './useForm';
+
+const division = [
+    { id: '11', value: 'blue' },
+    { id: '12', value: 'green' },
+    { id: '13', value: 'yellow' },
+    { id: '14', value: 'purple' },
+]
+
+const day = [
+    { id: '11', value: 'blue' },
+    { id: '12', value: 'green' },
+    { id: '13', value: 'yellow' },
+    { id: '14', value: 'purple' },
+]
+
+const venue = [
+    { id: '11', value: 'blue' },
+    { id: '12', value: 'green' },
+    { id: '13', value: 'yellow' },
+    { id: '14', value: 'purple' },
+]
+
+const club = [
+    { id: '11', value: 'blue' },
+    { id: '12', value: 'green' },
+    { id: '13', value: 'yellow' },
+    { id: '14', value: 'purple' },
+]
 
 const team = [
     { id: '11', value: 'blue' },
@@ -47,9 +75,20 @@ const match = [
 
 function MatchSchedule(){
     const initialFValues = {
-        sByTeam: '',
-        sByMatch: ''
+        division: '',
+        day: '',
+        venue: '',
+        club: '',
+        team: '',
+        match: ''
     }
+
+    const [divisions, setDivision] = useState([]);
+    const [days, setDay] = useState([]);
+    const [venues, setVenue] = useState([]);
+    const [clubs, setClub] = useState([]);
+    const [teams, setTeam] = useState([]);
+    const [matches, setMatch] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,7 +106,7 @@ function MatchSchedule(){
 
     return (
         <React.Fragment>
-            <Paper style={{ width: "100%"}} elevation={6} className="paperTab">
+            <Paper style={{ width: "100%"}} elevation={3} className="paperTab">
                 <Grid container justifyContent="center">
                     <Grid xs={11} item>
                         <Box py={1.5} className="sssFilterDeclarationHead">2021 Game Schedule</Box>
@@ -82,22 +121,66 @@ function MatchSchedule(){
                                 <Grid container item xs={4}>
                                     <Controls.Select
                                         variant="outlined"
-                                        name="sByTeam"
-                                        label="Search by Team"
-                                        value={values.sByTeam}
+                                        name="division"
+                                        label="Search by Division"
+                                        value={values.division}
                                         onChange={handleInputChange}
-                                        options={team}
+                                        options={divisions}
                                     />
                                 </Grid>
                                 &nbsp;
                                 <Grid container item xs={4}>
                                     <Controls.Select
                                         variant="outlined"
-                                        name="sByMatch"
-                                        label="Search by Match"
-                                        value={values.sByMatch}
+                                        name="day"
+                                        label="Search by Day"
+                                        value={values.day}
                                         onChange={handleInputChange}
-                                        options={match}
+                                        options={days}
+                                    />
+                                </Grid>
+                                &nbsp;
+                                <Grid container item xs={4}>
+                                    <Controls.Select
+                                        variant="outlined"
+                                        name="venue"
+                                        label="Search by Venue"
+                                        value={values.venue}
+                                        onChange={handleInputChange}
+                                        options={venues}
+                                    />
+                                </Grid>
+                                &nbsp;
+                                <Grid container item xs={4}>
+                                    <Controls.Select
+                                        variant="outlined"
+                                        name="club"
+                                        label="Search by Club"
+                                        value={values.club}
+                                        onChange={handleInputChange}
+                                        options={clubs}
+                                    />
+                                </Grid>
+                                &nbsp;
+                                <Grid container item xs={4}>
+                                    <Controls.Select
+                                        variant="outlined"
+                                        name="team"
+                                        label="Search by Team"
+                                        value={values.team}
+                                        onChange={handleInputChange}
+                                        options={teams}
+                                    />
+                                </Grid>
+                                &nbsp;
+                                <Grid container item xs={4}>
+                                    <Controls.Select
+                                        variant="outlined"
+                                        name="match"
+                                        label="Search by Match"
+                                        value={values.match}
+                                        onChange={handleInputChange}
+                                        options={matches}
                                     />
                                 </Grid>
                                 &nbsp;
