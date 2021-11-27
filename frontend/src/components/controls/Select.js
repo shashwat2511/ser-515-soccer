@@ -2,11 +2,11 @@ import { FormControl, FormHelperText, InputLabel, MenuItem, Select as MuiSelect 
 import React from 'react';
 
 function Select(props) {
-    const { variant, name, label, value, onChange, options, error = null } = props;
+    const { variant, name, label, value, onChange, options, error = null, disabled } = props;
 
     const mapHandler = option => {
         let key = Object.keys(option);
-        return (<MenuItem key={option.id} value={option[key[1]]}>{option[key[1]]}</MenuItem>);
+        return (<MenuItem key={option.id} value={option.value}>{option.value}</MenuItem>);
     }
 
     return (
@@ -19,6 +19,7 @@ function Select(props) {
                 label={label}
                 name={name}
                 value={value}
+                disabled={disabled === undefined ? "false" : disabled}
                 onChange={onChange}>
                 <MenuItem value="">None</MenuItem>
                 {
