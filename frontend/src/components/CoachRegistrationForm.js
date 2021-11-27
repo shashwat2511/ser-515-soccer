@@ -1,156 +1,210 @@
 import { Box, Grid, Paper } from '@material-ui/core';
-import React, { useRef } from 'react';
-import { useForm, Form } from './useForm';
+import React, { useState, useEffect, useRef } from 'react';
+import { useFormTeamReg, Form } from './useFormTeamReg';
 import Controls from './controls/Controls';
+import config from '../Constants';
+import { useHistory } from 'react-router-dom';
 
 const genderItems = [
-    { id: 'male', title: 'Male' },
-    { id: 'female', title: 'Female' },
-    { id: 'other', title: 'Other' }
-]
-
-const USAStateList = [
-    { id: '1', state: 'Alabama' },
-    { id: '2', state: 'Alaska' },
-    { id: '3', state: 'Arizona' },
-    { id: '4', state: 'Arkansas' },
-    { id: '5', state: 'California' },
-    { id: '6', state: 'Colorado' },
-    { id: '7', state: 'Connecticut' },
-    { id: '8', state: 'Delaware' },
-    { id: '9', state: 'Florida' },
-    { id: '10', state: 'Georgia' },
-    { id: '11', state: 'Hawaii' },
-    { id: '12', state: 'Idaho' },
-    { id: '13', state: 'Illinois' },
-    { id: '14', state: 'Indiana' },
-    { id: '15', state: 'Iowa' },
-    { id: '16', state: 'Kansas' },
-    { id: '17', state: 'Kentucky' },
-    { id: '18', state: 'Louisiana' },
-    { id: '19', state: 'Maine' },
-    { id: '20', state: 'Maryland' },
-    { id: '21', state: 'Massachusetts' },
-    { id: '22', state: 'Michigan' },
-    { id: '23', state: 'Minnesota' },
-    { id: '24', state: 'Mississippi' },
-    { id: '25', state: 'Missouri' },
-    { id: '26', state: 'Montana' },
-    { id: '27', state: 'Nebraska' },
-    { id: '28', state: 'Nevada' },
-    { id: '29', state: 'New Hampshire' },
-    { id: '30', state: 'New Jersey' },
-    { id: '31', state: 'New Mexico' },
-    { id: '32', state: 'New York' },
-    { id: '33', state: 'North Carolina' },
-    { id: '34', state: 'North Dakota' },
-    { id: '35', state: 'Ohio' },
-    { id: '36', state: 'Oklahoma' },
-    { id: '37', state: 'Oregon' },
-    { id: '38', state: 'Pennsylvania' },
-    { id: '39', state: 'Rhode Island' },
-    { id: '40', state: 'South Carolina' },
-    { id: '41', state: 'South Dakota' },
-    { id: '42', state: 'Tennessee' },
-    { id: '43', state: 'Texas' },
-    { id: '44', state: 'Utah' },
-    { id: '45', state: 'Vermont' },
-    { id: '46', state: 'Virginia' },
-    { id: '47', state: 'Washington' },
-    { id: '48', state: 'West Virginia' },
-    { id: '49', state: 'Wisconsin' },
-    { id: '50', state: 'Wyoming' },
+    { id: '0', value: 'M' },
+    { id: '1', value: 'F' }
 ];
 
+
+const USAStateList = [
+    { id: 'Alabama', value: 'AL' },
+    { id: 'Alaska', value: 'AK' },
+    { id: 'Arizona', value: 'AZ' },
+    { id: 'Arkansas', value: 'AR' },
+    { id: 'California', value: 'CA' },
+    { id: 'Colorado', value: 'CO' },
+    { id: 'Connecticut',value: 'CT' },
+    { id: 'Delaware', value: 'DE' },
+    { id: 'Florida',value: 'FL' },
+    { id: 'Georgia',value: 'GA' },
+    { id: 'Hawaii',value: 'HI' },
+    { id: 'Idaho',value: 'ID' },
+    { id: 'Illinois',value: 'IL' },
+    { id: 'Indiana',value: 'IN' },
+    { id: 'Iowa',value: 'IA' },
+    { id: 'Kansas',value: 'KS' },
+    { id: 'Kentucky',value: 'KY' },
+    { id: 'Louisiana',value: 'LA' },
+    { id: 'Maine',value: 'ME' },
+    { id: 'Maryland',value: 'MD' },
+    { id: 'Massachusetts',value: 'MA' },
+    { id: 'Michigan',value: 'MI' },
+    { id: 'Minnesota',value: 'MN' },
+    { id: 'Mississippi',value: 'MS' },
+    { id: 'Missouri',value: 'MO' },
+    { id: 'Montana',value: 'MT' },
+    { id: 'Nebraska',value: 'NE' },
+    { id: 'Nevada',value: 'NV' },
+    { id: 'New Hampshire',value: 'NH' },
+    { id: 'New Jersey',value: 'NJ' },
+    { id: 'New Mexico',value: 'NM' },
+    { id: 'New York',value: 'NY' },
+    { id: 'North Carolina',value: 'NC' },
+    { id: 'North Dakota',value: 'ND' },
+    { id: 'Ohio',value: 'OH' },
+    { id: 'Oklahoma',value: 'OK' },
+    { id: 'Oregon',value: 'OR' },
+    { id: 'Pennsylvania',value: 'PA' },
+    { id: 'Rhode Island',value: 'RI' },
+    { id: 'South Carolina',value: 'SC' },
+    { id: 'South Dakota',value: 'SD' },
+    { id: 'Tennessee',value: 'TN' },
+    { id: 'Texas',value: 'TX' },
+    { id: 'Utah',value: 'UT' },
+    { id: 'Vermont',value: 'VT' },
+    { id: 'Virginia',value: 'VA' },
+    { id: 'Washington',value: 'WA' },
+    { id: 'West Virginia',value: 'WV' },
+    { id: 'Wisconsin',value: 'WI' },
+    { id: 'Wyoming',value: 'WY' },
+];
+
+
+
 const division = [
-    { id: '11', value: 'blue' },
-    { id: '12', value: 'green' },
-    { id: '13', value: 'yellow' },
-    { id: '14', value: 'purple' },
-]
+    { id: '0', value: 'blue' },
+    { id: '1', value: 'green' },
+    { id: '2', value: 'yellow' },
+    { id: '3', value: 'red' },
+];
+
+
+
 
 function CoachRegistrationForm() {
+    // const [divisions, setDivisions] = useState([]);
+    // const [divisions, setDivisions] = useState([]);
+//     useEffect(() => {
+//         fetch(config.BASE_URL + "getFilterParams/", {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Access-Control-Allow-Origin": "*",
+//                 "Access-Control-Allow-Methods": "*",
+//                 "Access-Control-Request-Headers": "Content-Type"
+//             },
+//         }).then((res) => res.json())
+//             .then((result) => {
+//                 setDivisions(result.division);
+//                 // alert(config.BASE_URL);
+//                 // setDates(result.day);
+//                 // setVenues(result.venue);
+//                 // setTeams(result.teams);
+//                 // setClubs(result.club);
+//                 // alert(JSON.stringify(result));
+//                 console.log(JSON.stringify(result.club));
+//             })
+//             .catch((e) => {
+//             });
+// }, []);
+
+    const history = useHistory();
+
+    const submitTeamRegistration = () =>{
+        fetch(config.BASE_URL + "teamRegistration/", {
+            body: JSON.stringify(finalFormValues),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "*",
+                "Access-Control-Request-Headers": "Content-Type"
+            },
+        }).then((res) => res.json())
+            .then((result) => {
+                console.log(result)
+                history.push("/payment-gateway", {'team_id': result.team_id})
+            })
+            .catch((e) => {
+            });
+
+    };
     const initialFValues = {
         id: 0,
-        coachName: '',
-        teamName: '',
-        clubName: '',
-        mobile: '',
-        city: '',
+        team_name: '',
         gender: '',
-        stateName: '',
-        age: 8,
+        age_group: 8,
+        coach_name: '',
+        team_city: '',
+        team_state: '',
+        club_name: '',
+        primary_contact: '',
         division: '',
-        fileUplaod: '',
-    }
+        player_names: '',
+    };
 
-    const validateRegitrationForm = (fieldValues = values) => {
+    const validateRegitrationForm = (fieldValues = finalFormValues) => {
         let temp = { ...errors };
 
-        if ('teamName' in fieldValues)
-            temp.teamName = fieldValues.teamName.trim() ? '' : 'This field is required.';
-        if ('clubName' in fieldValues)
-            temp.clubName = fieldValues.clubName.trim() ? '' : 'This field is required.';
-        if ('coachName' in fieldValues)
-            temp.coachName = fieldValues.coachName.trim() ? '' : 'This field is required.';
-        if ('city' in fieldValues)
-            temp.city = (fieldValues.city.trim().length > 0) ? '' : 'This field is required.';
+        if ('team_name' in fieldValues)
+            temp.team_name = fieldValues.team_name.trim() ? '' : 'This field is required.';
+        if ('club_name' in fieldValues)
+            temp.club_name = fieldValues.club_name.trim() ? '' : 'This field is required.';
+        if ('coach_name' in fieldValues)
+            temp.coach_name = fieldValues.coach_name.trim() ? '' : 'This field is required.';
+        if ('team_city' in fieldValues)
+            temp.team_city = (fieldValues.team_city.trim().length > 0) ? '' : 'This field is required.';
         if ('gender' in fieldValues)
             temp.gender = (fieldValues.gender.trim().length > 0) ? '' : 'This field is required.';
-        if ('stateName' in fieldValues)
-            temp.stateName = (fieldValues.stateName.trim().length > 0) ? '' : 'This field is required.';
+        if ('team_state' in fieldValues)
+            temp.team_state = (fieldValues.team_state.trim().length > 0) ? '' : 'This field is required.';
         if ('division' in fieldValues)
             temp.division = (fieldValues.division.trim().length > 0) ? '' : 'This field is required.';
 
-        if ('mobile' in fieldValues) {
-            if (fieldValues.mobile.trim().length === 0) {
-                temp.mobile = 'This field is required.';
-            } else if (isNaN(fieldValues.mobile)) {
-                temp.mobile = 'Only numeric values are allowed.';
-            } else if (fieldValues.mobile.trim().length < 10) {
-                temp.mobile = 'Minimum 10 digits are required.';
+        if ('primary_contact' in fieldValues) {
+            if (fieldValues.primary_contact.trim().length === 0) {
+                temp.primary_contact = 'This field is required.';
+            } else if (isNaN(fieldValues.primary_contact)) {
+                temp.primary_contact = 'Only numeric values are allowed.';
+            } else if (fieldValues.primary_contact.trim().length < 10) {
+                temp.primary_contact = 'Minimum 10 digits are required.';
             } else {
-                temp.mobile = '';
+                temp.primary_contact = '';
             }
         }
 
-        if ('age' in fieldValues) {
-            if (fieldValues.age.length === 0) {
-                temp.age = 'This field is required.';
+        if ('age_group' in fieldValues) {
+            if (fieldValues.age_group.length === 0) {
+                temp.age_group = 'This field is required.';
             } else {
-                temp.age = '';
+                temp.age_group = '';
             }
         }
 
-        if ('fileUplaod' in fieldValues) {
-            console.log(fileRef.current.files);
-            if (fileRef.current.files.length === 0) {
-                temp.fileUplaod = 'This field is required.';
-            } else if (!fileRef.current.files[0].name.includes('.pdf') || !fileRef.current.files[0].type.includes('application/pdf')) {
-                temp.fileUplaod = 'File type should only be pdf';
-            } else if (Math.round(fileRef.current.files[0].size / 1024) > 2) {
-                temp.fileUplaod = 'File should not be greater than 2MB';
-            } else {
-                temp.fileUplaod = '';
-            }
-        }
+        // if ('player_names' in fieldValues) {
+        //     console.log(fileRef.current.files);
+        //     if (fileRef.current.files.length === 0) {
+        //         temp.player_names = 'This field is required.';
+        //     } else if (!fileRef.current.files[0].name.includes('.pdf') || !fileRef.current.files[0].type.includes('application/pdf')) {
+        //         temp.player_names = 'File type should only be pdf';
+        //     } else if (Math.round(fileRef.current.files[0].size / 1024) > 2) {
+        //         temp.player_names = 'File should not be greater than 2MB';
+        //     } else {
+        //         temp.player_names = '';
+        //     }
+        // }
 
         setErrors({
             ...temp
         });
 
-        if (fieldValues === values) {
+        if (fieldValues === finalFormValues) {
             return Object.values(temp).every(x => x === "");
         }
     }
 
     const {
-        values,
+        finalFormValues,
         setValues,
         errors,
         setErrors,
         handleInputChange
-    } = useForm(initialFValues, false, true, validateRegitrationForm);
+    } = useFormTeamReg(initialFValues, false, true, validateRegitrationForm);
 
     const boxStyles = {
         display: 'flex',
@@ -162,7 +216,7 @@ function CoachRegistrationForm() {
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
         if (validateRegitrationForm()) {
-            alert('testing');
+            submitTeamRegistration();
         }
     }
 
@@ -177,10 +231,10 @@ function CoachRegistrationForm() {
                             <Controls.Input variant="outlined"
                                 label="Team ID"
                                 name="teamID"
-                                value={values.teamID}
+                                value={finalFormValues.teamID}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid container item xs={1} spacing={1}/* style={{ marginTop: '1rem', marginBottom: '1rem' }} */
+                        <Grid container item xs={1} spacing={1}
                             direction="row"
                             justifyContent="center"
                             alignItems="center">
@@ -214,43 +268,43 @@ function CoachRegistrationForm() {
                         <Grid container item xs={4} >
                             <Controls.Input variant="outlined"
                                 label="Team Name"
-                                name="teamName"
-                                value={values.teamName}
-                                error={errors.teamName}
+                                name="team_name"
+                                value={finalFormValues.team_name}
+                                error={errors.team_name}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
                                 label="Club Name"
-                                name="clubName"
-                                value={values.clubName}
-                                error={errors.clubName}
+                                name="club_name"
+                                value={finalFormValues.club_name}
+                                error={errors.club_name}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
                                 label="Coach Name"
-                                name="coachName"
-                                value={values.coachName}
-                                error={errors.coachName}
+                                name="coach_name"
+                                value={finalFormValues.coach_name}
+                                error={errors.coach_name}
                                 onChange={handleInputChange} />
                         </Grid>
                     </Grid>
                     <Grid container item>
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
-                                label="Age"
-                                name="age"
+                                label="Age group"
+                                name="age_group"
                                 type="number"
-                                value={values.age}
-                                error={errors.age}
+                                value={finalFormValues.age_group}
+                                error={errors.age_group}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.RadioGroup
                                 label="Gender"
                                 name="gender"
-                                value={values.gender}
+                                value={finalFormValues.gender}
                                 onChange={handleInputChange}
                                 items={genderItems}
                                 error={errors.gender}
@@ -261,7 +315,7 @@ function CoachRegistrationForm() {
                                 variant="outlined"
                                 name="division"
                                 label="Division"
-                                value={values.division}
+                                value={finalFormValues.division}
                                 onChange={handleInputChange}
                                 options={division}
                                 error={errors.division}
@@ -272,26 +326,26 @@ function CoachRegistrationForm() {
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
                                 label="Contact Number"
-                                name="mobile"
-                                value={values.mobile}
-                                error={errors.mobile}
+                                name="primary_contact"
+                                value={finalFormValues.primary_contact}
+                                error={errors.primary_contact}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.Input variant="outlined"
-                                label="City"
-                                name="city"
-                                value={values.city}
-                                error={errors.city}
+                                label="Team city"
+                                name="team_city"
+                                value={finalFormValues.team_city}
+                                error={errors.team_city}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
                             <Controls.Select
                                 variant="outlined"
-                                name="stateName"
+                                name="team_state"
                                 label="State"
-                                value={values.stateName}
-                                error={errors.stateName}
+                                value={finalFormValues.team_state}
+                                error={errors.team_state}
                                 onChange={handleInputChange}
                                 options={USAStateList}
                             />
@@ -301,9 +355,9 @@ function CoachRegistrationForm() {
                         <Grid container item xs={12}>
                             <Controls.Input variant="outlined"
                                 label=""
-                                name="fileUplaod"
-                                value={values.fileUplaod}
-                                error={errors.fileUplaod}
+                                name="player_names"
+                                value={finalFormValues.player_names}
+                                error={errors.player_names}
                                 onChange={handleInputChange}
                                 type="file"
                                 fileRef={fileRef}

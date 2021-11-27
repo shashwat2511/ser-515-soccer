@@ -7,8 +7,10 @@ import './../css/SSSFilter.css';
 import axios from 'axios';
 import { DataGrid } from "@material-ui/data-grid";
 import { teamList } from '../demoJSONs/teamList';
+import { withRouter } from 'react-router-dom';
 
-function SSSFilter() {
+function SSSFilter(props) {
+    const [searching, setSearching] = useState(false);
     const [tableData, setTableData] = useState([]);
 
     const [divisions, setDivisions] = useState([]);
@@ -18,15 +20,32 @@ function SSSFilter() {
     const [clubs, setClubs] = useState([]);
 
     const columns = [
-        { field: 'field_id', headerName: 'FIELD ID', minWidth: 100, flex: 1, headerClassName: 'super-app-theme--header', },
-        { field: 'ground_number', headerName: 'GROUND NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'match_date', headerName: 'MATCH DATE', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'match_division', headerName: 'MATCH DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'match_time', headerName: 'MATCH TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'team_1_club_name', headerName: 'T1 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'team_1_id', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'team_2_club_name', headerName: 'T2 CLUB NAME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
-        { field: 'team_2_id', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', },
+        { field: 'id', headerName: 'NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
+        {
+            field: 'match_division', headerName: 'DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            renderCell: (params) => {
+                return (<a href="" className="cellAnchor">{params.value}</a>);
+            }
+        },
+        { field: 'match_time', headerName: 'TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
+        {
+            field: 'field_id', headerName: 'FIELD', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            renderCell: (params) => {
+                return (<a href="../maps" className="cellAnchor">{params.value}</a>);
+            }
+        },
+        {
+            field: 'team_1_id', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            renderCell: (params) => {
+                return (<a href="" className="cellAnchor">{params.value}</a>);
+            }
+        },
+        {
+            field: 'team_2_id', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            renderCell: (params) => {
+                return (<a href="" className="cellAnchor">{params.value}</a>);
+            }
+        },
     ];
 
     const initialFValues = {
@@ -36,6 +55,12 @@ function SSSFilter() {
         team_id: '',
         club_name: '',
     }
+
+    const fingID = (array, value) => {
+        array.filter(obj => {
+            return obj.value === value;
+        });
+    };
 
     const {
         values,
@@ -47,95 +72,133 @@ function SSSFilter() {
 
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
-        var url = new URL(document.location);
+
+        let resDivisions = divisions.map(x => x.value);
+        let resDay = dates.map(x => x.value);
+        let resVenue = venues.map(x => x.value);
+        let resTeams = teams.map(x => x.value);
+        let resClub = clubs.map(x => x.value);
+
+        let division = values['division'];
+        let day = values['day'];
+        let venue = values['venue'];
+        let team = values['team_id'];
+        let club = values['club_name'];
+        let data = {
+            division: '',
+            day: '',
+            venue: '',
+            team_id: '',
+            club_name: '',
+        };
         let thereIsAValue = false;
-        let data = {};
 
-        if (values.division !== null && values.division.trim() !== '') {
-            thereIsAValue = true;
-            data = {
-                ...data,
-                "division": values.division
-            };
-            url.searchParams.append('division', values.division);
-        } else {
-            data = {
-                ...data,
-                "division": ""
-            };
+        if (division !== null && division !== '') {
+            if (resDivisions.indexOf(division) !== -1) {
+                data.division = division;
+                thereIsAValue = true;
+            }
         }
 
-        if (values.day !== null && values.day.trim() !== '') {
-            thereIsAValue = true;
-            data = {
-                ...data,
-                "day": values.day
-            };
-            url.searchParams.append('division', values.day);
-        } else {
-            data = {
-                ...data,
-                "day": ""
-            };
+        if (day !== null && day !== '') {
+            if (resDay.indexOf(day) !== -1) {
+                data.day = day;
+                thereIsAValue = true;
+            }
         }
 
-        if (values.venue !== null && values.venue.trim() !== '') {
-            thereIsAValue = true;
-            data = {
-                ...data,
-                "venue": values.venue
-            };
-            url.searchParams.append('division', values.venue);
-        } else {
-            data = {
-                ...data,
-                "venue": ""
-            };
+        if (venue !== null && venue !== '') {
+            if (resVenue.indexOf(venue) !== -1) {
+                data.venue = venue;
+                thereIsAValue = true;
+            }
         }
 
-        if (values.team_id !== null && values.team_id.trim() !== '') {
-            thereIsAValue = true;
-            data = {
-                ...data,
-                "team": values.team_id
-            };
-            url.searchParams.append('division', values.team_id);
-        } else {
-            data = {
-                ...data,
-                "team": ""
-            };
+        if (team !== null && team !== '') {
+            if (resTeams.indexOf(team) !== -1) {
+                // data.team_id = team;
+                data.team_id = fingID(teams, team).id;
+                thereIsAValue = true;
+            }
         }
 
-        if (values.club_name !== null && values.club_name.trim() !== '') {
-            thereIsAValue = true;
-            data = {
-                ...data,
-                "club": values.club_name
-            };
-            url.searchParams.append('division', values.club_name);
-        } else {
-            data = {
-                ...data,
-                "club": ""
-            };
+        if (club !== null && club !== '') {
+            if (resClub.indexOf(club) !== -1) {
+                data.club_name = club;
+                thereIsAValue = true;
+            }
         }
+
+        console.debug(data);
+        let location = {
+            ...props.location,
+        };
+
+        let params = new URLSearchParams(location.search);
+        delete location.key;
+        if (data.division === "") {
+            params.delete("division");
+        } else {
+            params.set("division", data.division);
+        }
+
+        if (data.day === "") {
+            params.delete("day");
+        } else {
+            params.set("day", data.day);
+        }
+
+        if (data.venue === "") {
+            params.delete("venue");
+        } else {
+            params.set("venue", data.venue);
+        }
+
+        if (data.team_id === "") {
+            params.delete("team");
+        } else {
+            params.set("team", data.team_id);
+        }
+
+        if (data.club_name === "") {
+            params.delete("club");
+        } else {
+            params.set("club", data.club_name);
+        }
+
+        location.search = params.toString();
+        props.history.push(location);
 
         if (thereIsAValue) {
+            setSearching(true);
             setValues(data);
-            axios.post('https://jsonplaceholder.typicode.com/posts', data)
-                .then((response) => {
-                    setTableData(teamList);
+            setTableData([]);
+            // create a searching variable and use it to disable dropdowns.
+            fetch("http://localhost:5000/api/v1/filterMatches/", {
+                body: JSON.stringify(data),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "POST",
+                    "Access-Control-Request-Headers": "Content-Type"
+                },
+            }).then((res) => res.json())
+                .then((result) => {
+                    setTableData(result.matches);
+                    // alert(result);
+                    console.log(result);
+                    setSearching(false);
                 })
-                .catch((error) => {
+                .catch((e) => {
+                    setSearching(false);
                 });
+        } else {
+            setTableData([]);
         }
-        alert(url);
     };
 
     const handleCellClick = (param, event) => {
-        console.log(param);
-        console.log(event);
         if (param.colIndex === 2) {
             event.stopPropagation();
         }
@@ -153,117 +216,157 @@ function SSSFilter() {
         }).then((res) => res.json())
             .then((result) => {
                 setDivisions(result.division);
+                let resDivisions = result.division.map(x => x.value);
                 setDates(result.day);
+                let resDay = result.day.map(x => x.value);
                 setVenues(result.venue);
+                let resVenue = result.venue.map(x => x.value);
                 setTeams(result.teams);
+                let resTeams = result.teams.map(x => x.value);
                 setClubs(result.club);
-                alert(JSON.stringify(result));
-                console.log(JSON.stringify(result.club));
-            })
-            .catch((e) => {
-            });
+                let resClub = result.club.map(x => x.value);
+                // console.log(JSON.stringify(result));
+                // alert(JSON.stringify(result.club));
 
-        let param = (new URL(document.location)).searchParams;
-        let division = param.get('division');
-        let day = param.get('day');
-        let venue = param.get('venue');
-        let team = param.get('team');
-        let club = param.get('club');
-        let data = {};
-        let thereIsAValue = false;
+                // let param = (new URL(document.location)).searchParams;
+                let param = new URLSearchParams(props.location.search);
+                let division = param.get('division');
+                let day = param.get('day');
+                let venue = param.get('venue');
+                let team = param.get('team');
+                let club = param.get('club');
+                console.debug(param);
+                console.debug(division);
+                console.debug(day);
+                console.debug(venue);
+                console.debug(team);
+                console.debug(club);
+                let data = {
+                    division: '',
+                    day: '',
+                    venue: '',
+                    team_id: '',
+                    club_name: '',
+                };
+                let thereIsAValue = false;
+                let overrideNeeded = false;
 
-        if (division !== null && division.trim() !== '') {
-            data = {
-                ...data,
-                "division": division
-            };
-            thereIsAValue = true;
-        } else {
-            data = {
-                ...data,
-                "division": ""
-            };
-        }
+                console.log(result.division.includes(division));
 
-        if (day !== null && day.trim() !== '') {
-            data = {
-                ...data,
-                "day": day
-            };
-            thereIsAValue = true;
-        } else {
-            data = {
-                ...data,
-                "day": ""
-            };
-        }
+                if (division !== null && division !== '') {
+                    if (resDivisions.indexOf(division) !== -1) {
+                        data.division = division;
+                        thereIsAValue = true;
+                    } else {
+                        overrideNeeded = true;
+                    }
+                }
 
-        if (venue !== null && venue.trim() !== '') {
-            data = {
-                ...data,
-                "venue": venue
-            };
-            thereIsAValue = true;
-        } else {
-            data = {
-                ...data,
-                "venue": ""
-            };
-        }
+                if (day !== null && day !== '') {
+                    if (resDay.indexOf(day) !== -1) {
+                        data.day = day;
+                        thereIsAValue = true;
+                    } else {
+                        overrideNeeded = true;
+                    }
+                }
 
-        if (team !== null && team.trim() !== '') {
-            data = {
-                ...data,
-                "team_id": team
-            };
-            thereIsAValue = true;
-        } else {
-            data = {
-                ...data,
-                "team_id": ""
-            };
-        }
+                if (venue !== null && venue !== '') {
+                    if (resVenue.indexOf(venue) !== -1) {
+                        data.venue = venue;
+                        thereIsAValue = true;
+                    } else {
+                        overrideNeeded = true;
+                    }
+                }
 
-        if (club !== null && club.trim() !== '') {
-            data = {
-                ...data,
-                "club_name": club
-            };
-            thereIsAValue = true;
-        } else {
-            data = {
-                ...data,
-                "club_name": ""
-            };
-        }
+                if (team !== null && team !== '') {
+                    if (resTeams.indexOf(team) !== -1) {
+                        data.team_id = fingID(teams, team).id;
+                        thereIsAValue = true;
+                    } else {
+                        overrideNeeded = true;
+                    }
+                }
 
-        data = {
-            "division": "Red",
-            "day": "2021-12-15",
-            "venue": "",
-            "team_id": 1,
-            "club_name": "Shashwat Club"
-        }
-        fetch("http://localhost:5000/api/v1/filterMatches/", {
-            body: JSON.stringify(data),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST",
-                "Access-Control-Request-Headers": "Content-Type"
-            },
-        }).then((res) => res.json())
-            .then((result) => {
-                setTableData(result.matches);
-                // alert(result);
-                console.log(result);
+                if (club !== null && club !== '') {
+                    if (resClub.indexOf(club) !== -1) {
+                        data.club_name = club;
+                        thereIsAValue = true;
+                    } else {
+                        overrideNeeded = true;
+                    }
+                }
+
+                console.debug(data);
+                let location = {
+                    ...props.location,
+                };
+
+                let params = new URLSearchParams(location.search);
+                delete location.key;
+                if (data.division === "") {
+                    params.delete("division");
+                } else {
+                    params.set("division", data.division);
+                }
+
+                if (data.day === "") {
+                    params.delete("day");
+                } else {
+                    params.set("day", data.day);
+                }
+
+                if (data.venue === "") {
+                    params.delete("venue");
+                } else {
+                    params.set("venue", data.venue);
+                }
+
+                if (data.team_id === "") {
+                    params.delete("team");
+                } else {
+                    params.set("team", data.team_id);
+                }
+
+                if (data.club_name === "") {
+                    params.delete("club");
+                } else {
+                    params.set("club", data.club_name);
+                }
+
+                location.search = params.toString();
+                props.history.push(location);
+
+                if (thereIsAValue) {
+                    setSearching(true);
+                    setValues(data);
+                    setTableData([]);
+                    // create a searching variable and use it to disable dropdowns.
+                    fetch("http://localhost:5000/api/v1/filterMatches/", {
+                        body: JSON.stringify(data),
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*",
+                            "Access-Control-Allow-Methods": "POST",
+                            "Access-Control-Request-Headers": "Content-Type"
+                        },
+                    }).then((res) => res.json())
+                        .then((result) => {
+                            setTableData(result.matches);
+                            // alert(result);
+                            console.log(result);
+                            setSearching(false);
+                        })
+                        .catch((e) => {
+                            setSearching(false);
+                        });
+                }
             })
             .catch((e) => {
             });
     }, []);
-
-
 
     return (
         <React.Fragment>
@@ -288,6 +391,7 @@ function SSSFilter() {
                                     value={values.division}
                                     onChange={handleInputChange}
                                     options={divisions}
+                                    disabled={searching}
                                 />
                             </Grid>
                             <Grid container item xs={4}>
@@ -298,6 +402,7 @@ function SSSFilter() {
                                     value={values.day}
                                     onChange={handleInputChange}
                                     options={dates}
+                                    disabled={searching}
                                 />
                             </Grid>
                             <Grid container item xs={4}>
@@ -308,6 +413,7 @@ function SSSFilter() {
                                     value={values.venue}
                                     onChange={handleInputChange}
                                     options={venues}
+                                    disabled={searching}
                                 />
                             </Grid>
                         </Grid>
@@ -320,6 +426,7 @@ function SSSFilter() {
                                     value={values.team_id}
                                     onChange={handleInputChange}
                                     options={teams}
+                                    disabled={searching}
                                 />
                             </Grid>
                             <Grid container item xs={6}>
@@ -330,6 +437,7 @@ function SSSFilter() {
                                     value={values.club_name}
                                     onChange={handleInputChange}
                                     options={clubs}
+                                    disabled={searching}
                                 />
                             </Grid>
                         </Grid>
@@ -344,6 +452,7 @@ function SSSFilter() {
                             color="secondary"
                             size="large"
                             text="See Games"
+                            disabled={Object.values(values).filter(x => x !== "").length === 0 || searching}
                         />
                     </Grid>
                 </Form>
@@ -367,6 +476,7 @@ function SSSFilter() {
                         disableSelectionOnClick
                         rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
                         onCellClick={handleCellClick}
+                        isCellEditable="false"
                     ></DataGrid>
                 </Box>
             </Box>
@@ -374,4 +484,4 @@ function SSSFilter() {
     );
 }
 
-export default SSSFilter
+export default withRouter(SSSFilter);

@@ -6,7 +6,8 @@ function Select(props) {
 
     const mapHandler = option => {
         let key = Object.keys(option);
-        return (<MenuItem key={option.id} value={option[key[1]]}>{option[key[1]]}</MenuItem>);
+        // return (<MenuItem key={option.id} value={option[key[1]]}>{option[key[1]]}</MenuItem>);
+        return (<MenuItem key={option.id} value={option.value}>{option.value}</MenuItem>);
     }
 
     return (
