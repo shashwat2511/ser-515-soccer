@@ -55,7 +55,7 @@ const AdminLogin = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box p={1}>
-                            <TextField sm={5} style={{width:'100%'}} variant="outlined" value={payload["password"]} required id="password" label="Password" margin="normal" autoFocus
+                            <TextField sm={5} style={{width:'100%'}} type="password" variant="outlined" value={payload["password"]} required id="password" label="Password" margin="normal" autoFocus
                              onChange={(event) => {
                                 const password = event.target.value
                                 setPayload({
