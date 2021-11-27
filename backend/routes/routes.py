@@ -12,6 +12,7 @@ from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
 from services.adminLogin.AdminLogin import AdminLogin
 from services.fetchMatchDetails.FetchMatchDetails import FetchMatchDetails
 from services.updateMatchScore.UpdateMatchScore import UpdateMatchScore
+from services.checkMatchesScheduled.CheckMatchesScheduled import CheckMatchesScheduled
 
 
 APP = Flask(__name__)
@@ -147,6 +148,18 @@ def update_score():
     if request.method == 'POST':
         ums = UpdateMatchScore()
         return_data = ums.scores_update(request)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+@APP.route("/api/v1/checkMatchesScheduled/", methods=['GET'])
+def check_matches_scheduled():
+    if request.method == 'GET':
+        cms = CheckMatchesScheduled()
+        return_data = cms.matches_count()
         response = Response(
             response=json.dumps(return_data),
             status=200,
