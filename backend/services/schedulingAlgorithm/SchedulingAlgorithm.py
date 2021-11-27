@@ -14,6 +14,8 @@ class SchedulingAlgorithm():
         return ans
 
     def make_pair(self, team_list):
+        # if team_list is None or len(team_list)%2 > 0:
+        #     return None
         ans = []
         for i in range(0, len(team_list), 2):
             ans.append([team_list[i], team_list[i + 1]])
@@ -116,7 +118,9 @@ class SchedulingAlgorithm():
                     else:
                         self.matches_with_ground[age_range].append(paired_team)
         self.insert_match_details()
-        return_msg = {
-            "message": "All matches scheduled successfully"
-        }
-        return return_msg
+        matches = dsm.select_all_matches()
+        return {"matches": matches}
+        # return_msg = {
+        #     "message": "All matches scheduled successfully"
+        # }
+        # return return_msg

@@ -16,7 +16,7 @@ class DBTeamRegistration(object):
 
     def insert_team(self,
                     team_name, gender, age_group, coach_name, team_city, team_state,
-                    club_name, primary_contact, division, player_name):
+                    club_name, primary_contact, division, player_names):
         try:
             connection = psycopg2.connect(
                 user=self.user,
@@ -34,7 +34,7 @@ class DBTeamRegistration(object):
             RETURNING team_id"""
             record_to_insert = (
                 team_name, gender, age_group, coach_name, team_city, team_state,
-                club_name, primary_contact, division, player_name
+                club_name, primary_contact, division, player_names
             )
             # print(insert_query, record_to_insert)
 
