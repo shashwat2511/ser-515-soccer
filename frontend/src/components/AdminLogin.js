@@ -26,7 +26,7 @@ const AdminLogin = () => {
         .then(res => res.json())
         .catch(err => console.log(err))
         if(response && response["user_exist"]) {
-            // navigate to match schedule page
+            // navigate to match_schedule page
             history.push("/match_schedule")
         }
     }
