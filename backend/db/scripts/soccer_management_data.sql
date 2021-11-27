@@ -42,3 +42,5 @@ INSERT INTO public.teams (team_id, team_name, gender, age_group, division, coach
 INSERT INTO public.teams (team_id, team_name, gender, age_group, division, coach_name, team_city, team_state, club_name, primary_contact, team_details_file_path, is_active) VALUES (14, 'Team_14', 'M', 20, 'Blue', 'John', 'Tempe', 'AZ', 'John Club', 1234567890, '/uploaded_files/Team14.pdf', true);
 INSERT INTO public.teams (team_id, team_name, gender, age_group, division, coach_name, team_city, team_state, club_name, primary_contact, team_details_file_path, is_active) VALUES (15, 'Team_15', 'M', 20, 'Blue', 'Roy', 'Tempe', 'AZ', 'Roy Club', 1234567890, '/uploaded_files/Team15.pdf', true);
 INSERT INTO public.teams (team_id, team_name, gender, age_group, division, coach_name, team_city, team_state, club_name, primary_contact, team_details_file_path, is_active) VALUES (16, 'Team_16', 'M', 20, 'Blue', 'Bob', 'Tempe', 'AZ', 'Bob Club', 1234567890, '/uploaded_files/Team16.pdf', true);
+
+INSERT INTO public.users (user_id, username, password, user_role, is_admin, is_active) VALUES (1, 'shashwat', 'password', 'tournament_manager', true, true);
