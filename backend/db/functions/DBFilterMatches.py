@@ -61,7 +61,8 @@ class DBFilterMatches(object):
             cursor = connection.cursor()
             select_query = """select array_agg(row_to_json(agg_tab)) from 
                             (SELECT m.match_division, m.match_date, m.match_time, m.ground_number,
-                             m.team_1_id, m.team_2_id, f.field_id, t1.club_name as team_1_club_name,
+                             m.team_1_id, t1.team_name as team_1_name, t2.team_name as team_2_name,
+                             m.team_2_id, f.field_id, t1.club_name as team_1_club_name,
                              t2.club_name as team_2_club_name
                             from public.match m
                             LEFT JOIN public.teams t1 ON m.team_1_id = t1.team_id
@@ -77,8 +78,33 @@ class DBFilterMatches(object):
         except (Exception, psycopg2.Error) as error:
             print("Failed to select record into teams table", error)
 
-
-
-
-
-
+    def select_matches_by_teamid(self, team_id):
+        try:
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=self.database,
+            )
+            cursor = connection.cursor()
+            # query_where_clause = "(m.team_1_id='" + str(team_id) + "'"
+            # query_where_clause += " OR m.team_2_id='" + str(team_id) + "')"
+            select_query = """select array_agg(row_to_json(agg_tab)) from 
+                                (SELECT m.match_division, m.match_date, m.match_time, m.ground_number,
+                                 m.team_1_id, t1.team_name as team_1_name, t2.team_name as team_2_name,
+                                 m.team_2_id, f.field_id, t1.club_name as team_1_club_name,
+                                 t2.club_name as team_2_club_name
+                                from public.match m
+                                LEFT JOIN public.teams t1 ON m.team_1_id = t1.team_id
+                                LEFT JOIN public.teams t2 ON m.team_2_id = t2.team_id
+                                LEFT JOIN public.field f ON m.field_id = f.field_id
+                                where m.team_1_id=%s OR m.team_2_id=%s ) agg_tab
+                                """
+            record_to_select = (team_id, team_id)
+            cursor.execute(select_query, record_to_select)
+            matches_json = cursor.fetchall()
+            connection.close()
+            return matches_json[0][0]
+        except (Exception, psycopg2.Error) as error:
+            print("Failed to select record into matches table", error)

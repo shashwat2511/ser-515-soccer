@@ -3,6 +3,7 @@ import datetime as dt
 # from datetime import datetime
 from db.functions.DBTournamentDetails import DBTournamentDetails
 
+
 class GenerateTeamRegistrationAmount():
 
     def registration_payment(self):
@@ -15,11 +16,9 @@ class GenerateTeamRegistrationAmount():
 
         time_difference = registration_date - currentDate
         delta = time_difference.days
-        # delta = 15
-
-        # print(type(delta))
 
         message = ""
+        registration_open = True
         if (delta > 45):
             message = "You are too early to register"
         elif (30 < delta < 45):
@@ -30,9 +29,11 @@ class GenerateTeamRegistrationAmount():
         elif (0 < delta < 15):
             registration_fee = registration_fee + ((registration_fee * 10) / 100)
             message = "To register the team, you need to pay " + str(registration_fee)
-        elif(delta < 0):
+        elif (delta < 0):
+            registration_open = False
             message = "You cannot make this payment, You are late for competition!"
-        return {
-            "registration_fee": registration_fee,
-            "message": message
-        }
+        return_data = {"registration_open": registration_open, "message": message}
+        return_data["registration_fee"] = registration_fee
+        # if registration_open:
+        #     return_data["registration_fee"] = registration_fee
+        return return_data

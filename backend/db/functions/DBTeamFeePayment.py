@@ -24,25 +24,21 @@ class DBTeamFeePayment(object):
             )
             cursor = connection.cursor()
             insert_query = """ 
-            INSERT INTO public.payment (payment_amount,team_id)
+            INSERT INTO public.payment (team_id, payment_amount)
             VALUES (%s,%s) 
             RETURNING payment_id"""
             record_to_insert = (
                 team_id, payment_amount
             )
             cursor.execute(insert_query, record_to_insert)
+            inserted_payment_id = cursor.fetchone()[0]
             connection.commit()
             connection.close()
-            return_msg = {
-                "message": "Payment successfully completed for team_id = %s."
-                           + "Congrats!!! You are now enrolled to the tournament." % (team_id),
-                "payment_success": True
-            }
-            return return_msg
+            return inserted_payment_id
         except (Exception, psycopg2.Error) as error:
             print("Failed to insert record into payment table", error)
             return {
-                "message": "Failed to insert payment record. Payment already exist for team_id = %s" % (team_id),
+                "message": "Failed to insert payment record. Payment already exist for team_id = %s" % (str(team_id)),
                 "payment_success": False
             }
 
@@ -64,5 +60,26 @@ class DBTeamFeePayment(object):
             payment_json = cursor.fetchall()
             connection.close()
             return payment_json[0][0]
+        except (Exception, psycopg2.Error) as error:
+            print("Failed to select record into payment table", error)
+
+    def check_already_paid(self, team_id):
+        try:
+            connection = psycopg2.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                database=self.database,
+            )
+            cursor = connection.cursor()
+            select_query = """ 
+            SELECT array_agg(row_to_json(t)) from 
+                (SELECT count(*) as count from public.payment where team_id=%s ) t
+            """
+            cursor.execute(select_query, (team_id,))
+            payment_json = cursor.fetchall()
+            connection.close()
+            return payment_json[0][0][0]
         except (Exception, psycopg2.Error) as error:
             print("Failed to select record into payment table", error)

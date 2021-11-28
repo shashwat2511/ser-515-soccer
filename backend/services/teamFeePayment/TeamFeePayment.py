@@ -10,14 +10,22 @@ class TeamFeePayment():
         payment_amount = json_data['payment_amount']
 
         dtfp = DBTeamFeePayment()
-        check_team_fee_paid_data = dtfp.select_team_fee_payment(team_id)
-        payment_detail = {}
-        if check_team_fee_paid_data is not None:
-            if len(check_team_fee_paid_data) == 1:
-                payment_detail = dtfp.insert_team_fee_payment(team_id, payment_amount)
+        check_team_fee_paid_data = dtfp.check_already_paid(team_id)
+        transaction_id = ""
+
+        if check_team_fee_paid_data["count"] == 0:
+            transaction_id = dtfp.insert_team_fee_payment(team_id, payment_amount)
+        else:
+            txt = "Already Paid"
+
+
+        message = "Congrats!!! You are now enrolled to the tournament."
+
         return_data = {
-            "message": payment_detail.get("message"),
+            "message": message,
             "team_id": team_id,
-            "payment_success": payment_detail.get("payment_success")
+            "payment_success": True
         }
+        if check_team_fee_paid_data["count"] == 0:
+            return_data["transaction_id"] = transaction_id
         return return_data
