@@ -5,7 +5,7 @@ from flask_cors import CORS
 from services.teamRegistration.TeamRegistration import TeamRegistration
 from services.teamFeePayment.TeamFeePayment import TeamFeePayment
 from services.generateTeamRegistrationAmount.GenerateTeamRegistrationAmount import GenerateTeamRegistrationAmount
-from services.fetchTeamListForTm.FetchTeamListForTm import FetchTeamListForTm
+from services.fetchTeamList.FetchTeamList import FetchTeamList
 from services.getFilterParameters.GetFilterParameters import GetFilterParameters
 from services.filterMatchDetails.FilterMatchDetails import FilterMatchDetails
 from services.schedulingAlgorithm.SchedulingAlgorithm import SchedulingAlgorithm
@@ -68,11 +68,20 @@ def team_fee_payment():
         return response
 
 
-@APP.route("/api/v1/fetchTeamListForTm/", methods=['GET'])
-def fetch_team_list_for_tm():
+@APP.route("/api/v1/fetchTeamList/", methods=['GET', 'POST'])
+def fetch_team_list():
     if request.method == 'GET':
-        ftl = FetchTeamListForTm()
+        ftl = FetchTeamList()
         return_data = ftl.get_registered_team_list()
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+    if request.method == 'POST':
+        ftl = FetchTeamList()
+        return_data = ftl.get_team_list_by_category(request)
         response = Response(
             response=json.dumps(return_data),
             status=200,
