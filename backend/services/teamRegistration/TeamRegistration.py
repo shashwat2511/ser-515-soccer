@@ -23,7 +23,7 @@ class TeamRegistration():
             team_name, gender, age_group, coach_name, team_city,
             team_state, club_name, primary_contact, division, player_names
         )
-
+        
         message = "Your team " + team_name +" has been registered. Please pay the due about to enroll to tournament"
 
         return {

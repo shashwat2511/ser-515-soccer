@@ -16,8 +16,8 @@ export default function Header() {
             }}>
                 <a href="./home" className="headerMenu"><Box>HOME</Box></a>
                 <a href="./about" className="headerMenu"><Box>ABOUT</Box></a>
-                <a href="./coach-registration" className="headerMenu"><Box>APPLY</Box></a>
-                <a href="./faqs" className="headerMenu"><Box>FAQs</Box></a>
+                <a href="./teamregistration" className="headerMenu"><Box>APPLY</Box></a>
+                <a href="./rulesandregulations" className="headerMenu"><Box>FAQs</Box></a>
                 <a href="./schedule" className="headerMenu"><Box>TEAMS, SCHEDULES & SCORES</Box></a>
                 <a href="./maps" className="headerMenu"><Box>MAPS</Box></a>
                 <a href="./forms" className="headerMenu"><Box>FORMS</Box></a>
