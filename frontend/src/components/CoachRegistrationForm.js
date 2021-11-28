@@ -77,35 +77,10 @@ const division = [
 
 
 function CoachRegistrationForm() {
-    // const [divisions, setDivisions] = useState([]);
-    // const [divisions, setDivisions] = useState([]);
-//     useEffect(() => {
-//         fetch(config.BASE_URL + "getFilterParams/", {
-//             method: "GET",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 "Access-Control-Allow-Origin": "*",
-//                 "Access-Control-Allow-Methods": "*",
-//                 "Access-Control-Request-Headers": "Content-Type"
-//             },
-//         }).then((res) => res.json())
-//             .then((result) => {
-//                 setDivisions(result.division);
-//                 // alert(config.BASE_URL);
-//                 // setDates(result.day);
-//                 // setVenues(result.venue);
-//                 // setTeams(result.teams);
-//                 // setClubs(result.club);
-//                 // alert(JSON.stringify(result));
-//                 console.log(JSON.stringify(result.club));
-//             })
-//             .catch((e) => {
-//             });
-// }, []);
-
+    
     const history = useHistory();
 
-    const submitTeamRegistration = () =>{
+    const submitTeamRegistration = () => {
         fetch(config.BASE_URL + "teamRegistration/", {
             body: JSON.stringify(finalFormValues),
             method: "POST",
@@ -125,8 +100,7 @@ function CoachRegistrationForm() {
 
     };
     const submitTeamID = () => {
-        alert("hello")
-
+        history.push("/teammatches", {'team_id': finalFormValues.team_id});
     };
     
     const initialFValues = {
