@@ -104,19 +104,21 @@ class SchedulingAlgorithm():
             for gen in gender_list:
                 for age in age_group_list:
                     filtered_teams = dsm.select_filtered_team_list(div, gen, age)
-                    # list_filtered_teams = self.dict_to_list(filtered_teams, "team_id")
-                    age_range = self.find_key_for_age(age)
-                    if age_range is None:
-                        print("Error")
-                        return
-                    paired_team = self.make_pair(filtered_teams)
+                    if filtered_teams is not None:
+                        # list_filtered_teams = self.dict_to_list(filtered_teams, "team_id")
+                        if len(filtered_teams) % 2 == 0:
+                            age_range = self.find_key_for_age(age)
+                            if age_range is None:
+                                print("Error")
+                                return
+                            paired_team = self.make_pair(filtered_teams)
 
-                    if self.matches_with_ground.get(age_range) is None:
-                        list_team_pairs = list()
-                        list_team_pairs.append(paired_team)
-                        self.matches_with_ground[age_range] = list_team_pairs
-                    else:
-                        self.matches_with_ground[age_range].append(paired_team)
+                            if self.matches_with_ground.get(age_range) is None:
+                                list_team_pairs = list()
+                                list_team_pairs.append(paired_team)
+                                self.matches_with_ground[age_range] = list_team_pairs
+                            else:
+                                self.matches_with_ground[age_range].append(paired_team)
         self.insert_match_details()
         matches = dsm.select_all_matches()
         return {"matches": matches}
