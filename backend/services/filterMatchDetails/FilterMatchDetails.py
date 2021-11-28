@@ -8,11 +8,22 @@ class FilterMatchDetails():
         request_body = request.stream.read()
         json_data = json.loads(request_body)
 
-        division = json_data.get("division")
-        day = json_data["day"]
-        venue = json_data["venue"]
-        team_id = json_data["team_id"]
-        club_name = json_data["club_name"]
+        division = ""
+        day = ""
+        venue = ""
+        team_id = ""
+        club_name = ""
+
+        if json_data.get("division"):
+            division = json_data.get("division").lower()
+        if json_data.get("day"):
+            day = json_data.get("day").lower()
+        if json_data.get("venue"):
+            venue = str(json_data.get("venue")).lower()
+        if json_data.get("team_id"):
+            team_id = str(json_data.get("team_id")).lower()
+        if json_data.get("club_name"):
+            club_name = str(json_data.get("club_name")).lower()
 
         dbfm = DBFilterMatches()
         filtered_matches = dbfm.select_filtered_match_list(division, day, venue, team_id, club_name)
