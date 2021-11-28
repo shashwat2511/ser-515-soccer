@@ -56,10 +56,8 @@ function SSSFilter(props) {
         club_name: '',
     }
 
-    const fingID = (array, value) => {
-        array.filter(obj => {
-            return obj.value === value;
-        });
+    const findID = (array, value) => {
+        return array.filter(obj => obj.value === value);
     };
 
     const {
@@ -116,8 +114,7 @@ function SSSFilter(props) {
 
         if (team !== null && team !== '') {
             if (resTeams.indexOf(team) !== -1) {
-                // data.team_id = team;
-                data.team_id = fingID(teams, team).id;
+                data.team_id = findID(teams, team)[0].id;
                 thereIsAValue = true;
             }
         }
@@ -157,7 +154,7 @@ function SSSFilter(props) {
         if (data.team_id === "") {
             params.delete("team");
         } else {
-            params.set("team", data.team_id);
+            params.set("team", team);
         }
 
         if (data.club_name === "") {
@@ -171,7 +168,10 @@ function SSSFilter(props) {
 
         if (thereIsAValue) {
             setSearching(true);
-            setValues(data);
+            setValues({
+                ...data,
+                team_id: team
+            });
             setTableData([]);
             // create a searching variable and use it to disable dropdowns.
             fetch("http://localhost:5000/api/v1/filterMatches/", {
@@ -186,7 +186,6 @@ function SSSFilter(props) {
             }).then((res) => res.json())
                 .then((result) => {
                     setTableData(result.matches);
-                    // alert(result);
                     console.log(result);
                     setSearching(false);
                 })
@@ -225,22 +224,13 @@ function SSSFilter(props) {
                 let resTeams = result.teams.map(x => x.value);
                 setClubs(result.club);
                 let resClub = result.club.map(x => x.value);
-                // console.log(JSON.stringify(result));
-                // alert(JSON.stringify(result.club));
 
-                // let param = (new URL(document.location)).searchParams;
                 let param = new URLSearchParams(props.location.search);
                 let division = param.get('division');
                 let day = param.get('day');
                 let venue = param.get('venue');
                 let team = param.get('team');
                 let club = param.get('club');
-                console.debug(param);
-                console.debug(division);
-                console.debug(day);
-                console.debug(venue);
-                console.debug(team);
-                console.debug(club);
                 let data = {
                     division: '',
                     day: '',
@@ -249,56 +239,50 @@ function SSSFilter(props) {
                     club_name: '',
                 };
                 let thereIsAValue = false;
-                let overrideNeeded = false;
 
-                console.log(result.division.includes(division));
-
+                // alert(team);
                 if (division !== null && division !== '') {
                     if (resDivisions.indexOf(division) !== -1) {
                         data.division = division;
                         thereIsAValue = true;
-                    } else {
-                        overrideNeeded = true;
                     }
                 }
 
+                // alert("1");
                 if (day !== null && day !== '') {
                     if (resDay.indexOf(day) !== -1) {
                         data.day = day;
                         thereIsAValue = true;
-                    } else {
-                        overrideNeeded = true;
                     }
                 }
 
+                // alert("2");
                 if (venue !== null && venue !== '') {
                     if (resVenue.indexOf(venue) !== -1) {
                         data.venue = venue;
                         thereIsAValue = true;
-                    } else {
-                        overrideNeeded = true;
                     }
                 }
 
+                // alert(team !== null && team !== '');
                 if (team !== null && team !== '') {
+                    // alert(3);
+                    // alert(resTeams.indexOf(team) !== -1);
                     if (resTeams.indexOf(team) !== -1) {
-                        data.team_id = fingID(teams, team).id;
+                        data.team_id = findID(result.teams, team)[0].id;
                         thereIsAValue = true;
-                    } else {
-                        overrideNeeded = true;
                     }
                 }
 
+                // alert("4");
                 if (club !== null && club !== '') {
                     if (resClub.indexOf(club) !== -1) {
                         data.club_name = club;
                         thereIsAValue = true;
-                    } else {
-                        overrideNeeded = true;
                     }
                 }
 
-                console.debug(data);
+                // alert("5");
                 let location = {
                     ...props.location,
                 };
@@ -326,7 +310,7 @@ function SSSFilter(props) {
                 if (data.team_id === "") {
                     params.delete("team");
                 } else {
-                    params.set("team", data.team_id);
+                    params.set("team", team);
                 }
 
                 if (data.club_name === "") {
@@ -340,7 +324,11 @@ function SSSFilter(props) {
 
                 if (thereIsAValue) {
                     setSearching(true);
-                    setValues(data);
+                    let tempData = {
+                        ...data,
+                        team_id: team
+                    }
+                    setValues(tempData);
                     setTableData([]);
                     // create a searching variable and use it to disable dropdowns.
                     fetch("http://localhost:5000/api/v1/filterMatches/", {
@@ -355,8 +343,6 @@ function SSSFilter(props) {
                     }).then((res) => res.json())
                         .then((result) => {
                             setTableData(result.matches);
-                            // alert(result);
-                            console.log(result);
                             setSearching(false);
                         })
                         .catch((e) => {
