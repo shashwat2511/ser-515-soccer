@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useForm, Form } from './useForm';
 import Controls from './controls/Controls';
 import { Box } from '@mui/system';
 import './../css/SSSFilter.css';
-import axios from 'axios';
 import { DataGrid } from "@material-ui/data-grid";
-import { teamList } from '../demoJSONs/teamList';
 import { withRouter } from 'react-router-dom';
 
 function SSSFilter(props) {
@@ -35,15 +33,15 @@ function SSSFilter(props) {
             }
         },
         {
-            field: 'team_1_id', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            field: 'team_1_name', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
+                return (<a href={'../schedule?team=' + findValue(teams, params.row.team_1_id)[0].value} className="cellAnchor">{params.value}</a>);
             }
         },
         {
-            field: 'team_2_id', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            field: 'team_2_name', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
+                return (<a href={'../schedule?team=' + findValue(teams, params.row.team_2_id)[0].value} className="cellAnchor">{params.value}</a>);
             }
         },
     ];
@@ -58,6 +56,10 @@ function SSSFilter(props) {
 
     const findID = (array, value) => {
         return array.filter(obj => obj.value === value);
+    };
+
+    const findValue = (array, id) => {
+        return array.filter(obj => obj.id === id);
     };
 
     const {
@@ -197,11 +199,11 @@ function SSSFilter(props) {
         }
     };
 
-    const handleCellClick = (param, event) => {
+    /* const handleCellClick = (param, event) => {
         if (param.colIndex === 2) {
             event.stopPropagation();
         }
-    };
+    }; */
 
     useEffect(() => {
         fetch("http://localhost:5000/api/v1/getFilterParams/", {
@@ -461,7 +463,7 @@ function SSSFilter(props) {
                         pageSize={5}
                         disableSelectionOnClick
                         rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
-                        onCellClick={handleCellClick}
+                        // onCellClick={handleCellClick}
                         isCellEditable="false"
                     ></DataGrid>
                 </Box>
