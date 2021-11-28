@@ -105,7 +105,6 @@ function TeamsAsPerDivision(props) {
                 pageSize={5}
                 disableSelectionOnClick
                 rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
-                onCellClick={handleCellClick}
                 isCellEditable="false"
             ></DataGrid>
         </Box>
