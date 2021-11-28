@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CoachTeam from './CoachTeam';
+import TeamMatches from './TeamMatches';
 import Referee from './Referee';
 import TournamentManager from './TournamentManager';
 import TeamRegistration from './TeamRegistration';
@@ -38,19 +38,22 @@ function Content() {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/home" component={Home} />
-                    <Route path="/schedule" component={FilterTitle} />
-                    <Route path="/referee" component={Referee} />
-                    {/* <Route path="/team-registrationsss" component={TeamRegistration} /> */}
-                    <Route path="/coach-team" component={CoachTeam} />
-                    <Route path="/tournament-manager" component={TournamentManager} />
                     <Route path="/teamregistration" exact component={CoachRegistrationForm} />
                     <Route path="/payment-gateway" component={PaymentGateway} />
-                    <Route path="/payment-info" component={PaymentInfo} />
+                    <Route path="/teammatches" component={TeamMatches} />
+                    
+                    <Route path="/rulesandregulations" component={RulesandRegulationsTM} />
+                    
+                    <Route path="/schedule" component={FilterTitle} />
+                    <Route path="/match_schedule" component={MatchSchedule} />
+                    
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/admin_login" component={AdminLogin} />
-                    <Route path="/match_schedule" component={MatchSchedule} />
-                    <Route path="/rulesandregulations" component={RulesandRegulationsTM} />
-                    {/* <Route path="/faqs" component={FAQHeader} /> */}
+
+                    <Route path="/referee" component={Referee} />
+                    <Route path="/tournament-manager" component={TournamentManager} />
+                    {/* <Route path="/payment-info" component={PaymentInfo} /> */}
+                    {/* <Route path="/team-registrationsss" component={TeamRegistration} /> */}
                 </Switch>
             </Router>
         </div>
