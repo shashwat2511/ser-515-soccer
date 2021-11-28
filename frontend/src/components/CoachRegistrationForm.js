@@ -124,8 +124,13 @@ function CoachRegistrationForm() {
             });
 
     };
+    const submitTeamID = () => {
+        alert("hello")
+
+    };
+    
     const initialFValues = {
-        id: 0,
+        team_id: '',
         team_name: '',
         gender: '',
         age_group: 8,
@@ -219,22 +224,26 @@ function CoachRegistrationForm() {
             submitTeamRegistration();
         }
     }
+    const viewTeamSchedule = (e) => {
+        e.preventDefault();
+        submitTeamID();
+    }
 
     const fileRef = useRef(null);
 
     return (
         <Box style={boxStyles}>
-            <Form autoComplete="on" style={{ backgroundColor: '#FFFFFF' }}>
+            <Form autoComplete="on" onSubmit={viewTeamSchedule} style={{ backgroundColor: '#FFFFFF' }}>
                 <Grid container spacing={1}>
                     <Grid container item>
-                        <Grid container item xs={11} >
+                        <Grid container item xs={10} >
                             <Controls.Input variant="outlined"
                                 label="Team ID"
-                                name="teamID"
-                                value={finalFormValues.teamID}
+                                name="team_id"
+                                value={finalFormValues.team_id}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid container item xs={1} spacing={1}
+                        <Grid container item xs={2} spacing={1}
                             direction="row"
                             justifyContent="center"
                             alignItems="center">

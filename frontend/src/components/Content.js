@@ -14,6 +14,7 @@ import SSSFilter from './SSSFilter';
 import MatchLocation from './MatchLocation'
 import AdminLogin from './AdminLogin';
 import MatchSchedule from './MatchSchedule';
+import FAQHeader from './FAQHeader';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
@@ -39,16 +40,17 @@ function Content() {
                     <Route path="/home" component={Home} />
                     <Route path="/schedule" component={FilterTitle} />
                     <Route path="/referee" component={Referee} />
-                    <Route path="/team-registration" component={TeamRegistration} />
+                    {/* <Route path="/team-registrationsss" component={TeamRegistration} /> */}
                     <Route path="/coach-team" component={CoachTeam} />
                     <Route path="/tournament-manager" component={TournamentManager} />
-                    <Route path="/coach-registration" exact component={CoachRegistrationForm} />
+                    <Route path="/teamregistration" exact component={CoachRegistrationForm} />
                     <Route path="/payment-gateway" component={PaymentGateway} />
                     <Route path="/payment-info" component={PaymentInfo} />
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/admin_login" component={AdminLogin} />
                     <Route path="/match_schedule" component={MatchSchedule} />
                     <Route path="/rulesandregulations" component={RulesandRegulationsTM} />
+                    {/* <Route path="/faqs" component={FAQHeader} /> */}
                 </Switch>
             </Router>
         </div>

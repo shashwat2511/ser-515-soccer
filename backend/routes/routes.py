@@ -166,3 +166,15 @@ def check_matches_scheduled():
             mimetype='application/json'
         )
         return response
+
+@APP.route("/api/v1/getMatchesByTeamID/<team_id>", methods=['GET'])
+def get_matches_by_teamid(team_id):
+    if request.method == 'GET':
+        fmd = FetchMatchDetails()
+        return_data = fmd.get_matches_by_teamid(team_id)
+        response = Response(
+            response=json.dumps(return_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
