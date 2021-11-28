@@ -44,7 +44,8 @@ class DBFetchTeamList(object):
             cursor = connection.cursor()
             # add_later_to_query = "and team_id IN(select team_id from public.payment)"
             select_query = """select array_agg(row_to_json(t)) from 
-                                (SELECT * from public.teams where is_active= True order by team_id) t
+                                (SELECT *, concat( team_city, ', ', team_state) as address
+                                 from public.teams where is_active= True order by team_id) t
                             """
             cursor.execute(select_query)
             teams_json = cursor.fetchall()
@@ -67,7 +68,8 @@ class DBFetchTeamList(object):
             where_clause = self.where_clause_builder(division, age_group, gender)
             # add_later_to_query = "and team_id IN(select team_id from public.payment)"
             select_query = """select array_agg(row_to_json(t)) from 
-                                (SELECT * from public.teams where is_active= True %s order by team_id) t
+                                (SELECT *, concat( team_city, ', ', team_state) as address 
+                                from public.teams where is_active= True %s order by team_id) t
                             """
             cursor.execute(select_query % where_clause)
             teams_json = cursor.fetchall()
