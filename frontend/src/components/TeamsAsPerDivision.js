@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 function TeamsAsPerDivision(props) {
     const [tableData, setTableData] = useState([]);
+    const [thereIsAValue, setThereIsAValue] = useState(false);
 
     const columns = [
         { field: 'id', headerName: 'NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
@@ -37,21 +38,12 @@ function TeamsAsPerDivision(props) {
 
     useEffect(() => {
         let param = new URLSearchParams(props.location.search);
-        let team = param.get('team');
+        let division = param.get('division');
         let data = {
             division: '',
-            day: '',
-            venue: '',
-            team_id: '',
-            club_name: '',
+            age_group: '',
+            gender: '',
         };
-        let thereIsAValue = false;
-
-        if (team !== null && team !== '') {
-            data.team_id = team;
-            thereIsAValue = true;
-        }
-
         let location = {
             ...props.location,
         };
@@ -59,16 +51,18 @@ function TeamsAsPerDivision(props) {
         let params = new URLSearchParams(location.search);
         delete location.key;
 
-        if (data.team_id === "") {
-            params.delete("team");
+        if (division !== null && division !== '') {
+            data.division = division;
+            params.set("division", data.division);
+            setThereIsAValue(true);
         } else {
-            params.set("team", team);
+            params.delete("division");
         }
 
         if (thereIsAValue) {
             setTableData([]);
             // create a searching variable and use it to disable dropdowns.
-            fetch("http://localhost:5000/api/v1/filterMatches/", {
+            fetch("http://localhost:5000/api/v1/fetchTeamList/", {
                 body: JSON.stringify(data),
                 method: "POST",
                 headers: {
@@ -86,29 +80,51 @@ function TeamsAsPerDivision(props) {
         }
     }, []);
 
-    return (
-        <Box className="sssTableBox" style={{
-            height: '27rem',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-            <DataGrid style={{
-                width: '90%',
-                height: '90%',
-                backgroundColor: '#FFFFFF'
-            }} className='teamTable'
-                rows={tableData}
-                columns={columns}
-                pageSize={5}
-                disableSelectionOnClick
-                rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
-                isCellEditable="false"
-            ></DataGrid>
-        </Box>
-    )
+    var noDataDisplay = {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'transparent',
+        color: '#999999',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontFamily: 'RobotoSlab',
+        fontWeight: 700,
+    }
+
+    if (thereIsAValue) {
+        return (
+            <Box className="sssMainDiv" style={{
+                height: '27rem',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <DataGrid style={{
+                    width: '90%',
+                    height: '90%',
+                    backgroundColor: '#FFFFFF'
+                }} className='teamTable'
+                    rows={tableData}
+                    columns={columns}
+                    pageSize={5}
+                    disableSelectionOnClick
+                    rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
+                    isCellEditable="false"
+                ></DataGrid>
+            </Box>
+        )
+    } else {
+        return (
+            <Box style={noDataDisplay}>
+                THERE IS NO DATA TO BE DISPLAYED
+            </Box>
+        )
+    }
+
 }
 
 export default withRouter(TeamsAsPerDivision);

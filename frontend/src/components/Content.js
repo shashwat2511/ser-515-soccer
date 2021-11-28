@@ -17,6 +17,7 @@ import MatchSchedule from './MatchSchedule';
 import FAQHeader from './FAQHeader';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
+import TeamsAsPerDivision from './TeamsAsPerDivision';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
 
 function Content() {
@@ -41,12 +42,13 @@ function Content() {
                     <Route path="/teamregistration" exact component={CoachRegistrationForm} />
                     <Route path="/payment-gateway" component={PaymentGateway} />
                     <Route path="/teammatches" component={TeamMatches} />
-                    
+
                     <Route path="/rulesandregulations" component={RulesandRegulationsTM} />
-                    
+
                     <Route path="/schedule" component={FilterTitle} />
+                    <Route path="/accepted-teams" component={TeamsAsPerDivision} />
                     <Route path="/match_schedule" component={MatchSchedule} />
-                    
+
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/admin_login" component={AdminLogin} />
 

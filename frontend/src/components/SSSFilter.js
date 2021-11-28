@@ -23,7 +23,7 @@ function SSSFilter(props) {
         {
             field: 'match_division', headerName: 'DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
+                return (<a href={'../accepted-teams?division=' + params.value} className="cellAnchor">{params.value}</a>);
             }
         },
         { field: 'match_time', headerName: 'TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
