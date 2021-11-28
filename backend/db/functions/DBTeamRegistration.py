@@ -16,7 +16,7 @@ class DBTeamRegistration(object):
 
     def insert_team(self,
                     team_name, gender, age_group, coach_name, team_city, team_state,
-                    club_name, primary_contact, division, player_name):
+                    club_name, primary_contact, division, player_names):
         try:
             connection = psycopg2.connect(
                 user=self.user,
@@ -26,7 +26,6 @@ class DBTeamRegistration(object):
                 database=self.database,
             )
             cursor = connection.cursor()
-            date_timestamp = datetime.now()
             insert_query = """ INSERT INTO public.teams (
             team_name,gender,age_group,coach_name,team_city,team_state,
             club_name,primary_contact,division,team_details_file_path)
@@ -34,15 +33,16 @@ class DBTeamRegistration(object):
             RETURNING team_id"""
             record_to_insert = (
                 team_name, gender, age_group, coach_name, team_city, team_state,
-                club_name, primary_contact, division, player_name
+                club_name, primary_contact, division, player_names
             )
             # print(insert_query, record_to_insert)
 
             cursor.execute(insert_query, record_to_insert)
+            inserted_team_id = cursor.fetchone()[0]
             connection.commit()
             connection.close()
-            return_msg = "User created successfully "
-            return return_msg
+            # return_msg = "User created successfully"
+            return inserted_team_id
         except (Exception, psycopg2.Error) as error:
             print("Failed to insert record into users table", error)
 

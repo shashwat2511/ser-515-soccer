@@ -19,7 +19,7 @@ function RadioGroup(props) {
                 onChange={onChange}>
                 {
                     items.map((item, index) => (
-                        <FormControlLabel key={item.id} value={item.id} control={<Radio />} label={item.title} />
+                        <FormControlLabel key={item.id} value={item.value} control={<Radio />} label={item.value} />
                     ))
 
                 }

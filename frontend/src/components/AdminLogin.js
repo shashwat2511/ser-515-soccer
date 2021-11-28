@@ -1,11 +1,11 @@
 import { Button, Checkbox, FormControlLabel, Grid, SvgIcon, TextField, Typography } from '@material-ui/core'
 import { Box } from '@mui/system'
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 
-export const AdminLogin = () => {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    }
+const AdminLogin = () => {
+    const history = useHistory()
+    const [payload, setPayload] = useState({"username": "", "password": ""})
 
     function HomeIcon(props) {
         return (
@@ -14,24 +14,55 @@ export const AdminLogin = () => {
           </SvgIcon>
         );
       }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+       const response =  await fetch("http://localhost:5000/api/v1/adminLogin/", {
+            method : "POST",
+            body : JSON.stringify(payload),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(res => res.json())
+        .catch(err => console.log(err))
+        if(response && response["user_exist"]) {
+            // navigate to match_schedule page
+            history.push("/match_schedule")
+        }
+    }
 
     return (
         <Grid container justifyContent="center">
             <Grid item xs={5}>
-                <Box sx={{my:8, mx:4, display:'flex', flexDirection:'column', alignItems: 'center'}}>
+                <form onSubmit={handleSubmit}>
+                <Box  sx={{my:8, mx:4, display:'flex', flexDirection:'column', alignItems: 'center'}}>
                     <HomeIcon color="primary" />
                     <Typography variant="h5">Login</Typography>
                     &nbsp;
-                    <Box onSubmit={handleSubmit} sx={{mt:2}}>
+                    <Box  sx={{mt:2}}>
                     <Grid container direction="row" >
                         <Grid item xs={12}>
                             <Box p={1}>
-                                <TextField sm={5} style={{width:'100%'}} variant="outlined" required id="username" label="User name" margin="normal" autoFocus />
+                                <TextField sm={5} style={{width:'100%'}} variant="outlined" value={payload["username"]} required id="username" label="User name" margin="normal" autoFocus
+                                onChange={(event) => {
+                                    const uname = event.target.value
+                                    setPayload({
+                                        ...payload,
+                                        username: uname
+                                    })
+                                }} />
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
                             <Box p={1}>
-                            <TextField sm={5} style={{width:'100%'}} variant="outlined" required id="password" label="Password" margin="normal" autoFocus />
+                            <TextField sm={5} style={{width:'100%'}} type="password" variant="outlined" value={payload["password"]} required id="password" label="Password" margin="normal" autoFocus
+                             onChange={(event) => {
+                                const password = event.target.value
+                                setPayload({
+                                    ...payload,
+                                    password
+                                })
+                            }} />
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
@@ -44,11 +75,15 @@ export const AdminLogin = () => {
                     &nbsp;
                     <Grid item xs={5}>
                         <Box p={1}>
-                            <Button fullWidth variant="contained" color="primary">Login</Button>
+                            <Button fullWidth type="submit" variant="contained" color="primary" >Login</Button>
                         </Box>
                     </Grid>
                 </Box>
+                </form>
             </Grid>
         </Grid>
     )
 }
+
+
+export default AdminLogin 

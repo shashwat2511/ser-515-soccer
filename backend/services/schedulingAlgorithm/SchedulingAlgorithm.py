@@ -1,4 +1,4 @@
-from db.functions.DBGetTeamDetail import DBGetTeamDetail
+# from db.functions.DBGetTeamDetail import DBGetTeamDetail
 from db.functions.DBScheduleMatches import DBScheduleMatches
 
 
@@ -14,23 +14,25 @@ class SchedulingAlgorithm():
         return ans
 
     def make_pair(self, team_list):
+        # if team_list is None or len(team_list)%2 > 0:
+        #     return None
         ans = []
         for i in range(0, len(team_list), 2):
             ans.append([team_list[i], team_list[i + 1]])
         return ans
 
     def get_division_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         division_list = db.select_division_list()
         return division_list
 
     def get_age_group_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         age_group_list = db.select_age_group_list()
         return age_group_list
 
     def get_gender_list(self):
-        db = DBGetTeamDetail()
+        db = DBScheduleMatches()
         gender_list = db.select_gender_list()
         return gender_list
 
@@ -116,7 +118,9 @@ class SchedulingAlgorithm():
                     else:
                         self.matches_with_ground[age_range].append(paired_team)
         self.insert_match_details()
-        return_msg = {
-            "message": "All matches scheduled successfully"
-        }
-        return return_msg
+        matches = dsm.select_all_matches()
+        return {"matches": matches}
+        # return_msg = {
+        #     "message": "All matches scheduled successfully"
+        # }
+        # return return_msg
