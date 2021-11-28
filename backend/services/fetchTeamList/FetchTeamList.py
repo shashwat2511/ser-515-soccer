@@ -33,8 +33,3 @@ class FetchTeamList():
             "enrolled_teams": enrolled_team_list_data
         }
         return return_data
-
-
-
-# if _name_ == "_main_":
-#     sasa

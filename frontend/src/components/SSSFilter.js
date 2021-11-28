@@ -6,6 +6,7 @@ import { Box } from '@mui/system';
 import './../css/SSSFilter.css';
 import { DataGrid } from "@material-ui/data-grid";
 import { withRouter } from 'react-router-dom';
+import config from '../Constants';
 
 function SSSFilter(props) {
     const [searching, setSearching] = useState(false);
@@ -109,7 +110,8 @@ function SSSFilter(props) {
 
         if (venue !== null && venue !== '') {
             if (resVenue.indexOf(venue) !== -1) {
-                data.venue = venue;
+                // data.venue = venue;
+                data.venue = findID(venues, venue)[0].id;
                 thereIsAValue = true;
             }
         }
@@ -176,7 +178,7 @@ function SSSFilter(props) {
             });
             setTableData([]);
             // create a searching variable and use it to disable dropdowns.
-            fetch("http://localhost:5000/api/v1/filterMatches/", {
+            fetch(config.BASE_URL + "filterMatches/", {
                 body: JSON.stringify(data),
                 method: "POST",
                 headers: {
@@ -206,7 +208,7 @@ function SSSFilter(props) {
     }; */
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/v1/getFilterParams/", {
+        fetch(config.BASE_URL + "getFilterParams/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -261,7 +263,8 @@ function SSSFilter(props) {
                 // alert("2");
                 if (venue !== null && venue !== '') {
                     if (resVenue.indexOf(venue) !== -1) {
-                        data.venue = venue;
+                        // data.venue = venue;
+                        data.venue = findID(venues, venue)[0].id;
                         thereIsAValue = true;
                     }
                 }
@@ -304,7 +307,8 @@ function SSSFilter(props) {
                 }
 
                 if (data.venue === "") {
-                    params.delete("venue");
+                    // params.delete("venue");
+                    data.venue = findID(venues, venue)[0].id;
                 } else {
                     params.set("venue", data.venue);
                 }
@@ -333,7 +337,7 @@ function SSSFilter(props) {
                     setValues(tempData);
                     setTableData([]);
                     // create a searching variable and use it to disable dropdowns.
-                    fetch("http://localhost:5000/api/v1/filterMatches/", {
+                    fetch(config.BASE_URL + "filterMatches/", {
                         body: JSON.stringify(data),
                         method: "POST",
                         headers: {
