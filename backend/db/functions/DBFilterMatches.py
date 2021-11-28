@@ -60,7 +60,7 @@ class DBFilterMatches(object):
             query_where_clause = self.filter_value_validation(division, day, venue, team_id, club_name)
             cursor = connection.cursor()
             select_query = """select array_agg(row_to_json(agg_tab)) from 
-                            (SELECT m.match_division, m.match_date, m.match_time, m.ground_number,
+                            (SELECT m.match_id, m.match_division, m.match_date, m.match_time, m.ground_number,
                              m.team_1_id, t1.team_name as team_1_name, t2.team_name as team_2_name,
                              m.team_2_id, f.field_id, t1.club_name as team_1_club_name,
                              t2.club_name as team_2_club_name
@@ -91,7 +91,7 @@ class DBFilterMatches(object):
             # query_where_clause = "(m.team_1_id='" + str(team_id) + "'"
             # query_where_clause += " OR m.team_2_id='" + str(team_id) + "')"
             select_query = """select array_agg(row_to_json(agg_tab)) from 
-                                (SELECT m.match_division, m.match_date, m.match_time, m.ground_number,
+                                (SELECT m.match_id, m.match_division, m.match_date, m.match_time, m.ground_number,
                                  m.team_1_id, t1.team_name as team_1_name, t2.team_name as team_2_name,
                                  m.team_2_id, f.field_id, t1.club_name as team_1_club_name,
                                  t2.club_name as team_2_club_name
