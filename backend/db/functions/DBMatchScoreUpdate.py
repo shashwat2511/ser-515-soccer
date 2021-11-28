@@ -37,12 +37,17 @@ class DBMatchScoreUpdate(object):
                 match_result, str(team_1_id["team_id"]), str(team_2_id["team_id"])
             )
             cursor.execute(update_query, record_to_update)
+            updated_count = cursor.rowcount
             connection.commit()
+            if updated_count == 0:
+                raise psycopg2.Error
             connection.close()
             return_msg = "Match Goals updated successfully "
-            return return_msg
-        except (psycopg2.Error) as error:
-            print("Failed to update record into users table", error)
+            return return_msg, True
+        except (Exception, psycopg2.Error) as error:
+            message = "Incorrect details provided"
+            print("Failed to update record into users table",message, error)
+            return message, False
 
     def get_team_id(self, team_name):
         try:
