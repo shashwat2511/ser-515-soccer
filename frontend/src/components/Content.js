@@ -14,6 +14,7 @@ import SSSFilter from './SSSFilter';
 import MatchLocation from './MatchLocation'
 import AdminLogin from './AdminLogin';
 import MatchSchedule from './MatchSchedule';
+import Sponsors from './Sponsors';
 import FAQHeader from './FAQHeader';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
@@ -48,6 +49,7 @@ function Content() {
                     <Route path="/match_schedule" component={MatchSchedule} />
                     
                     <Route path="/maps" component={MatchLocation} />
+                    <Route path="/sponsors" component={Sponsors} />
                     <Route path="/admin_login" component={AdminLogin} />
 
                     <Route path="/referee" component={Referee} />
