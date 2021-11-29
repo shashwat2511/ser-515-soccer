@@ -15,13 +15,6 @@ class DBFilterMatches(object):
 
     def filter_value_validation(self, division, day, venue, team_id, club_name):
         try:
-            # division_check = False
-            # day_check = False
-            # venue_check = False
-            # team_id_check = False
-            # club_name_check = False
-            print(division, day, venue, team_id, club_name)
-
             result = ""
             if len(division) > 0:
                 result += "m.match_division='" + division + "'"
@@ -43,7 +36,10 @@ class DBFilterMatches(object):
                     result += " AND "
                 result += "(t1.club_name='" + club_name
                 result += "' OR t2.club_name='" + club_name + "')"
-            return result
+            if result == "":
+                return result
+            else:
+                return "where " + result
 
         except (Exception) as error:
             print("Failed to select record into teams table", error)
@@ -68,7 +64,7 @@ class DBFilterMatches(object):
                             LEFT JOIN public.teams t1 ON m.team_1_id = t1.team_id
                             LEFT JOIN public.teams t2 ON m.team_2_id = t2.team_id
                             LEFT JOIN public.field f ON m.field_id = f.field_id
-                            where %s) agg_tab
+                            %s) agg_tab
                             """
 
             cursor.execute(select_query % query_where_clause)
