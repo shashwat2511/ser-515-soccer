@@ -1,4 +1,4 @@
-# ser-515-soccer
+# ser-515-soccer APR Soccer Management
 
 **Team 10**
 Members:
