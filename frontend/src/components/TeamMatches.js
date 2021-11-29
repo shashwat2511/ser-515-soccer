@@ -24,15 +24,15 @@ function TeamMatches() {
         { field: 'ground_number', headerName: 'Ground Number', minWidth: 180, flex: 1, headerClassName: 'super-app-theme--header', },
     ];
 
-    const renameKey = ( obj, oldKey, newKey ) => {
+    const renameKey = (obj, oldKey, newKey) => {
         obj[newKey] = obj[oldKey];
         delete obj[oldKey];
-      }
-    
+    };
+
 
     useEffect(() => {
         let team_id = 1;
-        if(location.state && "team_id" in location.state) {
+        if (location.state && "team_id" in location.state) {
             // setTeamID(location.state.team_id);
             team_id = location.state.team_id;
         }
@@ -47,7 +47,7 @@ function TeamMatches() {
         }).then((res) => res.json())
             .then((result) => {
                 const modifiedMatches = result.matches;
-                modifiedMatches.forEach( obj => renameKey( obj, 'match_id', 'id' ) );
+                modifiedMatches.forEach(obj => renameKey(obj, 'match_id', 'id'));
                 setTableData(modifiedMatches);
             })
             .catch((error) => {
