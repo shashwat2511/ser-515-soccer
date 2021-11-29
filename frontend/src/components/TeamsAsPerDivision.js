@@ -2,38 +2,69 @@ import React, { useState, useEffect } from "react";
 import { Box } from '@mui/system';
 import { DataGrid } from "@material-ui/data-grid";
 import { withRouter } from 'react-router-dom';
+import { Typography } from "@material-ui/core";
+import Controls from './controls/Controls';
 
 function TeamsAsPerDivision(props) {
     const [tableData, setTableData] = useState([]);
     const [thereIsAValue, setThereIsAValue] = useState(false);
+    const handleClick = (event, params) => {
+        props.history.push(`/schedule?team=${params.row.gender}${params.row.age_group}${params.row.division} - ${params.row.team_name} (${params.row.coach_name})`);
+    };
+
+    const renameKey = (obj, oldKey, newKey) => {
+        obj[newKey] = obj[oldKey];
+        delete obj[oldKey];
+    };
 
     const columns = [
-        { field: 'id', headerName: 'NUMBER', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
         {
-            field: 'match_division', headerName: 'DIVISION', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            field: 'team_name', headerName: 'TEAM/LOCATION', minWidth: 200, flex: 3, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
+                return (
+                    <Box style={{
+                        width: '100%'
+                    }}>
+                        <Typography className="acceptedTeamsTable" variant="subtitle1">{params.value}</Typography>
+                        <Typography className="acceptedTeamsTable" variant="overline" display="block" style={{
+                            fontStyle: "italic",
+                            marginTop: '0.25rem',
+                            display: "flex"
+                        }}>
+                            {params.row.club_name}
+                        </Typography>
+                        <Typography className="acceptedTeamsTable" variant="overline" display="block" style={{
+                            display: "flex",
+                            marginTop: '0.1rem',
+                        }}>
+                            {params.row.address}
+                        </Typography>
+                    </Box>
+                );
             }
         },
-        { field: 'match_time', headerName: 'TIME', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false },
+        { field: 'coach_name', headerName: 'COACH', minWidth: 200, flex: 3, headerClassName: 'super-app-theme--header', editable: false },
         {
-            field: 'field_id', headerName: 'FIELD', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            field: 'gender', headerName: 'GROUP', minWidth: 200, flex: 3, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="../maps" className="cellAnchor">{params.value}</a>);
+                return (<Box>{params.value + params.row.age_group}</Box>);
             }
         },
         {
-            field: 'team_1_name', headerName: 'TEAM 1', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
+            field: 'field_id', headerName: 'SCHEDULE', minWidth: 200, flex: 3, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
+                return (
+                    <Controls.Button
+                        variant="contained"
+                        color="primary"
+                        text="See Schedule"
+                        onClick={(event) => {
+                            handleClick(event, params);
+                        }}
+                    />
+                );
             }
-        },
-        {
-            field: 'team_2_name', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
-            renderCell: (params) => {
-                return (<a href="" className="cellAnchor">{params.value}</a>);
-            }
-        },
+        }
     ];
 
     useEffect(() => {
@@ -44,6 +75,7 @@ function TeamsAsPerDivision(props) {
             age_group: '',
             gender: '',
         };
+        let isValuePresent = false;
         let location = {
             ...props.location,
         };
@@ -54,14 +86,14 @@ function TeamsAsPerDivision(props) {
         if (division !== null && division !== '') {
             data.division = division;
             params.set("division", data.division);
+            isValuePresent = true;
             setThereIsAValue(true);
         } else {
             params.delete("division");
         }
 
-        if (thereIsAValue) {
+        if (isValuePresent) {
             setTableData([]);
-            // create a searching variable and use it to disable dropdowns.
             fetch("http://localhost:5000/api/v1/fetchTeamList/", {
                 body: JSON.stringify(data),
                 method: "POST",
@@ -73,7 +105,9 @@ function TeamsAsPerDivision(props) {
                 },
             }).then((res) => res.json())
                 .then((result) => {
-                    setTableData(result.matches);
+                    const modifiedMatches = result.enrolled_teams;
+                    modifiedMatches.forEach(obj => renameKey(obj, 'team_id', 'id'));
+                    setTableData(modifiedMatches);
                 })
                 .catch((e) => {
                 });
@@ -95,17 +129,10 @@ function TeamsAsPerDivision(props) {
 
     if (thereIsAValue) {
         return (
-            <Box className="sssMainDiv" style={{
-                height: '27rem',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
+            <Box className="sssAcceptedDiv">
                 <DataGrid style={{
-                    width: '90%',
-                    height: '90%',
+                    width: '100%',
+                    height: '100%',
                     backgroundColor: '#FFFFFF'
                 }} className='teamTable'
                     rows={tableData}
@@ -114,6 +141,7 @@ function TeamsAsPerDivision(props) {
                     disableSelectionOnClick
                     rowsPerPageOptions={[15, 30, 45, 60, 75, 90]}
                     isCellEditable="false"
+                    rowHeight={90}
                 ></DataGrid>
             </Box>
         )

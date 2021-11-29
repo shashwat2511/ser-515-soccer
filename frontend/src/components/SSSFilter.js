@@ -42,6 +42,7 @@ function SSSFilter(props) {
         {
             field: 'team_2_name', headerName: 'TEAM 2', minWidth: 200, flex: 2, headerClassName: 'super-app-theme--header', editable: false,
             renderCell: (params) => {
+                // alert(JSON.stringify(params.row));
                 return (<a href={'../schedule?team=' + findValue(teams, params.row.team_2_id)[0].value} className="cellAnchor">{params.value}</a>);
             }
         },
@@ -152,7 +153,7 @@ function SSSFilter(props) {
         if (data.venue === "") {
             params.delete("venue");
         } else {
-            params.set("venue", data.venue);
+            params.set("venue", venue);
         }
 
         if (data.team_id === "") {
@@ -174,7 +175,8 @@ function SSSFilter(props) {
             setSearching(true);
             setValues({
                 ...data,
-                team_id: team
+                venue: venue,
+                team_id: team,
             });
             setTableData([]);
             // create a searching variable and use it to disable dropdowns.
@@ -244,7 +246,6 @@ function SSSFilter(props) {
                 };
                 let thereIsAValue = false;
 
-                // alert(team);
                 if (division !== null && division !== '') {
                     if (resDivisions.indexOf(division) !== -1) {
                         data.division = division;
@@ -252,7 +253,6 @@ function SSSFilter(props) {
                     }
                 }
 
-                // alert("1");
                 if (day !== null && day !== '') {
                     if (resDay.indexOf(day) !== -1) {
                         data.day = day;
@@ -260,26 +260,20 @@ function SSSFilter(props) {
                     }
                 }
 
-                // alert("2");
                 if (venue !== null && venue !== '') {
                     if (resVenue.indexOf(venue) !== -1) {
-                        // data.venue = venue;
                         data.venue = findID(venues, venue)[0].id;
                         thereIsAValue = true;
                     }
                 }
 
-                // alert(team !== null && team !== '');
                 if (team !== null && team !== '') {
-                    // alert(3);
-                    // alert(resTeams.indexOf(team) !== -1);
                     if (resTeams.indexOf(team) !== -1) {
                         data.team_id = findID(result.teams, team)[0].id;
                         thereIsAValue = true;
                     }
                 }
 
-                // alert("4");
                 if (club !== null && club !== '') {
                     if (resClub.indexOf(club) !== -1) {
                         data.club_name = club;
@@ -287,7 +281,6 @@ function SSSFilter(props) {
                     }
                 }
 
-                // alert("5");
                 let location = {
                     ...props.location,
                 };
@@ -307,10 +300,9 @@ function SSSFilter(props) {
                 }
 
                 if (data.venue === "") {
-                    // params.delete("venue");
-                    data.venue = findID(venues, venue)[0].id;
+                    params.delete("team");
                 } else {
-                    params.set("venue", data.venue);
+                    params.set("venue", venue);
                 }
 
                 if (data.team_id === "") {
@@ -332,6 +324,7 @@ function SSSFilter(props) {
                     setSearching(true);
                     let tempData = {
                         ...data,
+                        venue: venue,
                         team_id: team
                     }
                     setValues(tempData);
@@ -439,7 +432,7 @@ function SSSFilter(props) {
                         direction="row"
                         justifyContent="center"
                         alignItems="center">
-                        <Controls.Button
+                        <Controls.DisableButton
                             variant="contained"
                             color="secondary"
                             size="large"
