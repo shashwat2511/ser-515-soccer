@@ -16,6 +16,7 @@ import AdminLogin from './AdminLogin';
 import MatchSchedule from './MatchSchedule';
 import Sponsors from './Sponsors';
 import FAQHeader from './FAQHeader';
+import AboutUs from './AboutUs';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
 import TeamsAsPerDivision from './TeamsAsPerDivision';
@@ -53,6 +54,7 @@ function Content() {
                     <Route path="/maps" component={MatchLocation} />
                     <Route path="/sponsors" component={Sponsors} />
                     <Route path="/admin_login" component={AdminLogin} />
+                    <Route path="/aboutus" component={AboutUs} />
 
                     <Route path="/referee" component={Referee} />
                     <Route path="/tournament-manager" component={TournamentManager} />

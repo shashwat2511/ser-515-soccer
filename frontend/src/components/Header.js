@@ -15,7 +15,7 @@ export default function Header() {
                 fontWeight: "500"
             }}>
                 <a href="./home" className="headerMenu"><Box>HOME</Box></a>
-                <a href="./about" className="headerMenu"><Box>ABOUT</Box></a>
+                <a href="./aboutus" className="headerMenu"><Box>ABOUT</Box></a>
                 <a href="./teamregistration" className="headerMenu"><Box>APPLY</Box></a>
                 <a href="./rulesandregulations" className="headerMenu"><Box>FAQs</Box></a>
                 <a href="./schedule" className="headerMenu"><Box>TEAMS, SCHEDULES & SCORES</Box></a>
