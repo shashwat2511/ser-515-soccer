@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Grid } from '@material-ui/core';
 import { useForm, Form } from './useForm';
 import Controls from './controls/Controls';
 import { Box } from '@mui/system';
+import config from '../Constants';
+import { withRouter } from 'react-router-dom';
 
-const division = [
-    { id: '11', value: 'blue' },
-    { id: '12', value: 'green' },
-    { id: '13', value: 'yellow' },
-    { id: '14', value: 'purple' },
-]
-
-function AcceptedTeams() {
+function AcceptedTeams(props) {
     const initialFValues = {
-        accTeamsdivision: '',
-    }
+        division: '',
+    };
+    const [divisions, setDivisions] = useState([]);
+    const [searching, setSearching] = useState(false);
 
     const {
         values,
@@ -26,8 +23,31 @@ function AcceptedTeams() {
 
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
-        // console.log(btnRef.current);
-    }
+
+        if (values.division !== null && values.division !== '') {
+            props.history.push('../accepted-teams?division=' + values.division);
+        }
+    };
+
+    useEffect(() => {
+        setSearching(true);
+        fetch(config.BASE_URL + "getFilterParams/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Request-Headers": "Content-Type"
+            },
+        }).then((res) => res.json())
+            .then((result) => {
+                setSearching(false);
+                setDivisions(result.division);
+            })
+            .catch((e) => {
+                setSearching(false);
+            });
+    }, []);
 
     return (
         <Form autoComplete="on" onSubmit={handleRegistrationSubmit} style={{ backgroundColor: '#FFFFFF' }}>
@@ -43,22 +63,25 @@ function AcceptedTeams() {
                     <Grid container item xs={2} >
                         <Controls.Select
                             variant="outlined"
-                            name="accTeamsdivision"
+                            name="division"
                             label="Divisions"
-                            value={values.accTeamsdivision}
+                            value={values.division}
                             onChange={handleInputChange}
-                            options={division}
+                            disabled={searching}
+                            options={divisions}
                         />
                     </Grid>
                     <Grid container item xs={1} style={{ marginLeft: '1rem' }}
                         direction="row"
                         justifyContent="center"
                         alignItems="center">
-                        <Controls.Button
+                        <Controls.DisableButton
                             variant="contained"
                             color="secondary"
                             size="medium"
-                            text="See Teams" />
+                            text="See Teams"
+                            disabled={searching}
+                        />
                     </Grid>
                 </Grid>
             </Grid>
@@ -66,4 +89,4 @@ function AcceptedTeams() {
     )
 }
 
-export default AcceptedTeams
+export default withRouter(AcceptedTeams);
