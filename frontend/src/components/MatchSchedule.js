@@ -61,6 +61,7 @@ function MatchSchedule() {
 
     const columnNames = {
         "field_id": "Field ID",
+        "ground_number": "Ground Number",
         "match_date": "Date",
         "match_division": "Division",
         "match_time": "Time",

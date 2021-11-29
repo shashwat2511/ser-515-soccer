@@ -18,7 +18,7 @@ export const FAQContent = [
                 
             }, {
                 question: "How do I place my team in one division or the other?",
-                answer: "Your team will be placed in the division to be the most competitive with other teams that apply. However, you may help the selection committee by indicating your choice on the application form. Level 1-GREEN; Level 2-RED; Level 3-YELLOW; Level 4-BLUE & Level 5-PURPLE divisions. If we only have 2 levels in an age group then only BLUE and RED will be used."
+                answer: "Your team will be placed in the division to be the most competitive with other teams that apply. However, you may help the selection committee by indicating your choice on the application form. Level 1-GREEN; Level 2-RED; Level 3-YELLOW & Level 4-BLUE divisions. If we only have 2 levels in an age group then only BLUE and RED will be used."
             },
             {
                 question: "When do I send travel permit?",
