@@ -25,6 +25,57 @@ function AddScore() {
     };
 
     const submitScore = () => {
+        let tempObj = {
+            ...values,
+            team_1_name: values.team_1_name.trim().split(' ')[2],
+            team_2_name: values.team_2_name.trim().split(' ')[2],
+        }
+        if (values.team_1_goal > values.team_2_goal) {
+            tempObj = {
+                ...values,
+                winner: values.team_1_name,
+                match_result: 'won',
+            };
+        } else if (values.team_1_goal < values.team_2_goal) {
+            tempObj = {
+                ...values,
+                winner: values.team_2_name,
+                match_result: 'won',
+            };
+        } else {
+            tempObj = {
+                ...values,
+                winner: -1,
+                match_result: 'draw',
+            };
+        }
+
+        alert(JSON.stringify(tempObj));
+        fetch(config.BASE_URL + "updateMatchScore/", {
+            body: JSON.stringify(tempObj),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "*",
+                "Access-Control-Request-Headers": "Content-Type"
+            },
+        }).then((res) => res.json())
+            .then((result) => {
+                alert(JSON.stringify(result));
+                if (result.update_status) {
+                    document.getElementById('addScoreMessage').style.color = "green";
+                    document.getElementById('addScoreMessage').innerHTML = 'Scores added successfully';
+                } else {
+                    document.getElementById('addScoreMessage').style.color = "red";
+                    document.getElementById('addScoreMessage').innerHTML = 'Something went wrong. Please try again.';
+                }
+            })
+            .catch((e) => {
+                // alert(JSON.stringify(result));
+                document.getElementById('addScoreMessage').style.color = "red";
+                document.getElementById('addScoreMessage').innerHTML = 'Something went wrong. Please try again.';
+            });
     };
 
 
@@ -125,6 +176,7 @@ function AddScore() {
             },
         }).then((res) => res.json())
             .then((result) => {
+                alert(JSON.stringify(result.teams));
                 setTeams(result.teams);
             })
             .catch((e) => {
@@ -239,7 +291,6 @@ function AddScore() {
                     fontFamily: 'RobotoSlab',
                     color: '#999999',
                 }}>
-                    No Message
                 </Box>
             </Paper>
         </React.Fragment>
