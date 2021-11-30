@@ -20,6 +20,7 @@ import AboutUs from './AboutUs';
 
 import RulesandRegulationsTM from './RulesandRegulationsTM';
 import TeamsAsPerDivision from './TeamsAsPerDivision';
+import AddScore from './AddScore';
 // import PaymentDetails from './PaymentInfo/PaymentDetails';
 
 function Content() {
@@ -28,7 +29,7 @@ function Content() {
         top: 0,
         left: 0,
         width: 'calc(100% - 2em)',
-        height: 'calc(100% - 10em)',
+        height: 'calc(100% - 6em)',
         overflow: 'auto',
         padding: '5em 1em',
         display: 'flex',
@@ -55,6 +56,8 @@ function Content() {
                     <Route path="/sponsors" component={Sponsors} />
                     <Route path="/admin_login" component={AdminLogin} />
                     <Route path="/aboutus" component={AboutUs} />
+
+                    <Route path="/add-score" component={AddScore} />
 
                     <Route path="/referee" component={Referee} />
                     <Route path="/tournament-manager" component={TournamentManager} />
