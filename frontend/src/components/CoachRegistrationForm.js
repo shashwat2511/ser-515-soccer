@@ -18,50 +18,50 @@ const USAStateList = [
     { id: 'Arkansas', value: 'AR' },
     { id: 'California', value: 'CA' },
     { id: 'Colorado', value: 'CO' },
-    { id: 'Connecticut',value: 'CT' },
+    { id: 'Connecticut', value: 'CT' },
     { id: 'Delaware', value: 'DE' },
-    { id: 'Florida',value: 'FL' },
-    { id: 'Georgia',value: 'GA' },
-    { id: 'Hawaii',value: 'HI' },
-    { id: 'Idaho',value: 'ID' },
-    { id: 'Illinois',value: 'IL' },
-    { id: 'Indiana',value: 'IN' },
-    { id: 'Iowa',value: 'IA' },
-    { id: 'Kansas',value: 'KS' },
-    { id: 'Kentucky',value: 'KY' },
-    { id: 'Louisiana',value: 'LA' },
-    { id: 'Maine',value: 'ME' },
-    { id: 'Maryland',value: 'MD' },
-    { id: 'Massachusetts',value: 'MA' },
-    { id: 'Michigan',value: 'MI' },
-    { id: 'Minnesota',value: 'MN' },
-    { id: 'Mississippi',value: 'MS' },
-    { id: 'Missouri',value: 'MO' },
-    { id: 'Montana',value: 'MT' },
-    { id: 'Nebraska',value: 'NE' },
-    { id: 'Nevada',value: 'NV' },
-    { id: 'New Hampshire',value: 'NH' },
-    { id: 'New Jersey',value: 'NJ' },
-    { id: 'New Mexico',value: 'NM' },
-    { id: 'New York',value: 'NY' },
-    { id: 'North Carolina',value: 'NC' },
-    { id: 'North Dakota',value: 'ND' },
-    { id: 'Ohio',value: 'OH' },
-    { id: 'Oklahoma',value: 'OK' },
-    { id: 'Oregon',value: 'OR' },
-    { id: 'Pennsylvania',value: 'PA' },
-    { id: 'Rhode Island',value: 'RI' },
-    { id: 'South Carolina',value: 'SC' },
-    { id: 'South Dakota',value: 'SD' },
-    { id: 'Tennessee',value: 'TN' },
-    { id: 'Texas',value: 'TX' },
-    { id: 'Utah',value: 'UT' },
-    { id: 'Vermont',value: 'VT' },
-    { id: 'Virginia',value: 'VA' },
-    { id: 'Washington',value: 'WA' },
-    { id: 'West Virginia',value: 'WV' },
-    { id: 'Wisconsin',value: 'WI' },
-    { id: 'Wyoming',value: 'WY' },
+    { id: 'Florida', value: 'FL' },
+    { id: 'Georgia', value: 'GA' },
+    { id: 'Hawaii', value: 'HI' },
+    { id: 'Idaho', value: 'ID' },
+    { id: 'Illinois', value: 'IL' },
+    { id: 'Indiana', value: 'IN' },
+    { id: 'Iowa', value: 'IA' },
+    { id: 'Kansas', value: 'KS' },
+    { id: 'Kentucky', value: 'KY' },
+    { id: 'Louisiana', value: 'LA' },
+    { id: 'Maine', value: 'ME' },
+    { id: 'Maryland', value: 'MD' },
+    { id: 'Massachusetts', value: 'MA' },
+    { id: 'Michigan', value: 'MI' },
+    { id: 'Minnesota', value: 'MN' },
+    { id: 'Mississippi', value: 'MS' },
+    { id: 'Missouri', value: 'MO' },
+    { id: 'Montana', value: 'MT' },
+    { id: 'Nebraska', value: 'NE' },
+    { id: 'Nevada', value: 'NV' },
+    { id: 'New Hampshire', value: 'NH' },
+    { id: 'New Jersey', value: 'NJ' },
+    { id: 'New Mexico', value: 'NM' },
+    { id: 'New York', value: 'NY' },
+    { id: 'North Carolina', value: 'NC' },
+    { id: 'North Dakota', value: 'ND' },
+    { id: 'Ohio', value: 'OH' },
+    { id: 'Oklahoma', value: 'OK' },
+    { id: 'Oregon', value: 'OR' },
+    { id: 'Pennsylvania', value: 'PA' },
+    { id: 'Rhode Island', value: 'RI' },
+    { id: 'South Carolina', value: 'SC' },
+    { id: 'South Dakota', value: 'SD' },
+    { id: 'Tennessee', value: 'TN' },
+    { id: 'Texas', value: 'TX' },
+    { id: 'Utah', value: 'UT' },
+    { id: 'Vermont', value: 'VT' },
+    { id: 'Virginia', value: 'VA' },
+    { id: 'Washington', value: 'WA' },
+    { id: 'West Virginia', value: 'WV' },
+    { id: 'Wisconsin', value: 'WI' },
+    { id: 'Wyoming', value: 'WY' },
 ];
 
 
@@ -77,7 +77,7 @@ const division = [
 
 
 function CoachRegistrationForm() {
-    
+
     const history = useHistory();
 
     const submitTeamRegistration = () => {
@@ -93,16 +93,16 @@ function CoachRegistrationForm() {
         }).then((res) => res.json())
             .then((result) => {
                 console.log(result)
-                history.push("/payment-gateway", {'team_id': result.team_id})
+                history.push("/payment-gateway", { 'team_id': result.team_id })
             })
             .catch((e) => {
             });
+    };
 
-    };
     const submitTeamID = () => {
-        history.push("/teammatches", {'team_id': finalFormValues.team_id});
+        history.push("/teammatches", { 'team_id': finalFormValues.team_id });
     };
-    
+
     const initialFValues = {
         team_id: '',
         team_name: '',
@@ -155,19 +155,6 @@ function CoachRegistrationForm() {
             }
         }
 
-        // if ('player_names' in fieldValues) {
-        //     console.log(fileRef.current.files);
-        //     if (fileRef.current.files.length === 0) {
-        //         temp.player_names = 'This field is required.';
-        //     } else if (!fileRef.current.files[0].name.includes('.pdf') || !fileRef.current.files[0].type.includes('application/pdf')) {
-        //         temp.player_names = 'File type should only be pdf';
-        //     } else if (Math.round(fileRef.current.files[0].size / 1024) > 2) {
-        //         temp.player_names = 'File should not be greater than 2MB';
-        //     } else {
-        //         temp.player_names = '';
-        //     }
-        // }
-
         setErrors({
             ...temp
         });
@@ -175,7 +162,7 @@ function CoachRegistrationForm() {
         if (fieldValues === finalFormValues) {
             return Object.values(temp).every(x => x === "");
         }
-    }
+    };
 
     const {
         finalFormValues,
@@ -190,18 +177,19 @@ function CoachRegistrationForm() {
         flexDirection: 'column',
         justifyContent: 'flex - start',
         alignItems: 'center',
-    }
+    };
 
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
         if (validateRegitrationForm()) {
             submitTeamRegistration();
         }
-    }
+    };
+
     const viewTeamSchedule = (e) => {
         e.preventDefault();
         submitTeamID();
-    }
+    };
 
     const fileRef = useRef(null);
 
@@ -281,6 +269,7 @@ function CoachRegistrationForm() {
                                 type="number"
                                 value={finalFormValues.age_group}
                                 error={errors.age_group}
+                                minimum={8}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid container item xs={4}>
